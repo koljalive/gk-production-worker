@@ -13,6 +13,18 @@ Test("content loss blocks", () => Assert(!QualityGate.Check(new(1,new string('a'
 Test("two source rule", () => Assert(!QualityGate.Check(new(1,"old long enough","new long enough",[],["https://telekom.de/a","https://www.telekom.de/b"],true,true),cfg).Passed,"same host should not count twice"));
 Test("media rule", () => Assert(!QualityGate.Check(new(1,"old long enough","new long enough",[],["https://telekom.de/a","https://bundesnetzagentur.de/b"],false,true),cfg).Passed,"media should block"));
 Test("idempotency stable", () => Assert(Hashing.Idempotency(7,"x") == Hashing.Idempotency(7,"x"),"hash differs"));
+Test("explicit post bypasses checkpoint", () =>
+{
+    var state = new Checkpoint { CompletedIds = [75] };
+    Assert(ProductionWorker.ShouldProcess(true, state, 75), "explicit post was skipped");
+    Assert(!ProductionWorker.ShouldProcess(false, state, 75), "queue checkpoint was ignored");
+});
+Test("saved correction becomes verified", () =>
+{
+    var quality = new QualityResult(true, []);
+    Assert(ProductionWorker.DetermineResultStatus(quality, true, true) == "verified", "saved correction not verified");
+    Assert(ProductionWorker.DetermineResultStatus(quality, true, false) == "needs_correction", "unsaved correction status wrong");
+});
 Test("web search evidence accepts source objects", () =>
 {
     using var doc = JsonDocument.Parse("""{"output":[{"type":"web_search_call","action":{"sources":[{"url":"https://www.telekom.de/hilfe/a"},{"url":"https://bundesnetzagentur.de/b"}]}}]}""");

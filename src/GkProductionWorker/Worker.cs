@@ -15,7 +15,7 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
             ? explicitIds.Select(id => new QueueItem(id, null, null)).ToList()
             : await api.Queue(Math.Min(max, cfg.Worker.BatchSize), state.Offset, ct);
 
-        foreach (var q in items.Where(x => !state.CompletedIds.Contains(x.Id)).Take(max))
+        foreach (var q in items.Where(x => ShouldProcess(explicitIds.Count > 0, state, x.Id)).Take(max))
         {
             try
             {
@@ -39,11 +39,13 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
                     await unified.ClearCache(ct);
                     saved = true;
                 }
-                var resultStatus = quality.Passed ? (proposal.Changed ? "needs_correction" : "verified") :
-                    quality.Findings.Any(x => x.Code == "INSUFFICIENT_SOURCES") ? "insufficient_sources" : "needs_correction";
-                await api.SaveResult(item.Id, resultStatus,
-                    $"Quality Gate: {(quality.Passed ? "bestanden" : "blockiert")}; Vorschlag geändert: {proposal.Changed}; gespeichert: {saved}",
-                    quality.Findings, proposal.Sources, Hashing.Idempotency(item.Id, "result-" + proposal.CorrectedHtml), ct);
+                if (publish)
+                {
+                    var resultStatus = DetermineResultStatus(quality, proposal.Changed, saved);
+                    await api.SaveResult(item.Id, resultStatus,
+                        $"Quality Gate: {(quality.Passed ? "bestanden" : "blociert")}; Vorschlag geÃ¤ndert: {proposal.Changed}; gespeichert: {saved}",
+                        quality.Findings, proposal.Sources, Hashing.Idempotency(item.Id, "result-" + proposal.CorrectedHtml), ct);
+                }
                 var lastBackup = saved ? Directory.GetFiles(cfg.Worker.BackupsDirectory, $"post-{item.Id}-*.html").OrderByDescending(x=>x).FirstOrDefault() : null;
                 rows.Add(new(item.Id, item.Title, proposal.Changed, saved, quality.Findings, proposal.Sources, proposal.OriginalHtml, proposal.CorrectedHtml, lastBackup, null));
                 state.CompletedIds.Add(item.Id); state.Offset++;
@@ -58,4 +60,11 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
         ReportWriter.Write(cfg.Worker.ReportsDirectory, publish ? "production" : "preview", rows);
         return rows;
     }
+    public static bool ShouldProcess(bool explicitSelection, Checkpoint state, long id) =>
+        explicitSelection || !state.CompletedIds.Contains(id);
+
+    public static string DetermineResultStatus(QualityResult quality, bool changed, bool saved) =>
+        !quality.Passed
+            ? (quality.Findings.Any(x => x.Code == "INSUFFICIENT_SOURCES") ? "insufficient_sources" : "needs_correction")
+            : saved || !changed ? "verified" : "needs_correction";
 }
