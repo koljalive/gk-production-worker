@@ -43,7 +43,7 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
                 {
                     var resultStatus = DetermineResultStatus(quality, proposal.Changed, saved);
                     await api.SaveResult(item.Id, resultStatus,
-                        $"Quality Gate: {(quality.Passed ? "bestanden" : "blociert")}; Vorschlag geÃ¤ndert: {proposal.Changed}; gespeichert: {saved}",
+                        $"Quality Gate: {(quality.Passed ? "bestanden" : "blockiert")}; Vorschlag geändert: {proposal.Changed}; gespeichert: {saved}",
                         quality.Findings, proposal.Sources, Hashing.Idempotency(item.Id, "result-" + proposal.CorrectedHtml), ct);
                 }
                 var lastBackup = saved ? Directory.GetFiles(cfg.Worker.BackupsDirectory, $"post-{item.Id}-*.html").OrderByDescending(x=>x).FirstOrDefault() : null;

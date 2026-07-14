@@ -19,10 +19,13 @@ public sealed record CorrectionProposal(
     IReadOnlyList<Finding> Findings,
     IReadOnlyList<string> Sources,
     bool ImagesChecked,
-    bool AiObjectsChecked)
+    bool AiObjectsChecked,
+    bool RequiresFactualSources)
 {
     public bool Changed => !string.Equals(OriginalHtml, CorrectedHtml, StringComparison.Ordinal);
 }
+
+public sealed record AffiliateLink(string Url, string Rel, string Text);
 
 public sealed record QualityResult(bool Passed, IReadOnlyList<Finding> Findings);
 

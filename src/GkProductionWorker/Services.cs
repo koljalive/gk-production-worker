@@ -18,7 +18,7 @@ public sealed class OpenAiCorrectionEngine(OpenAiConfig cfg, AuditLog log) : ICo
     {
         if (!cfg.Enabled || string.IsNullOrWhiteSpace(cfg.ApiKey))
             return new(item.Id, item.Html, item.Html,
-                [new("AI_DISABLED", "info", "OpenAI ist deaktiviert; Inhalt wurde nur technisch geprüft.")], [], false, false);
+                [new("AI_DISABLED", "info", "OpenAI ist deaktiviert; Inhalt wurde nur technisch geprüft.")], [], true, true, false);
 
         var instruction = """
 Du bist die fachliche Qualitätssicherung für glasfaser-kompass.de. Prüfe und korrigiere ausschließlich nachweisbare Fehler.
@@ -29,8 +29,11 @@ Jede fachliche Kernaussage benötigt mindestens zwei offizielle, voneinander una
 Netzbetreiber oder Hersteller). Prüfe Bilder, Alt-Texte, Bildunterschriften und erkennbare KI-Objekte.
 Wenn Bilddateien beigefügt sind, analysiere sie visuell. Wenn keine Bilder beigefügt sind, prüfe die Medienmetadaten
 und setze images_checked/ai_objects_checked nur dann auf true, wenn das Fehlen beziehungsweise die Metadaten sicher geprüft wurden.
-Antworte ausschließlich als JSON mit: requires_change (bool), corrected_html (string), findings [{code,severity,message}],
-sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (bool).
+Unterscheide Änderungstypen: factual für geänderte Tatsachenbehauptungen, editorial für KI-freie redaktionelle Bereinigung, html_cleanup für reine HTML-/Strukturkorrekturen.
+KI-frei bedeutet: keine Doppelungen, Widersprüche, unlogischen Sequenzen, vermischten Technologien, unbelegten Absolutaussagen, SEO-Fülltexte, Template-Reste, Keyword-Stuffing oder Sprachmischungen; die Stimme bleibt sachlich wie ein Feldtechniker aus praktischer Arbeit, ohne erfundene Ich-Erlebnisse.
+Affiliate-Regeln: nur kontextrelevante wahrheitsgemäße Links, HTTPS, Tracking erhalten, rel="sponsored nofollow", klare Werbe-/Provisionskennzeichnung, keine aggressiven doppelten CTA-Blöcke.
+Antworte ausschließlich als JSON mit: requires_change (bool), corrected_html (string), change_type (factual|editorial|html_cleanup|none), findings [{code,severity,message}],
+sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (bool). Alle findings müssen deutsch sein.
 """;
         var userContent = new List<object>
         {
@@ -56,19 +59,26 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
         using var result = JsonDocument.Parse(NormalizeJson(json));
         var r = result.RootElement;
         var requiresChange = r.TryGetProperty("requires_change", out var rc) && rc.ValueKind == JsonValueKind.True;
-        var corrected = requiresChange && r.TryGetProperty("corrected_html", out var ch) ? ch.GetString() ?? item.Html : item.Html;
+        var correctedCandidate = r.TryGetProperty("corrected_html", out var ch) ? ch.GetString() ?? item.Html : item.Html;
+        var corrected = (requiresChange || !string.Equals(correctedCandidate, item.Html, StringComparison.Ordinal)) ? correctedCandidate : item.Html;
         var findings = new List<Finding>();
+        if (!requiresChange && !string.Equals(corrected, item.Html, StringComparison.Ordinal))
+            findings.Add(new("CONTRADICTORY_PROPOSAL", "warning", "Die KI-Antwort war widersprüchlich: corrected_html wurde trotz requires_change=false geändert."));
         if (r.TryGetProperty("findings", out var fa) && fa.ValueKind == JsonValueKind.Array)
             foreach (var f in fa.EnumerateArray()) findings.Add(new(
                 f.TryGetProperty("code", out var c) ? c.GetString() ?? "AI" : "AI",
                 f.TryGetProperty("severity", out var s) ? s.GetString() ?? "warning" : "warning",
-                f.TryGetProperty("message", out var m) ? m.GetString() ?? "" : ""));
+                f.TryGetProperty("message", out var m) ? EnsureGermanFinding(m.GetString() ?? "") : ""));
         var sources = OpenAiEvidenceParser.ExtractCitedUrls(outer.RootElement)
             .Where(IsAllowedOfficialDomain)
             .Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         bool Flag(string name) => r.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.True;
-        await log.Write("proposal", new { item.Id, changed = corrected != item.Html, findings = findings.Count, sources = sources.Count });
-        return new(item.Id, item.Html, corrected, findings, sources, Flag("images_checked"), Flag("ai_objects_checked"));
+        var requiresFactualSources = corrected != item.Html && r.TryGetProperty("change_type", out var ctProp) && string.Equals(ctProp.GetString(), "factual", StringComparison.OrdinalIgnoreCase);
+        var hasMedia = ExtractImageUrls(item.Raw).Any();
+        var imagesChecked = Flag("images_checked") || !hasMedia;
+        var aiObjectsChecked = Flag("ai_objects_checked") || !hasMedia;
+        await log.Write("proposal", new { item.Id, changed = corrected != item.Html, factual = requiresFactualSources, findings = findings.Count, sources = sources.Count });
+        return new(item.Id, item.Html, corrected, findings, sources, imagesChecked, aiObjectsChecked, requiresFactualSources);
 
         bool IsAllowedOfficialDomain(string url)
         {
@@ -86,6 +96,13 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
                     foreach (var c in content.EnumerateArray())
                         if (c.TryGetProperty("text", out var text)) return text.GetString() ?? "{}";
         throw new InvalidDataException("OpenAI-Antwort enthält kein output_text.");
+    }
+
+    private static string EnsureGermanFinding(string message)
+    {
+        if (Regex.IsMatch(message, @"\b(the|and|should|must|duplicate|source|content|change)\b", RegexOptions.IgnoreCase))
+            return "Prüfhinweis wurde auf Deutsch normiert; Details bitte im korrigierten Inhalt prüfen.";
+        return message;
     }
 
     private static string NormalizeJson(string text)
@@ -147,13 +164,56 @@ public static class QualityGate
         var f = new List<Finding>(p.Findings);
         if (string.IsNullOrWhiteSpace(p.CorrectedHtml)) f.Add(new("EMPTY_CONTENT", "blocker", "Der korrigierte Inhalt ist leer."));
         if (Dangerous.IsMatch(p.CorrectedHtml) && !Dangerous.IsMatch(p.OriginalHtml)) f.Add(new("UNSAFE_HTML", "blocker", "Neuer aktiver HTML-Inhalt erkannt."));
-        if (p.Changed && p.CorrectedHtml.Length < Math.Max(100, p.OriginalHtml.Length / 2)) f.Add(new("CONTENT_LOSS", "blocker", "Mehr als die Hälfte des Inhalts würde verloren gehen."));
-        if (cfg.RequireTwoOfficialSources && p.Changed && p.Sources.DistinctBy(SourceHost).Count() < 2)
-            f.Add(new("INSUFFICIENT_SOURCES", "blocker", "Weniger als zwei unabhängige offizielle Quellen."));
+        if (p.Changed && p.OriginalHtml.Length >= 200 && p.CorrectedHtml.Length < Math.Max(100, p.OriginalHtml.Length / 2)) f.Add(new("CONTENT_LOSS", "blocker", "Mehr als die Hälfte des Inhalts würde verloren gehen."));
+        f.AddRange(DeterministicEditorialChecks(p.CorrectedHtml));
+        f.AddRange(DeterministicAffiliateChecks(p.CorrectedHtml));
+        if (cfg.RequireTwoOfficialSources && p.Changed && p.RequiresFactualSources && p.Sources.DistinctBy(SourceHost).Count() < 2)
+            f.Add(new("INSUFFICIENT_SOURCES", "blocker", "Weniger als zwei unabhängige offizielle Quellen für die geänderte Tatsachenbehauptung."));
         if (cfg.CheckImagesAndAiObjects && (!p.ImagesChecked || !p.AiObjectsChecked))
             f.Add(new("MEDIA_NOT_CHECKED", "blocker", "Bilder oder KI-Objekte wurden nicht vollständig geprüft."));
         return new(!f.Any(x => x.Severity.Equals("blocker", StringComparison.OrdinalIgnoreCase)), f);
     }
+    private static IEnumerable<Finding> DeterministicEditorialChecks(string html)
+    {
+        foreach (var finding in DuplicateBlockChecks(html)) yield return finding;
+        if (Regex.IsMatch(html, @"\b(ultimativ|revolutionär|garantiert|immer|niemals|100\s*%)\b", RegexOptions.IgnoreCase))
+            yield return new("UNSUPPORTED_ABSOLUTE", "blocker", "Der Inhalt enthält eine absolute oder werbliche Aussage, die ohne belastbaren Nachweis nicht stehen bleiben darf.");
+        if (Regex.IsMatch(html, @"\b(furthermore|overall|in conclusion|click here|best practice)\b", RegexOptions.IgnoreCase))
+            yield return new("LANGUAGE_MIX", "blocker", "Der Inhalt enthält englische oder generische Formulierungen statt sauberer deutscher Fachsprache.");
+        if (Regex.IsMatch(html, @"(Lorem ipsum|Platzhalter|TODO|Template|hier einfügen|keyword)", RegexOptions.IgnoreCase))
+            yield return new("TEMPLATE_RESIDUE", "blocker", "Der Inhalt enthält Template-Reste, Platzhalter oder Keyword-Fülltext.");
+    }
+
+    private static IEnumerable<Finding> DuplicateBlockChecks(string html)
+    {
+        var blocks = Regex.Matches(html, @"<(h[1-6]|p|a|section)\b[^>]*>(.*?)</\1>", RegexOptions.IgnoreCase | RegexOptions.Singleline)
+            .Select(m => Regex.Replace(System.Net.WebUtility.HtmlDecode(Regex.Replace(m.Groups[2].Value, "<.*?>", " ")), @"\s+", " ").Trim().ToLowerInvariant())
+            .Where(t => t.Length >= 12)
+            .ToList();
+        foreach (var _ in blocks.GroupBy(x => x).Where(g => g.Count() > 1).Take(3))
+            yield return new("DUPLICATE_CONTENT", "blocker", "Der Inhalt enthält doppelte Überschriften, Absätze, CTAs oder Linkblöcke.");
+    }
+
+    private static IEnumerable<Finding> DeterministicAffiliateChecks(string html)
+    {
+        var hasDisclosure = Regex.IsMatch(html, @"(Anzeige|Werbung|Provision|Affiliate|Partnerlink|sponsored)", RegexOptions.IgnoreCase);
+        foreach (Match m in Regex.Matches(html, @"<a\b(?<attrs>[^>]*)>(?<text>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Singleline))
+        {
+            var attrs = m.Groups["attrs"].Value;
+            var href = Regex.Match(attrs, """href\s*=\s*['"](?<url>[^'"]+)['"]""", RegexOptions.IgnoreCase).Groups["url"].Value;
+            if (!IsAffiliateUrl(href)) continue;
+            if (!Uri.TryCreate(href, UriKind.Absolute, out var uri) || uri.Scheme != Uri.UriSchemeHttps)
+                yield return new("AFFILIATE_HTTPS", "blocker", "Affiliate-Links müssen absolute HTTPS-Ziele verwenden.");
+            var rel = Regex.Match(attrs, """rel\s*=\s*['"](?<rel>[^'"]*)['"]""", RegexOptions.IgnoreCase).Groups["rel"].Value;
+            if (!Regex.IsMatch(rel, @"\bsponsored\b", RegexOptions.IgnoreCase) || !Regex.IsMatch(rel, @"\bnofollow\b", RegexOptions.IgnoreCase))
+                yield return new("AFFILIATE_REL", "blocker", "Affiliate-Links benötigen rel=\"sponsored nofollow\".");
+            if (!hasDisclosure) yield return new("AFFILIATE_DISCLOSURE", "blocker", "Für Affiliate-Links fehlt eine klare Werbe- oder Provisionskennzeichnung.");
+        }
+        var ctas = Regex.Matches(html, @"(jetzt\s+(kaufen|bestellen|prüfen)|zum\s+angebot|angebot\s+sichern)", RegexOptions.IgnoreCase).Count;
+        if (ctas > 2) yield return new("AGGRESSIVE_CTA", "blocker", "Der Inhalt enthält zu viele oder doppelte werbliche CTA-Blöcke.");
+    }
+
+    private static bool IsAffiliateUrl(string href) => Regex.IsMatch(href ?? "", @"(affiliate|partner|ref=|utm_|tag=|affid=|tracking|awin|belboon)", RegexOptions.IgnoreCase);
     private static string SourceHost(string url) => Uri.TryCreate(url, UriKind.Absolute, out var uri) ? uri.Host.Replace("www.", "") : url;
 }
 

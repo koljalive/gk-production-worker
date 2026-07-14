@@ -8,10 +8,33 @@ void Test(string name, Action action) { try { action(); Console.WriteLine("PASS 
 void Assert(bool value, string message) { if (!value) throw new Exception(message); }
 
 var cfg = new WorkerConfig { RequireTwoOfficialSources = true, CheckImagesAndAiObjects = true };
-Test("unchanged content passes", () => Assert(QualityGate.Check(new(1,"abc content long enough","abc content long enough",[],[],true,true),cfg).Passed,"should pass"));
-Test("content loss blocks", () => Assert(!QualityGate.Check(new(1,new string('a',300),"short",[],["https://telekom.de/a","https://bundesnetzagentur.de/b"],true,true),cfg).Passed,"should block"));
-Test("two source rule", () => Assert(!QualityGate.Check(new(1,"old long enough","new long enough",[],["https://telekom.de/a","https://www.telekom.de/b"],true,true),cfg).Passed,"same host should not count twice"));
-Test("media rule", () => Assert(!QualityGate.Check(new(1,"old long enough","new long enough",[],["https://telekom.de/a","https://bundesnetzagentur.de/b"],false,true),cfg).Passed,"media should block"));
+Test("unchanged content passes", () => Assert(QualityGate.Check(new(1,"abc content long enough","abc content long enough",[],[],true,true,false),cfg).Passed,"should pass"));
+Test("content loss blocks", () => Assert(!QualityGate.Check(new(1,new string('a',300),"short",[],["https://telekom.de/a","https://bundesnetzagentur.de/b"],true,true,false),cfg).Passed,"should block"));
+Test("two source rule", () => Assert(!QualityGate.Check(new(1,"old long enough","new long enough",[],["https://telekom.de/a","https://www.telekom.de/b"],true,true,true),cfg).Passed,"same host should not count twice"));
+Test("media rule", () => Assert(!QualityGate.Check(new(1,"old long enough","new long enough",[],["https://telekom.de/a","https://bundesnetzagentur.de/b"],false,true,true),cfg).Passed,"media should block"));
+
+Test("editorial cleanup does not require factual sources", () =>
+{
+    var proposal = new CorrectionProposal(1, "<p>Techniker prüfen den Hausanschluss.</p>", "<p>Techniker prüfen den Hausanschluss sorgfältig.</p>", [], [], true, true, false);
+    Assert(QualityGate.Check(proposal, cfg).Passed, "editorial cleanup was blocked by source gate");
+});
+Test("deterministic KI-frei gates block duplicate and filler", () =>
+{
+    var proposal = new CorrectionProposal(1, "old content long enough", "<h2>Glasfaser prüfen</h2><h2>Glasfaser prüfen</h2><p>In conclusion: ultimativ 100% garantiert.</p>", [], ["https://telekom.de/a", "https://bundesnetzagentur.de/b"], true, true, false);
+    var result = QualityGate.Check(proposal, cfg);
+    Assert(!result.Passed && result.Findings.Any(x => x.Code == "DUPLICATE_CONTENT") && result.Findings.Any(x => x.Code == "LANGUAGE_MIX"), "KI-frei findings missing");
+});
+Test("affiliate gates require https rel and disclosure", () =>
+{
+    var proposal = new CorrectionProposal(1, "old content long enough", "<p><a href='http://shop.test/router?ref=abc' rel='nofollow'>Router kaufen</a></p>", [], ["https://telekom.de/a", "https://bundesnetzagentur.de/b"], true, true, false);
+    var result = QualityGate.Check(proposal, cfg);
+    Assert(!result.Passed && result.Findings.Any(x => x.Code == "AFFILIATE_HTTPS") && result.Findings.Any(x => x.Code == "AFFILIATE_REL") && result.Findings.Any(x => x.Code == "AFFILIATE_DISCLOSURE"), "affiliate findings missing");
+});
+Test("valid affiliate disclosure passes deterministic gate", () =>
+{
+    var proposal = new CorrectionProposal(1, "old content long enough", "<p>Anzeige: Bei qualifizierten Käufen erhalten wir eine Provision.</p><p><a href='https://shop.test/router?ref=abc' rel='sponsored nofollow'>passender Router</a></p>", [], ["https://telekom.de/a", "https://bundesnetzagentur.de/b"], true, true, false);
+    Assert(QualityGate.Check(proposal, cfg).Passed, "valid affiliate markup was blocked");
+});
 Test("idempotency stable", () => Assert(Hashing.Idempotency(7,"x") == Hashing.Idempotency(7,"x"),"hash differs"));
 Test("explicit post bypasses checkpoint", () =>
 {
