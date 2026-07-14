@@ -131,10 +131,6 @@ public static class OpenAiEvidenceParser
             {
                 if ((trustedSourceArea || isCitation) && p.NameEquals("url") && p.Value.ValueKind == JsonValueKind.String && Uri.TryCreate(p.Value.GetString(), UriKind.Absolute, out _))
                     yield return p.Value.GetString()!;
-                if (p.NameEquals("sources") && p.Value.ValueKind == JsonValueKind.Array)
-                    foreach (var source in p.Value.EnumerateArray())
-                        if (source.ValueKind == JsonValueKind.Object && source.TryGetProperty("url", out var sourceUrl) && sourceUrl.ValueKind == JsonValueKind.String && Uri.TryCreate(sourceUrl.GetString(), UriKind.Absolute, out _))
-                            yield return sourceUrl.GetString()!;
                 foreach (var url in ExtractCitedUrls(p.Value, trustedSourceArea || (isWebCall && p.NameEquals("action")))) yield return url;
             }
         }
