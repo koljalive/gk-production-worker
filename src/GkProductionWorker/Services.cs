@@ -1,0 +1,209 @@
+using System.Net.Http.Headers;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.RegularExpressions;
+
+namespace GkProductionWorker;
+
+public interface ICorrectionEngine
+{
+    Task<CorrectionProposal> Propose(ContentItem item, CancellationToken ct);
+}
+
+public sealed class OpenAiCorrectionEngine(OpenAiConfig cfg, AuditLog log) : ICorrectionEngine
+{
+    public async Task<CorrectionProposal> Propose(ContentItem item, CancellationToken ct)
+    {
+        if (!cfg.Enabled || string.IsNullOrWhiteSpace(cfg.ApiKey))
+            return new(item.Id, item.Html, item.Html,
+                [new("AI_DISABLED", "info", "OpenAI ist deaktiviert; Inhalt wurde nur technisch geprüft.")], [], false, false);
+
+        var instruction = """
+Du bist die fachliche Qualitätssicherung für glasfaser-kompass.de. Prüfe und korrigiere ausschließlich nachweisbare Fehler.
+Erhalte Struktur, Shortcodes, Affiliate-Links und nicht betroffene Inhalte. Entferne keine Aussagen ohne Grund.
+Wenn keine fachliche oder redaktionelle Korrektur erforderlich ist, gib corrected_html bytegenau unverändert zurück.
+Prüfe ausdrücklich doppelte Abschnitte, Template-Reste, fehlerhaftes HTML, Themenvermischung sowie widersprüchliche Passagen.
+Jede fachliche Kernaussage benötigt mindestens zwei offizielle, voneinander unabhängige Quellen (Behörden,
+Netzbetreiber oder Hersteller). Prüfe Bilder, Alt-Texte, Bildunterschriften und erkennbare KI-Objekte.
+Wenn Bilddateien beigefügt sind, analysiere sie visuell. Wenn keine Bilder beigefügt sind, prüfe die Medienmetadaten
+und setze images_checked/ai_objects_checked nur dann auf true, wenn das Fehlen beziehungsweise die Metadaten sicher geprüft wurden.
+Antworte ausschließlich als JSON mit: requires_change (bool), corrected_html (string), findings [{code,severity,message}],
+sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (bool).
+""";
+        var userContent = new List<object>
+        {
+            new { type = "input_text", text = $"ID: {item.Id}\nTitel: {item.Title}\nHTML:\n{item.Html}\n\nVollständiges Audit-Payload mit Medienmetadaten:\n{item.Raw.GetRawText()}" }
+        };
+        foreach (var imageUrl in ExtractImageUrls(item.Raw).Take(10))
+            userContent.Add(new { type = "input_image", image_url = imageUrl, detail = "high" });
+        var payload = JsonSerializer.Serialize(new
+        {
+            model = cfg.Model,
+            tools = new[] { new { type = "web_search", search_context_size = "high", filters = new { allowed_domains = cfg.OfficialDomains } } },
+            tool_choice = "auto",
+            include = new[] { "web_search_call.action.sources" },
+            input = new object[] { new { role = "system", content = instruction }, new { role = "user", content = userContent } }
+        }, Json.Options);
+        using var http = new HttpClient { Timeout = TimeSpan.FromMinutes(4) };
+        http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cfg.ApiKey);
+        using var response = await http.PostAsync(cfg.Endpoint, new StringContent(payload, Encoding.UTF8, "application/json"), ct);
+        var responseText = await response.Content.ReadAsStringAsync(ct);
+        if (!response.IsSuccessStatusCode) throw new InvalidOperationException($"OpenAI HTTP {(int)response.StatusCode}: {responseText[..Math.Min(500, responseText.Length)]}");
+        using var outer = JsonDocument.Parse(responseText);
+        var json = ExtractOutputText(outer.RootElement);
+        using var result = JsonDocument.Parse(NormalizeJson(json));
+        var r = result.RootElement;
+        var requiresChange = r.TryGetProperty("requires_change", out var rc) && rc.ValueKind == JsonValueKind.True;
+        var corrected = requiresChange && r.TryGetProperty("corrected_html", out var ch) ? ch.GetString() ?? item.Html : item.Html;
+        var findings = new List<Finding>();
+        if (r.TryGetProperty("findings", out var fa) && fa.ValueKind == JsonValueKind.Array)
+            foreach (var f in fa.EnumerateArray()) findings.Add(new(
+                f.TryGetProperty("code", out var c) ? c.GetString() ?? "AI" : "AI",
+                f.TryGetProperty("severity", out var s) ? s.GetString() ?? "warning" : "warning",
+                f.TryGetProperty("message", out var m) ? m.GetString() ?? "" : ""));
+        var sources = OpenAiEvidenceParser.ExtractCitedUrls(outer.RootElement)
+            .Where(IsAllowedOfficialDomain)
+            .Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+        bool Flag(string name) => r.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.True;
+        await log.Write("proposal", new { item.Id, changed = corrected != item.Html, findings = findings.Count, sources = sources.Count });
+        return new(item.Id, item.Html, corrected, findings, sources, Flag("images_checked"), Flag("ai_objects_checked"));
+
+        bool IsAllowedOfficialDomain(string url)
+        {
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri)) return false;
+            return cfg.OfficialDomains.Any(d => uri.Host.Equals(d, StringComparison.OrdinalIgnoreCase) || uri.Host.EndsWith("." + d, StringComparison.OrdinalIgnoreCase));
+        }
+    }
+
+    private static string ExtractOutputText(JsonElement root)
+    {
+        if (root.TryGetProperty("output_text", out var direct) && direct.ValueKind == JsonValueKind.String) return direct.GetString()!;
+        if (root.TryGetProperty("output", out var output))
+            foreach (var o in output.EnumerateArray())
+                if (o.TryGetProperty("content", out var content))
+                    foreach (var c in content.EnumerateArray())
+                        if (c.TryGetProperty("text", out var text)) return text.GetString() ?? "{}";
+        throw new InvalidDataException("OpenAI-Antwort enthält kein output_text.");
+    }
+
+    private static string NormalizeJson(string text)
+    {
+        var value = text.Trim();
+        if (value.StartsWith("```"))
+        {
+            var firstNewline = value.IndexOf('\n');
+            var lastFence = value.LastIndexOf("```", StringComparison.Ordinal);
+            if (firstNewline >= 0 && lastFence > firstNewline) value = value[(firstNewline + 1)..lastFence].Trim();
+        }
+        return value;
+    }
+
+    private static IEnumerable<string> ExtractImageUrls(JsonElement e)
+    {
+        if (e.ValueKind == JsonValueKind.Object)
+        {
+            foreach (var p in e.EnumerateObject())
+            {
+                if (p.Value.ValueKind == JsonValueKind.String &&
+                    (p.NameEquals("source_url") || p.NameEquals("image_url") || p.NameEquals("url")) &&
+                    Uri.TryCreate(p.Value.GetString(), UriKind.Absolute, out var uri) &&
+                    Regex.IsMatch(uri.AbsolutePath, @"\.(jpe?g|png|webp|gif|avif)$", RegexOptions.IgnoreCase))
+                    yield return uri.ToString();
+                foreach (var url in ExtractImageUrls(p.Value)) yield return url;
+            }
+        }
+        else if (e.ValueKind == JsonValueKind.Array)
+            foreach (var child in e.EnumerateArray()) foreach (var url in ExtractImageUrls(child)) yield return url;
+    }
+}
+
+public static class OpenAiEvidenceParser
+{
+    public static IEnumerable<string> ExtractCitedUrls(JsonElement e, bool trustedSourceArea = false)
+    {
+        if (e.ValueKind == JsonValueKind.Object)
+        {
+            var isCitation = e.TryGetProperty("type", out var type) && type.ValueKind == JsonValueKind.String && type.GetString() == "url_citation";
+            var isWebCall = e.TryGetProperty("type", out var callType) && callType.ValueKind == JsonValueKind.String && callType.GetString() == "web_search_call";
+            foreach (var p in e.EnumerateObject())
+            {
+                if ((trustedSourceArea || isCitation) && p.NameEquals("url") && p.Value.ValueKind == JsonValueKind.String && Uri.TryCreate(p.Value.GetString(), UriKind.Absolute, out _))
+                    yield return p.Value.GetString()!;
+                if (p.NameEquals("sources") && p.Value.ValueKind == JsonValueKind.Array)
+                    foreach (var source in p.Value.EnumerateArray())
+                        if (source.ValueKind == JsonValueKind.Object && source.TryGetProperty("url", out var sourceUrl) && sourceUrl.ValueKind == JsonValueKind.String && Uri.TryCreate(sourceUrl.GetString(), UriKind.Absolute, out _))
+                            yield return sourceUrl.GetString()!;
+                foreach (var url in ExtractCitedUrls(p.Value, trustedSourceArea || (isWebCall && p.NameEquals("action")))) yield return url;
+            }
+        }
+        else if (e.ValueKind == JsonValueKind.Array)
+            foreach (var child in e.EnumerateArray()) foreach (var url in ExtractCitedUrls(child, trustedSourceArea)) yield return url;
+    }
+}
+
+public static class QualityGate
+{
+    private static readonly Regex Dangerous = new(@"<(script|iframe)\b|\bon\w+\s*=|javascript:", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    public static QualityResult Check(CorrectionProposal p, WorkerConfig cfg)
+    {
+        var f = new List<Finding>(p.Findings);
+        if (string.IsNullOrWhiteSpace(p.CorrectedHtml)) f.Add(new("EMPTY_CONTENT", "blocker", "Der korrigierte Inhalt ist leer."));
+        if (Dangerous.IsMatch(p.CorrectedHtml) && !Dangerous.IsMatch(p.OriginalHtml)) f.Add(new("UNSAFE_HTML", "blocker", "Neuer aktiver HTML-Inhalt erkannt."));
+        if (p.Changed && p.CorrectedHtml.Length < Math.Max(100, p.OriginalHtml.Length / 2)) f.Add(new("CONTENT_LOSS", "blocker", "Mehr als die Hälfte des Inhalts würde verloren gehen."));
+        if (cfg.RequireTwoOfficialSources && p.Changed && p.Sources.DistinctBy(SourceHost).Count() < 2)
+            f.Add(new("INSUFFICIENT_SOURCES", "blocker", "Weniger als zwei unabhängige offizielle Quellen."));
+        if (cfg.CheckImagesAndAiObjects && (!p.ImagesChecked || !p.AiObjectsChecked))
+            f.Add(new("MEDIA_NOT_CHECKED", "blocker", "Bilder oder KI-Objekte wurden nicht vollständig geprüft."));
+        return new(!f.Any(x => x.Severity.Equals("blocker", StringComparison.OrdinalIgnoreCase)), f);
+    }
+    private static string SourceHost(string url) => Uri.TryCreate(url, UriKind.Absolute, out var uri) ? uri.Host.Replace("www.", "") : url;
+}
+
+public sealed class StateStore(string directory)
+{
+    private string PathName => Path.Combine(directory, "checkpoint.json");
+    public Checkpoint Load()
+    {
+        if (!File.Exists(PathName)) return new();
+        try { return JsonSerializer.Deserialize<Checkpoint>(File.ReadAllText(PathName), Json.Options) ?? new(); }
+        catch { return new(); }
+    }
+    public void Save(Checkpoint state)
+    {
+        Directory.CreateDirectory(directory); state.UpdatedAt = DateTimeOffset.UtcNow;
+        var tmp = PathName + ".tmp"; File.WriteAllText(tmp, JsonSerializer.Serialize(state, Json.Options)); File.Move(tmp, PathName, true);
+    }
+}
+
+public sealed class AuditLog(string directory)
+{
+    private readonly SemaphoreSlim _gate = new(1, 1);
+    private static readonly JsonSerializerOptions CompactJson = new(Json.Options) { WriteIndented = false };
+    public async Task Write(string type, object data)
+    {
+        Directory.CreateDirectory(directory);
+        var path = Path.Combine(directory, $"worker-{DateTime.UtcNow:yyyyMMdd}.jsonl");
+        var line = JsonSerializer.Serialize(new { time = DateTimeOffset.UtcNow, type, data }, CompactJson);
+        await _gate.WaitAsync(); try { await File.AppendAllTextAsync(path, line + Environment.NewLine); } finally { _gate.Release(); }
+    }
+}
+
+public static class ReportWriter
+{
+    public static string Write(string directory, string mode, IReadOnlyList<RunRow> rows)
+    {
+        Directory.CreateDirectory(directory);
+        var path = Path.Combine(directory, $"{mode}-{DateTime.Now:yyyyMMdd-HHmmss}.html");
+        static string H(string? s) => System.Net.WebUtility.HtmlEncode(s ?? "");
+        var table = string.Join("", rows.Select(r => $"<section><h2>{r.Id} – {H(r.Title)}</h2><p>Changed: {r.Changed} | Saved: {r.Saved} | Backup: {H(r.BackupPath)}</p><h3>Prüfung</h3><ul>{string.Join("",r.Findings.Select(f=>$"<li><strong>{H(f.Code)}</strong>: {H(f.Message)}</li>"))}</ul><h3>Quellen</h3><ul>{string.Join("",r.Sources.Select(s=>$"<li><a href='{H(s)}'>{H(s)}</a></li>"))}</ul><details><summary>Original</summary><pre>{H(r.OriginalHtml)}</pre></details><details><summary>Korrektur</summary><pre>{H(r.CorrectedHtml)}</pre></details>{(r.Error is null?"":$"<p class='error'>{H(r.Error)}</p>")}</section>"));
+        var html = $"<!doctype html><html lang='de'><meta charset='utf-8'><title>GK Worker {H(mode)}</title><style>body{{font-family:Arial;margin:24px;line-height:1.45}}section{{border:1px solid #ccc;padding:16px;margin:20px 0}}pre{{white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f6f6;padding:12px}}.error{{color:#b00020}}</style><h1>GK Production Worker – {H(mode)}</h1><p>Scanned: {rows.Count} | Changed: {rows.Count(x=>x.Changed)} | Saved: {rows.Count(x=>x.Saved)} | Errors: {rows.Count(x=>x.Error is not null)}</p>{table}</html>";
+        File.WriteAllText(path, html); return path;
+    }
+}
+
+public static class Hashing
+{
+    public static string Idempotency(long id, string html) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes($"{id}\n{html}"))).ToLowerInvariant();
+}
