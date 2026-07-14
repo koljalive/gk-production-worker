@@ -1,5 +1,6 @@
 using GkProductionWorker;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
@@ -34,6 +35,43 @@ Test("valid affiliate disclosure passes deterministic gate", () =>
 {
     var proposal = new CorrectionProposal(1, "old content long enough", "<p>Anzeige: Bei qualifizierten Käufen erhalten wir eine Provision.</p><p><a href='https://shop.test/router?ref=abc' rel='sponsored nofollow'>passender Router</a></p>", [], ["https://telekom.de/a", "https://bundesnetzagentur.de/b"], true, true, false);
     Assert(QualityGate.Check(proposal, cfg).Passed, "valid affiliate markup was blocked");
+});
+Test("contradictory proposal finding blocks publication", () =>
+{
+    var proposal = new CorrectionProposal(1, "<p>Originaler Text zum Anschluss.</p>", "<p>Geänderter Text zum Anschluss.</p>", [new("CONTRADICTORY_PROPOSAL", "blocker", "Die KI-Antwort ist widersprüchlich: corrected_html wurde trotz requires_change=false geändert.")], [], true, true, false);
+    var result = QualityGate.Check(proposal, cfg);
+    Assert(!result.Passed && result.Findings.Any(x => x.Code == "CONTRADICTORY_PROPOSAL" && x.Severity == "blocker"), "contradiction was not blocking");
+});
+Test("mislabeled factual edits still require sources", () =>
+{
+    var proposal = new CorrectionProposal(1, "<p>Der Tarif kostet 40 Euro.</p>", "<p>Der Tarif kostet 30 Euro.</p>", [], ["https://telekom.de/a"], true, true, true);
+    var result = QualityGate.Check(proposal, cfg);
+    Assert(!result.Passed && result.Findings.Any(x => x.Code == "INSUFFICIENT_SOURCES"), "factual edit bypassed source gate");
+});
+Test("deterministic duplicate cleanup can bypass factual sources", () =>
+{
+    var original = "<p>Der Techniker misst den Pegel am ONT.</p><p>Der Techniker misst den Pegel am ONT.</p>";
+    var corrected = "<p>Der Techniker misst den Pegel am ONT.</p>";
+    var proposal = new CorrectionProposal(1, original, corrected, [], [], true, true, false);
+    Assert(QualityGate.Check(proposal, cfg).Passed, "duplicate cleanup was blocked by factual sources");
+});
+Test("HTML media evidence is not auto-checked", () =>
+{
+    using var doc = JsonDocument.Parse("""{"content":"<figure class=\"wp-image-55\"><picture><img src=\"https://example.test/bild.webp\" alt=\"ONT im Keller\"></picture><figcaption>Montage</figcaption></figure>"}""");
+    var method = typeof(OpenAiCorrectionEngine).GetMethod("HasMediaEvidence", BindingFlags.NonPublic | BindingFlags.Static);
+    Assert(method is not null && (bool)method.Invoke(null, [doc.RootElement])!, "HTML media evidence was not detected");
+});
+Test("real affiliate host is detected without tracking query", () =>
+{
+    var proposal = new CorrectionProposal(1, "old content long enough", "<p><a href='https://glasfaser-kompass.telekom-profis.de/router' rel='nofollow'>Router bestellen</a></p>", [], ["https://telekom.de/a", "https://bundesnetzagentur.de/b"], true, true, false);
+    var result = QualityGate.Check(proposal, cfg);
+    Assert(!result.Passed && result.Findings.Any(x => x.Code == "AFFILIATE_REL") && result.Findings.Any(x => x.Code == "AFFILIATE_DISCLOSURE"), "real affiliate host was not detected");
+});
+Test("non-German finding normalization preserves detail", () =>
+{
+    var method = typeof(OpenAiCorrectionEngine).GetMethod("EnsureGermanFinding", BindingFlags.NonPublic | BindingFlags.Static);
+    var normalized = (string)method!.Invoke(null, ["Duplicate CTA block should be removed near the router offer."])!;
+    Assert(normalized.Contains("Duplicate CTA block should be removed near the router offer."), "normalization lost actionable detail");
 });
 Test("idempotency stable", () => Assert(Hashing.Idempotency(7,"x") == Hashing.Idempotency(7,"x"),"hash differs"));
 Test("explicit post bypasses checkpoint", () =>

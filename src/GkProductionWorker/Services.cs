@@ -60,10 +60,11 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
         var r = result.RootElement;
         var requiresChange = r.TryGetProperty("requires_change", out var rc) && rc.ValueKind == JsonValueKind.True;
         var correctedCandidate = r.TryGetProperty("corrected_html", out var ch) ? ch.GetString() ?? item.Html : item.Html;
-        var corrected = (requiresChange || !string.Equals(correctedCandidate, item.Html, StringComparison.Ordinal)) ? correctedCandidate : item.Html;
+        var contradictoryChange = !requiresChange && !string.Equals(correctedCandidate, item.Html, StringComparison.Ordinal);
+        var corrected = (requiresChange || contradictoryChange) ? correctedCandidate : item.Html;
         var findings = new List<Finding>();
-        if (!requiresChange && !string.Equals(corrected, item.Html, StringComparison.Ordinal))
-            findings.Add(new("CONTRADICTORY_PROPOSAL", "warning", "Die KI-Antwort war widersprüchlich: corrected_html wurde trotz requires_change=false geändert."));
+        if (contradictoryChange)
+            findings.Add(new("CONTRADICTORY_PROPOSAL", "blocker", "Die KI-Antwort ist widersprüchlich: corrected_html wurde trotz requires_change=false geändert. Die Korrektur darf erst nach einem konsistenten erneuten Vorschlag veröffentlicht werden."));
         if (r.TryGetProperty("findings", out var fa) && fa.ValueKind == JsonValueKind.Array)
             foreach (var f in fa.EnumerateArray()) findings.Add(new(
                 f.TryGetProperty("code", out var c) ? c.GetString() ?? "AI" : "AI",
@@ -73,8 +74,8 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
             .Where(IsAllowedOfficialDomain)
             .Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         bool Flag(string name) => r.TryGetProperty(name, out var v) && v.ValueKind == JsonValueKind.True;
-        var requiresFactualSources = corrected != item.Html && r.TryGetProperty("change_type", out var ctProp) && string.Equals(ctProp.GetString(), "factual", StringComparison.OrdinalIgnoreCase);
-        var hasMedia = ExtractImageUrls(item.Raw).Any();
+        var requiresFactualSources = corrected != item.Html && !IsDeterministicCleanup(item.Html, corrected);
+        var hasMedia = HasMediaEvidence(item.Raw);
         var imagesChecked = Flag("images_checked") || !hasMedia;
         var aiObjectsChecked = Flag("ai_objects_checked") || !hasMedia;
         await log.Write("proposal", new { item.Id, changed = corrected != item.Html, factual = requiresFactualSources, findings = findings.Count, sources = sources.Count });
@@ -101,7 +102,7 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
     private static string EnsureGermanFinding(string message)
     {
         if (Regex.IsMatch(message, @"\b(the|and|should|must|duplicate|source|content|change)\b", RegexOptions.IgnoreCase))
-            return "Prüfhinweis wurde auf Deutsch normiert; Details bitte im korrigierten Inhalt prüfen.";
+            return $"Prüfhinweis wurde auf Deutsch normiert; ursprünglicher Hinweis: {message}";
         return message;
     }
 
@@ -134,6 +135,36 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
         else if (e.ValueKind == JsonValueKind.Array)
             foreach (var child in e.EnumerateArray()) foreach (var url in ExtractImageUrls(child)) yield return url;
     }
+
+    private static bool HasMediaEvidence(JsonElement e)
+    {
+        if (ExtractImageUrls(e).Any()) return true;
+        var raw = e.GetRawText();
+        return Regex.IsMatch(raw, @"<\s*(img|picture|figure)\b|wp-image-\d+|\b(alt|caption|image|thumbnail|featured_media)\b|https?:\\?/\\?/[^""'\s<>\\]+\.(jpe?g|png|webp|gif|avif)", RegexOptions.IgnoreCase);
+    }
+
+    private static bool IsDeterministicCleanup(string original, string corrected)
+    {
+        if (string.Equals(original, corrected, StringComparison.Ordinal)) return false;
+        var originalText = VisibleText(original);
+        var correctedText = VisibleText(corrected);
+        if (string.Equals(originalText, correctedText, StringComparison.OrdinalIgnoreCase)) return true;
+
+        var originalBlocks = TextBlocks(original);
+        var correctedBlocks = TextBlocks(corrected);
+        return originalBlocks.Count > correctedBlocks.Count
+            && correctedBlocks.All(b => originalBlocks.Contains(b))
+            && originalBlocks.GroupBy(x => x).Any(g => g.Count() > 1);
+    }
+
+    private static string VisibleText(string html) =>
+        Regex.Replace(System.Net.WebUtility.HtmlDecode(Regex.Replace(html, "<.*?>", " ")), @"\s+", " ").Trim();
+
+    private static List<string> TextBlocks(string html) =>
+        Regex.Matches(html, @"<(h[1-6]|p|a|section)\b[^>]*>(.*?)</\1>", RegexOptions.IgnoreCase | RegexOptions.Singleline)
+            .Select(m => VisibleText(m.Groups[2].Value).ToLowerInvariant())
+            .Where(t => t.Length >= 12)
+            .ToList();
 }
 
 public static class OpenAiEvidenceParser
@@ -166,7 +197,7 @@ public static class QualityGate
         if (Dangerous.IsMatch(p.CorrectedHtml) && !Dangerous.IsMatch(p.OriginalHtml)) f.Add(new("UNSAFE_HTML", "blocker", "Neuer aktiver HTML-Inhalt erkannt."));
         if (p.Changed && p.OriginalHtml.Length >= 200 && p.CorrectedHtml.Length < Math.Max(100, p.OriginalHtml.Length / 2)) f.Add(new("CONTENT_LOSS", "blocker", "Mehr als die Hälfte des Inhalts würde verloren gehen."));
         f.AddRange(DeterministicEditorialChecks(p.CorrectedHtml));
-        f.AddRange(DeterministicAffiliateChecks(p.CorrectedHtml));
+        f.AddRange(DeterministicAffiliateChecks(p.CorrectedHtml, cfg));
         if (cfg.RequireTwoOfficialSources && p.Changed && p.RequiresFactualSources && p.Sources.DistinctBy(SourceHost).Count() < 2)
             f.Add(new("INSUFFICIENT_SOURCES", "blocker", "Weniger als zwei unabhängige offizielle Quellen für die geänderte Tatsachenbehauptung."));
         if (cfg.CheckImagesAndAiObjects && (!p.ImagesChecked || !p.AiObjectsChecked))
@@ -194,14 +225,14 @@ public static class QualityGate
             yield return new("DUPLICATE_CONTENT", "blocker", "Der Inhalt enthält doppelte Überschriften, Absätze, CTAs oder Linkblöcke.");
     }
 
-    private static IEnumerable<Finding> DeterministicAffiliateChecks(string html)
+    private static IEnumerable<Finding> DeterministicAffiliateChecks(string html, WorkerConfig cfg)
     {
         var hasDisclosure = Regex.IsMatch(html, @"(Anzeige|Werbung|Provision|Affiliate|Partnerlink|sponsored)", RegexOptions.IgnoreCase);
         foreach (Match m in Regex.Matches(html, @"<a\b(?<attrs>[^>]*)>(?<text>.*?)</a>", RegexOptions.IgnoreCase | RegexOptions.Singleline))
         {
             var attrs = m.Groups["attrs"].Value;
             var href = Regex.Match(attrs, """href\s*=\s*['"](?<url>[^'"]+)['"]""", RegexOptions.IgnoreCase).Groups["url"].Value;
-            if (!IsAffiliateUrl(href)) continue;
+            if (!IsAffiliateUrl(href, cfg)) continue;
             if (!Uri.TryCreate(href, UriKind.Absolute, out var uri) || uri.Scheme != Uri.UriSchemeHttps)
                 yield return new("AFFILIATE_HTTPS", "blocker", "Affiliate-Links müssen absolute HTTPS-Ziele verwenden.");
             var rel = Regex.Match(attrs, """rel\s*=\s*['"](?<rel>[^'"]*)['"]""", RegexOptions.IgnoreCase).Groups["rel"].Value;
@@ -213,7 +244,12 @@ public static class QualityGate
         if (ctas > 2) yield return new("AGGRESSIVE_CTA", "blocker", "Der Inhalt enthält zu viele oder doppelte werbliche CTA-Blöcke.");
     }
 
-    private static bool IsAffiliateUrl(string href) => Regex.IsMatch(href ?? "", @"(affiliate|partner|ref=|utm_|tag=|affid=|tracking|awin|belboon)", RegexOptions.IgnoreCase);
+    private static bool IsAffiliateUrl(string href, WorkerConfig cfg)
+    {
+        if (Regex.IsMatch(href ?? "", @"(affiliate|partner|ref=|utm_|tag=|affid=|tracking|awin|belboon)", RegexOptions.IgnoreCase)) return true;
+        if (!Uri.TryCreate(href, UriKind.Absolute, out var uri)) return false;
+        return cfg.AffiliateHosts.Any(host => uri.Host.Equals(host, StringComparison.OrdinalIgnoreCase) || uri.Host.EndsWith("." + host, StringComparison.OrdinalIgnoreCase));
+    }
     private static string SourceHost(string url) => Uri.TryCreate(url, UriKind.Absolute, out var uri) ? uri.Host.Replace("www.", "") : url;
 }
 

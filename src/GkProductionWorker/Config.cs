@@ -80,6 +80,7 @@ public sealed class WorkerConfig
     public string LogsDirectory { get; set; } = "logs";
     public string StateDirectory { get; set; } = "state";
     public string BackupsDirectory { get; set; } = "backups";
+    public List<string> AffiliateHosts { get; set; } = ["glasfaser-kompass.telekom-profis.de"];
 }
 
 internal static class Json
