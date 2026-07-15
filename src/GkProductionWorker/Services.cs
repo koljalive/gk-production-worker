@@ -39,7 +39,7 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
         {
             new { type = "input_text", text = $"ID: {item.Id}\nTitel: {item.Title}\nHTML:\n{item.Html}\n\nVollständiges Audit-Payload mit Medienmetadaten:\n{item.Raw.GetRawText()}" }
         };
-        foreach (var imageUrl in ExtractImageUrls(item.Raw).Take(10))
+        foreach (var imageUrl in ExtractImageUrls(item.Raw).Distinct(StringComparer.OrdinalIgnoreCase).Take(10))
             userContent.Add(new { type = "input_image", image_url = imageUrl, detail = "high" });
         var payload = JsonSerializer.Serialize(new
         {
@@ -120,20 +120,20 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
 
     private static IEnumerable<string> ExtractImageUrls(JsonElement e)
     {
-        if (e.ValueKind == JsonValueKind.Object)
+        if (e.ValueKind == JsonValueKind.String)
         {
-            foreach (var p in e.EnumerateObject())
-            {
-                if (p.Value.ValueKind == JsonValueKind.String &&
-                    (p.NameEquals("source_url") || p.NameEquals("image_url") || p.NameEquals("url")) &&
-                    Uri.TryCreate(p.Value.GetString(), UriKind.Absolute, out var uri) &&
-                    Regex.IsMatch(uri.AbsolutePath, @"\.(jpe?g|png|webp|gif|avif)$", RegexOptions.IgnoreCase))
+            var value = (e.GetString() ?? "").Replace(@"\/", "/", StringComparison.Ordinal);
+            foreach (Match match in Regex.Matches(value, @"https?://[^\s""'<>\\]+?\.(?:jpe?g|png|webp|gif|avif)(?:\?[^\s""'<>\\]*)?", RegexOptions.IgnoreCase))
+                if (Uri.TryCreate(System.Net.WebUtility.HtmlDecode(match.Value), UriKind.Absolute, out var uri))
                     yield return uri.ToString();
-                foreach (var url in ExtractImageUrls(p.Value)) yield return url;
-            }
+            yield break;
         }
+        if (e.ValueKind == JsonValueKind.Object)
+            foreach (var p in e.EnumerateObject())
+                foreach (var url in ExtractImageUrls(p.Value)) yield return url;
         else if (e.ValueKind == JsonValueKind.Array)
-            foreach (var child in e.EnumerateArray()) foreach (var url in ExtractImageUrls(child)) yield return url;
+            foreach (var child in e.EnumerateArray())
+                foreach (var url in ExtractImageUrls(child)) yield return url;
     }
 
     private static bool HasMediaEvidence(JsonElement e)
@@ -152,9 +152,15 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
 
         var originalBlocks = TextBlocks(original);
         var correctedBlocks = TextBlocks(corrected);
-        return originalBlocks.Count > correctedBlocks.Count
-            && correctedBlocks.All(b => originalBlocks.Contains(b))
-            && originalBlocks.GroupBy(x => x).Any(g => g.Count() > 1);
+        if (originalBlocks.Count <= correctedBlocks.Count) return false;
+        var originalCounts = originalBlocks.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+        var correctedCounts = correctedBlocks.GroupBy(x => x).ToDictionary(g => g.Key, g => g.Count());
+        if (!originalCounts.Values.Any(count => count > 1)) return false;
+        return originalCounts.All(entry =>
+            correctedCounts.TryGetValue(entry.Key, out var count)
+            && count >= 1
+            && count <= entry.Value)
+            && correctedCounts.All(entry => originalCounts.ContainsKey(entry.Key));
     }
 
     private static string VisibleText(string html) =>
