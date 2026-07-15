@@ -149,13 +149,17 @@ Test("audit client uses observed routes and parses rich content", () =>
     var handler = new FakeHandler(req =>
     {
         var path = req.RequestUri!.PathAndQuery;
-        if (path.Contains("/items?")) return Json("{\"items\":[{\"id\":75,\"title\":\"APL\"}]}");
+        if (path.Contains("/items?"))
+        {
+            Assert(path.Contains("page=1"), "mutable queue did not restart at page 1");
+            return Json("{\"items\":[{\"id\":75,\"title\":\"APL\"}]}");
+        }
         if (path.EndsWith("/item/75")) return Json("{\"id\":75,\"title\":{\"rendered\":\"APL\"},\"content\":{\"raw\":\"<p>x</p>\"}}");
         return new HttpResponseMessage(HttpStatusCode.NotFound);
     });
     var logDir = Path.Combine(Path.GetTempPath(), "gk-tests-" + Guid.NewGuid());
     using var client = new GkApiClient(new ApiConfig { BaseUrl="https://example.test/", Token="x", QueuePath="items?page={page}&per_page={limit}", ItemPath="item/{id}", MaxRetries=0, UpdatePaths=["unused"] }, new AuditLog(logDir), handler);
-    var items = client.Queue(1,0,CancellationToken.None).GetAwaiter().GetResult();
+    var items = client.Queue(1,50,CancellationToken.None).GetAwaiter().GetResult();
     var item = client.GetContent(75,CancellationToken.None).GetAwaiter().GetResult();
     Assert(items.Single().Id == 75 && item.Html == "<p>x</p>" && item.Title == "APL", "route or parsing mismatch");
 });
