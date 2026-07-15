@@ -22,6 +22,12 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
                 var item = await api.GetContent(q.Id, ct);
                 var proposal = await engine.Propose(item, ct);
                 var quality = QualityGate.Check(proposal, cfg.Worker);
+                if (publish && proposal.Changed && quality.Passed)
+                {
+                    var affiliateFindings = await AffiliateTargetValidator.Check(proposal.CorrectedHtml, cfg.Worker, ct);
+                    if (affiliateFindings.Count > 0)
+                        quality = new QualityResult(false, quality.Findings.Concat(affiliateFindings).ToList());
+                }
                 var saved = false;
                 if (publish && proposal.Changed && quality.Passed)
                 {
