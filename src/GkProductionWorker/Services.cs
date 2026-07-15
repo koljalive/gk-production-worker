@@ -223,7 +223,7 @@ public static class QualityGate
         if (string.IsNullOrWhiteSpace(p.CorrectedHtml)) f.Add(new("EMPTY_CONTENT", "blocker", "Der korrigierte Inhalt ist leer."));
         if (Dangerous.IsMatch(p.CorrectedHtml) && !Dangerous.IsMatch(p.OriginalHtml)) f.Add(new("UNSAFE_HTML", "blocker", "Neuer aktiver HTML-Inhalt erkannt."));
         if (p.Changed && p.OriginalHtml.Length >= 200 && p.CorrectedHtml.Length < Math.Max(100, p.OriginalHtml.Length / 2)) f.Add(new("CONTENT_LOSS", "blocker", "Mehr als die Hälfte des Inhalts würde verloren gehen."));
-        f.AddRange(DeterministicEditorialChecks(p.CorrectedHtml));
+        f.AddRange(DeterministicEditorialChecks(p.OriginalHtml, p.CorrectedHtml));
         f.AddRange(DeterministicAffiliateChecks(p.CorrectedHtml, cfg));
         if (cfg.RequireTwoOfficialSources && p.Changed && p.RequiresFactualSources && p.Sources.DistinctBy(SourceHost).Count() < 2)
             f.Add(new("INSUFFICIENT_SOURCES", "blocker", "Weniger als zwei unabhängige offizielle Quellen für die geänderte Tatsachenbehauptung."));
@@ -231,15 +231,19 @@ public static class QualityGate
             f.Add(new("MEDIA_NOT_CHECKED", "blocker", "Bilder oder KI-Objekte wurden nicht vollständig geprüft."));
         return new(!f.Any(x => x.Severity.Equals("blocker", StringComparison.OrdinalIgnoreCase)), f);
     }
-    private static IEnumerable<Finding> DeterministicEditorialChecks(string html)
+    private static IEnumerable<Finding> DeterministicEditorialChecks(string original, string corrected)
     {
-        foreach (var finding in DuplicateBlockChecks(html)) yield return finding;
-        if (Regex.IsMatch(html, @"\b(ultimativ|revolutionär|garantiert|immer|niemals|100\s*%)\b", RegexOptions.IgnoreCase))
-            yield return new("UNSUPPORTED_ABSOLUTE", "blocker", "Der Inhalt enthält eine absolute oder werbliche Aussage, die ohne belastbaren Nachweis nicht stehen bleiben darf.");
-        if (Regex.IsMatch(html, @"\b(furthermore|overall|in conclusion|click here|best practice)\b", RegexOptions.IgnoreCase))
-            yield return new("LANGUAGE_MIX", "blocker", "Der Inhalt enthält englische oder generische Formulierungen statt sauberer deutscher Fachsprache.");
-        if (Regex.IsMatch(html, @"(Lorem ipsum|Platzhalter|TODO|Template|hier einfügen|keyword)", RegexOptions.IgnoreCase))
-            yield return new("TEMPLATE_RESIDUE", "blocker", "Der Inhalt enthält Template-Reste, Platzhalter oder Keyword-Fülltext.");
+        foreach (var finding in DuplicateBlockChecks(corrected)) yield return finding;
+        if (NewMatches(original, corrected, @"\b(ultimativ|revolutionär|garantiert|immer|niemals|100\s*%)\b"))
+            yield return new("UNSUPPORTED_ABSOLUTE", "blocker", "Die Korrektur führt eine neue absolute oder werbliche Aussage ein.");
+        if (NewMatches(original, corrected, @"\b(furthermore|overall|in conclusion|click here|best practice)\b"))
+            yield return new("LANGUAGE_MIX", "blocker", "Die Korrektur führt neue englische oder generische Formulierungen ein.");
+        if (NewMatches(original, corrected, @"(Lorem ipsum|Platzhalter|TODO|Template|hier einfügen|keyword)"))
+            yield return new("TEMPLATE_RESIDUE", "blocker", "Die Korrektur führt neue Template-Reste, Platzhalter oder Keyword-Fülltexte ein.");
+
+        static bool NewMatches(string before, string after, string pattern) =>
+            Regex.Matches(after, pattern, RegexOptions.IgnoreCase).Count
+            > Regex.Matches(before, pattern, RegexOptions.IgnoreCase).Count;
     }
 
     private static IEnumerable<Finding> DuplicateBlockChecks(string html)
