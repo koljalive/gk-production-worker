@@ -188,7 +188,7 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
         Regex.Replace(System.Net.WebUtility.HtmlDecode(Regex.Replace(html, "<.*?>", " ")), @"\s+", " ").Trim();
 
     private static List<string> TextBlocks(string html) =>
-        Regex.Matches(html, @"<(h[1-6]|p|a|section)\b[^>]*>(.*?)</\1>", RegexOptions.IgnoreCase | RegexOptions.Singleline)
+        Regex.Matches(html, @"<(h[1-6]|p|a)\b[^>]*>(.*?)</\1>", RegexOptions.IgnoreCase | RegexOptions.Singleline)
             .Select(m => VisibleText(m.Groups[2].Value).ToLowerInvariant())
             .Where(t => t.Length >= 12)
             .ToList();
