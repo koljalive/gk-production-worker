@@ -26,8 +26,10 @@ public sealed class GkApiClient : IDisposable
 
     public async Task<IReadOnlyList<QueueItem>> Queue(int limit, int offset, CancellationToken ct)
     {
-        var page = offset / Math.Max(1, limit) + 1;
-        var path = Expand(_cfg.QueuePath, 0, limit, offset, page);
+        // The pending queue shrinks as results are saved. Always consume its current first page;
+        // advancing pages at the same time would skip items that shift forward.
+        var page = 1;
+        var path = Expand(_cfg.QueuePath, 0, limit, 0, page);
         using var doc = await SendJson(HttpMethod.Get, path, null, null, ct);
         var root = doc.RootElement;
         var array = root.ValueKind == JsonValueKind.Array ? root :
