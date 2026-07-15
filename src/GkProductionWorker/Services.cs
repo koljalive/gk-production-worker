@@ -51,9 +51,30 @@ sources (Array vollständiger URLs), images_checked (bool), ai_objects_checked (
         }, Json.Options);
         using var http = new HttpClient { Timeout = TimeSpan.FromMinutes(4) };
         http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", cfg.ApiKey);
-        using var response = await http.PostAsync(cfg.Endpoint, new StringContent(payload, Encoding.UTF8, "application/json"), ct);
+        var response = await http.PostAsync(cfg.Endpoint, new StringContent(payload, Encoding.UTF8, "application/json"), ct);
         var responseText = await response.Content.ReadAsStringAsync(ct);
-        if (!response.IsSuccessStatusCode) throw new InvalidOperationException($"OpenAI HTTP {(int)response.StatusCode}: {responseText[..Math.Min(500, responseText.Length)]}");
+        if (!response.IsSuccessStatusCode
+            && response.StatusCode == System.Net.HttpStatusCode.BadRequest
+            && responseText.Contains("Error while downloading file", StringComparison.OrdinalIgnoreCase)
+            && userContent.Count > 1)
+        {
+            response.Dispose();
+            userContent.RemoveRange(1, userContent.Count - 1);
+            payload = JsonSerializer.Serialize(new
+            {
+                model = cfg.Model,
+                tools = new[] { new { type = "web_search", search_context_size = "high", filters = new { allowed_domains = cfg.OfficialDomains } } },
+                tool_choice = "auto",
+                include = new[] { "web_search_call.action.sources" },
+                input = new object[] { new { role = "system", content = instruction }, new { role = "user", content = userContent } }
+            }, Json.Options);
+            response = await http.PostAsync(cfg.Endpoint, new StringContent(payload, Encoding.UTF8, "application/json"), ct);
+            responseText = await response.Content.ReadAsStringAsync(ct);
+        }
+        using (response)
+        {
+            if (!response.IsSuccessStatusCode) throw new InvalidOperationException($"OpenAI HTTP {(int)response.StatusCode}: {responseText[..Math.Min(500, responseText.Length)]}");
+        }
         using var outer = JsonDocument.Parse(responseText);
         var json = ExtractOutputText(outer.RootElement);
         using var result = JsonDocument.Parse(NormalizeJson(json));
