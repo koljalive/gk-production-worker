@@ -25,6 +25,13 @@ Test("deterministic KI-frei gates block duplicate and filler", () =>
     var result = QualityGate.Check(proposal, cfg);
     Assert(!result.Passed && result.Findings.Any(x => x.Code == "DUPLICATE_CONTENT") && result.Findings.Any(x => x.Code == "LANGUAGE_MIX"), "KI-frei findings missing");
 });
+Test("existing absolute wording does not block independent cleanup", () =>
+{
+    var original = "<p>Der Router funktioniert immer.</p><p>Weiterführender Artikel zur Routerwahl.</p><p>Weiterführender Artikel zur Routerwahl.</p>";
+    var corrected = "<p>Der Router funktioniert immer.</p><p>Weiterführender Artikel zur Routerwahl.</p>";
+    var proposal = new CorrectionProposal(1, original, corrected, [], [], true, true, false);
+    Assert(QualityGate.Check(proposal, cfg).Passed, "an unchanged pre-existing absolute wording blocked duplicate cleanup");
+});
 Test("affiliate gates require https rel and disclosure", () =>
 {
     var proposal = new CorrectionProposal(1, "old content long enough", "<p><a href='http://shop.test/router?ref=abc' rel='nofollow'>Router kaufen</a></p>", [], ["https://telekom.de/a", "https://bundesnetzagentur.de/b"], true, true, false);
