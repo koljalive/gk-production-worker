@@ -259,6 +259,75 @@ public static class QualityGate
     private static string SourceHost(string url) => Uri.TryCreate(url, UriKind.Absolute, out var uri) ? uri.Host.Replace("www.", "") : url;
 }
 
+
+public static class AffiliateTargetValidator
+{
+    public static async Task<IReadOnlyList<Finding>> Check(string html, WorkerConfig cfg, CancellationToken ct, HttpMessageHandler? handler = null)
+    {
+        var findings = new List<Finding>();
+        using var http = handler is null
+            ? new HttpClient(new HttpClientHandler { AllowAutoRedirect = false })
+            : new HttpClient(handler, disposeHandler: false);
+        http.Timeout = TimeSpan.FromSeconds(Math.Max(1, cfg.AffiliateValidationTimeoutSeconds));
+        foreach (var url in ExtractAffiliateUrls(html, cfg).Distinct(StringComparer.OrdinalIgnoreCase))
+        {
+            try
+            {
+                var current = new Uri(System.Net.WebUtility.HtmlDecode(url), UriKind.Absolute);
+                if (current.Scheme != Uri.UriSchemeHttps)
+                {
+                    findings.Add(new("AFFILIATE_TARGET", "blocker", $"Affiliate-Ziel ist nicht per HTTPS erreichbar: {url}"));
+                    continue;
+                }
+                HttpResponseMessage? response = null;
+                for (var redirect = 0; redirect <= Math.Max(0, cfg.AffiliateMaxRedirects); redirect++)
+                {
+                    response?.Dispose();
+                    using var request = new HttpRequestMessage(HttpMethod.Head, current);
+                    response = await http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, ct);
+                    if (response.StatusCode == System.Net.HttpStatusCode.MethodNotAllowed)
+                    {
+                        response.Dispose();
+                        response = await http.GetAsync(current, HttpCompletionOption.ResponseHeadersRead, ct);
+                    }
+                    if ((int)response.StatusCode is >= 300 and < 400 && response.Headers.Location is not null)
+                    {
+                        if (redirect == cfg.AffiliateMaxRedirects) break;
+                        current = response.Headers.Location.IsAbsoluteUri ? response.Headers.Location : new Uri(current, response.Headers.Location);
+                        if (current.Scheme != Uri.UriSchemeHttps) break;
+                        continue;
+                    }
+                    if (response.IsSuccessStatusCode && current.Scheme == Uri.UriSchemeHttps) break;
+                    findings.Add(new("AFFILIATE_TARGET", "blocker", $"Affiliate-Ziel antwortet mit HTTP {(int)response.StatusCode}: {url}"));
+                    break;
+                }
+                if (current.Scheme != Uri.UriSchemeHttps)
+                    findings.Add(new("AFFILIATE_TARGET", "blocker", $"Affiliate-Weiterleitung endet nicht auf HTTPS: {url}"));
+                else if (response is not null && (int)response.StatusCode is >= 300 and < 400)
+                    findings.Add(new("AFFILIATE_TARGET", "blocker", $"Affiliate-Ziel überschreitet die erlaubten Weiterleitungen: {url}"));
+                response?.Dispose();
+            }
+            catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or UriFormatException)
+            {
+                findings.Add(new("AFFILIATE_TARGET", "blocker", $"Affiliate-Ziel ist nicht erreichbar: {url} ({ex.GetType().Name})"));
+            }
+        }
+        return findings;
+    }
+
+    private static IEnumerable<string> ExtractAffiliateUrls(string html, WorkerConfig cfg)
+    {
+        foreach (Match link in Regex.Matches(html, @"<a\b[^>]*\bhref\s*=\s*['""](?<url>[^'""]+)['""][^>]*>", RegexOptions.IgnoreCase))
+        {
+            var url = link.Groups["url"].Value;
+            if (Regex.IsMatch(url, @"(affiliate|partner|[?&](ref|tag|affid|utm_[^=]+)=|tracking|awin|belboon)", RegexOptions.IgnoreCase)
+                || (Uri.TryCreate(url, UriKind.Absolute, out var uri)
+                    && cfg.AffiliateHosts.Any(host => uri.Host.Equals(host, StringComparison.OrdinalIgnoreCase) || uri.Host.EndsWith("." + host, StringComparison.OrdinalIgnoreCase))))
+                yield return url;
+        }
+    }
+}
+
 public sealed class StateStore(string directory)
 {
     private string PathName => Path.Combine(directory, "checkpoint.json");
