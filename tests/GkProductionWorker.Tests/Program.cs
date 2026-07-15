@@ -55,6 +55,13 @@ Test("deterministic duplicate cleanup can bypass factual sources", () =>
     var proposal = new CorrectionProposal(1, original, corrected, [], [], true, true, false);
     Assert(QualityGate.Check(proposal, cfg).Passed, "duplicate cleanup was blocked by factual sources");
 });
+Test("duplicate links inside changed section are deterministic cleanup", () =>
+{
+    var original = "<section><p>Weiterführende Artikel für die Praxis.</p><a href='/a'>Router für Glasfaser richtig auswählen</a><a href='/b'>Router für Glasfaser richtig auswählen</a><a href='/c'>ONT im Haus richtig einordnen</a></section>";
+    var corrected = "<section><p>Weiterführende Artikel für die Praxis.</p><a href='/a'>Router für Glasfaser richtig auswählen</a><a href='/c'>ONT im Haus richtig einordnen</a></section>";
+    var method = typeof(OpenAiCorrectionEngine).GetMethod("IsDeterministicCleanup", BindingFlags.NonPublic | BindingFlags.Static);
+    Assert(method is not null && (bool)method.Invoke(null, [original, corrected])!, "duplicate link cleanup was treated as factual because its section changed");
+});
 Test("cleanup cannot remove unique blocks", () =>
 {
     var original = "<p>Der Techniker misst den Pegel am ONT.</p><p>Der Techniker misst den Pegel am ONT.</p><p>Der Router bleibt für die Messung angeschlossen.</p>";
