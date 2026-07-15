@@ -151,7 +151,7 @@ Test("audit client uses observed routes and parses rich content", () =>
         var path = req.RequestUri!.PathAndQuery;
         if (path.Contains("/items?"))
         {
-            Assert(path.Contains("page=1"), "mutable queue did not restart at page 1");
+            Assert(path.Contains("page=51"), "explicit queue page was not calculated from the scan offset");
             return Json("{\"items\":[{\"id\":75,\"title\":\"APL\"}]}");
         }
         if (path.EndsWith("/item/75")) return Json("{\"id\":75,\"title\":{\"rendered\":\"APL\"},\"content\":{\"raw\":\"<p>x</p>\"}}");
