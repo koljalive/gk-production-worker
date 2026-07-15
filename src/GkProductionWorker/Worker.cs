@@ -48,6 +48,9 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
                 if (publish)
                 {
                     var resultStatus = DetermineResultStatus(quality, proposal.Changed, saved);
+                    if (resultStatus == "verified" && !proposal.Changed
+                        && proposal.Sources.Select(SourceHost).Distinct(StringComparer.OrdinalIgnoreCase).Count() < 2)
+                        resultStatus = "needs_correction";
                     await api.SaveResult(item.Id, resultStatus,
                         $"Quality Gate: {(quality.Passed ? "bestanden" : "blockiert")}; Vorschlag geändert: {proposal.Changed}; gespeichert: {saved}",
                         quality.Findings, proposal.Sources, Hashing.Idempotency(item.Id, "result-" + proposal.CorrectedHtml), ct);
@@ -73,4 +76,7 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
         !quality.Passed
             ? (quality.Findings.Any(x => x.Code == "INSUFFICIENT_SOURCES") ? "insufficient_sources" : "needs_correction")
             : saved || !changed ? "verified" : "needs_correction";
+
+    private static string SourceHost(string url) =>
+        Uri.TryCreate(url, UriKind.Absolute, out var uri) ? uri.Host.Replace("www.", "", StringComparison.OrdinalIgnoreCase) : url;
 }
