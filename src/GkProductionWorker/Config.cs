@@ -81,6 +81,8 @@ public sealed class WorkerConfig
     public string StateDirectory { get; set; } = "state";
     public string BackupsDirectory { get; set; } = "backups";
     public List<string> AffiliateHosts { get; set; } = ["glasfaser-kompass.telekom-profis.de"];
+    public int AffiliateValidationTimeoutSeconds { get; set; } = 15;
+    public int AffiliateMaxRedirects { get; set; } = 5;
 }
 
 internal static class Json
