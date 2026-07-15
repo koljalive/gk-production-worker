@@ -48,7 +48,7 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
                 if (publish)
                 {
                     var resultStatus = DetermineResultStatus(quality, proposal.Changed, saved);
-                    if (resultStatus == "verified" && !proposal.Changed
+                    if (resultStatus == "verified"
                         && proposal.Sources.Select(SourceHost).Distinct(StringComparer.OrdinalIgnoreCase).Count() < 2)
                         resultStatus = "needs_correction";
                     await api.SaveResult(item.Id, resultStatus,
