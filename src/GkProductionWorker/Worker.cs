@@ -11,9 +11,27 @@ public sealed class ProductionWorker(AppConfig cfg, GkApiClient api, UnifiedApiC
         var rows = new List<RunRow>();
         var max = Math.Min(limit ?? cfg.Worker.MaxItemsPerRun, cfg.Worker.MaxItemsPerRun);
         var explicitIds = selectedIds.Count > 0 ? selectedIds : cfg.Worker.PostIds;
-        IReadOnlyList<QueueItem> items = explicitIds.Count > 0
-            ? explicitIds.Select(id => new QueueItem(id, null, null)).ToList()
-            : await api.Queue(Math.Min(max, cfg.Worker.BatchSize), state.Offset, ct);
+        IReadOnlyList<QueueItem> items;
+        if (explicitIds.Count > 0)
+            items = explicitIds.Select(id => new QueueItem(id, null, null)).ToList();
+        else
+        {
+            var pageSize = Math.Min(max, cfg.Worker.BatchSize);
+            var scanOffset = 0;
+            items = [];
+            while (scanOffset < cfg.Worker.MaxItemsPerRun)
+            {
+                var page = await api.Queue(pageSize, scanOffset, ct);
+                var remaining = page.Where(x => !state.CompletedIds.Contains(x.Id)).ToList();
+                if (remaining.Count > 0)
+                {
+                    items = remaining;
+                    break;
+                }
+                if (page.Count < pageSize) break;
+                scanOffset += pageSize;
+            }
+        }
 
         foreach (var q in items.Where(x => ShouldProcess(explicitIds.Count > 0, state, x.Id)).Take(max))
         {
