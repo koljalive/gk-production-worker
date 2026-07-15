@@ -55,6 +55,20 @@ Test("deterministic duplicate cleanup can bypass factual sources", () =>
     var proposal = new CorrectionProposal(1, original, corrected, [], [], true, true, false);
     Assert(QualityGate.Check(proposal, cfg).Passed, "duplicate cleanup was blocked by factual sources");
 });
+Test("cleanup cannot remove unique blocks", () =>
+{
+    var original = "<p>Der Techniker misst den Pegel am ONT.</p><p>Der Techniker misst den Pegel am ONT.</p><p>Der Router bleibt für die Messung angeschlossen.</p>";
+    var corrected = "<p>Der Techniker misst den Pegel am ONT.</p>";
+    var method = typeof(OpenAiCorrectionEngine).GetMethod("IsDeterministicCleanup", BindingFlags.NonPublic | BindingFlags.Static);
+    Assert(method is not null && !(bool)method.Invoke(null, [original, corrected])!, "removal of a unique block was accepted as duplicate cleanup");
+});
+Test("embedded HTML image is extracted once", () =>
+{
+    using var doc = JsonDocument.Parse("""{"content":"<img src=\"https:\/\/example.test\/bild.webp\" alt=\"ONT\">","duplicate":"https://example.test/bild.webp"}""");
+    var method = typeof(OpenAiCorrectionEngine).GetMethod("ExtractImageUrls", BindingFlags.NonPublic | BindingFlags.Static);
+    var urls = ((IEnumerable<string>)method!.Invoke(null, [doc.RootElement])!).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
+    Assert(urls.Count == 1 && urls[0] == "https://example.test/bild.webp", "embedded image URL was not extracted and deduplicated");
+});
 Test("HTML media evidence is not auto-checked", () =>
 {
     using var doc = JsonDocument.Parse("""{"content":"<figure class=\"wp-image-55\"><picture><img src=\"https://example.test/bild.webp\" alt=\"ONT im Keller\"></picture><figcaption>Montage</figcaption></figure>"}""");
