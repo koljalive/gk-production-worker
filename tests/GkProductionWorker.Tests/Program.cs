@@ -87,6 +87,27 @@ Test("non-German finding normalization preserves detail", () =>
     var normalized = (string)method!.Invoke(null, ["Duplicate CTA block should be removed near the router offer."])!;
     Assert(normalized.Contains("Duplicate CTA block should be removed near the router offer."), "normalization lost actionable detail");
 });
+Test("affiliate target validation follows https redirect and preserves tracking", () =>
+{
+    var calls = new List<Uri>();
+    var handler = new FakeHandler(req =>
+    {
+        calls.Add(req.RequestUri!);
+        if (calls.Count == 1)
+            return new HttpResponseMessage(HttpStatusCode.Found) { Headers = { Location = new Uri("/final", UriKind.Relative) } };
+        return new HttpResponseMessage(HttpStatusCode.OK);
+    });
+    var affiliateCfg = new WorkerConfig { AffiliateHosts = ["shop.test"], AffiliateMaxRedirects = 3, AffiliateValidationTimeoutSeconds = 5 };
+    var findings = AffiliateTargetValidator.Check("<a href='https://shop.test/offer?ref=abc'>Angebot</a>", affiliateCfg, CancellationToken.None, handler).GetAwaiter().GetResult();
+    Assert(findings.Count == 0 && calls.Count == 2 && calls[0].Query == "?ref=abc" && calls[1].AbsoluteUri == "https://shop.test/final", "affiliate redirect validation failed or tracking was changed");
+});
+Test("affiliate target network failure blocks publication", () =>
+{
+    var handler = new ThrowingHandler();
+    var affiliateCfg = new WorkerConfig { AffiliateHosts = ["shop.test"], AffiliateValidationTimeoutSeconds = 5 };
+    var findings = AffiliateTargetValidator.Check("<a href='https://shop.test/offer?ref=abc'>Angebot</a>", affiliateCfg, CancellationToken.None, handler).GetAwaiter().GetResult();
+    Assert(findings.Any(x => x.Code == "AFFILIATE_TARGET" && x.Severity == "blocker"), "network failure did not block affiliate target");
+});
 Test("idempotency stable", () => Assert(Hashing.Idempotency(7,"x") == Hashing.Idempotency(7,"x"),"hash differs"));
 Test("explicit post bypasses checkpoint", () =>
 {
@@ -152,6 +173,11 @@ Test("unified client read update cache contract", () =>
 return failures == 0 ? 0 : 1;
 
 static HttpResponseMessage Json(string body) => new(HttpStatusCode.OK) { Content = new StringContent(body, Encoding.UTF8, "application/json") };
+sealed class ThrowingHandler : HttpMessageHandler
+{
+    protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) =>
+        throw new HttpRequestException("simulated");
+}
 sealed class FakeHandler(Func<HttpRequestMessage,HttpResponseMessage> callback) : HttpMessageHandler
 {
     protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken) => Task.FromResult(callback(request));
