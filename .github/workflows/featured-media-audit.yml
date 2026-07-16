@@ -17,10 +17,12 @@ jobs:
         env:
           GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
           GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          GK_CONTROL_TOKEN: ${{ secrets.GK_CONTROL_TOKEN }}
         run: |
           @"
           GK_SITE_URL=$env:GK_SITE_URL
           GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          GK_CONTROL_TOKEN=$env:GK_CONTROL_TOKEN
           "@|Set-Content .env -Encoding UTF8
       - name: Audit featured media
         shell: powershell
