@@ -2,6 +2,7 @@ param(
     [ValidateSet('Preview','Apply')][string]$Mode='Preview',
     [string]$Confirm='',
     [string]$EnvFile='.\.env',
+    [switch]$RemoveMarkers,
     [switch]$SelfTest
 )
 $ErrorActionPreference='Stop'
@@ -11,8 +12,8 @@ function Visible([string]$value){
 }
 
 function Clean([string]$source){
-    $markerCount=[regex]::Matches($source,'(?is)<!--\s*(?:GK|AI|SEO|TEMPLATE)[^>]{0,200}-->').Count
-    $clean=[regex]::Replace($source,'(?is)<!--\s*(?:GK|AI|SEO|TEMPLATE)[^>]{0,200}-->','')
+    $markerCount=0;$clean=$source
+    if($RemoveMarkers){$markerCount=[regex]::Matches($source,'(?is)<!--\s*(?:GK|AI|SEO|TEMPLATE)[^>]{0,200}-->').Count;$clean=[regex]::Replace($source,'(?is)<!--\s*(?:GK|AI|SEO|TEMPLATE)[^>]{0,200}-->','')}
     $seen=@{}; $removed=New-Object Collections.Generic.List[string]
     $clean=[regex]::Replace($clean,'(?is)<p\b[^>]*>.*?</p>',{
         param($m)
@@ -27,13 +28,14 @@ function Clean([string]$source){
 function Assert-Cleanup([string]$before,[object]$result){
     $again=Clean $result.html
     if($again.html -cne $result.html){throw 'Bereinigung ist nicht idempotent.'}
-    if([regex]::Matches($result.html,'(?is)<!--\s*(?:GK|AI|SEO|TEMPLATE)[^>]{0,200}-->').Count -ne 0){throw 'Template-Marker verblieben.'}
+    if($RemoveMarkers -and [regex]::Matches($result.html,'(?is)<!--\s*(?:GK|AI|SEO|TEMPLATE)[^>]{0,200}-->').Count -ne 0){throw 'Template-Marker verblieben.'}
     $beforeLinks=@([regex]::Matches($before,'(?is)<a\b[^>]*href\s*=\s*["''](?<u>.*?)["'']')|ForEach-Object{$_.Groups['u'].Value})
     $afterLinks=@([regex]::Matches($result.html,'(?is)<a\b[^>]*href\s*=\s*["''](?<u>.*?)["'']')|ForEach-Object{$_.Groups['u'].Value})
     if(($beforeLinks -join "`n") -cne ($afterLinks -join "`n")){throw 'Linkziele wurden verändert.'}
 }
 
 if($SelfTest){
+    $RemoveMarkers=$true
     $p='<p>Dieser identische Testabsatz enthält bewusst mehr als achtzig Zeichen und darf bei der sicheren Bereinigung exakt einmal übrig bleiben.</p>'
     $sample='<!-- GK_UPGRADE_START -->'+$p+'<h2>Bleibt</h2>'+$p+'<a href="https://example.org/x">X</a>'
     $r=Clean $sample; Assert-Cleanup $sample $r
