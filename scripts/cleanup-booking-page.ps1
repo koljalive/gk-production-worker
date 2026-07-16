@@ -34,7 +34,7 @@ $new=@'
 </div>
 </section>
 <section class="gkpr-note"><h2>Transparenzhinweis</h2><p>Der folgende Verfügbarkeitscheck ist ein Affiliate-Link. Wenn darüber ein Vertrag zustande kommt, kann Glasfaser-Kompass eine Provision erhalten. Für Sie entstehen dadurch keine zusätzlichen Kosten. Verbindliche Preise und Vertragsbedingungen zeigt ausschließlich der Anbieter vor Abschluss.</p></section>
-<section class="gkpr-cta"><h2>Verfügbarkeit an der eigenen Adresse prüfen</h2><p>Öffnen Sie den Anbieter-Check und vergleichen Sie das Ergebnis anschließend mit den technischen Voraussetzungen im Haus.</p><p><a class="gkpr-button" href="https://glasfaser-kompass.telekom-profis.de/" target="_blank" rel="nofollow sponsored noopener">Telekom-Verfügbarkeit prüfen (Werbelink)</a></p></section>
+<section class="gkpr-cta"><h2>Verfügbarkeit an der eigenen Adresse prüfen</h2><p>Öffnen Sie den Anbieter-Check und vergleichen Sie das Ergebnis anschließend mit den technischen Voraussetzungen im Haus.</p><p><a class="gkpr-btn" href="https://glasfaser-kompass.telekom-profis.de/" target="_blank" rel="nofollow sponsored noopener">Telekom-Verfügbarkeit prüfen (Werbelink)</a></p></section>
 </div>
 '@
 if($old-cmatch'data-gk-clean="booking-v2"'){Write-Host 'FERTIG: Bereits bereinigt und verifiziert.';exit 0}
