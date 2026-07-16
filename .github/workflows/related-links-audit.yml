@@ -2,7 +2,9 @@ name: Related Links Audit
 on:
   push:
     branches: [agent/verified-production-worker]
-    paths: [.github/workflows/related-links-audit.yml]
+    paths:
+      - .github/workflows/related-links-audit.yml
+      - scripts/audit-related-links.ps1
 permissions:
   contents: read
 jobs:
