@@ -24,7 +24,7 @@ jobs:
           "@|Set-Content .env -Encoding UTF8
       - name: Export current review batch
         shell: powershell
-        run: .\scripts\export-review-batch.ps1 -EnvFile .\.env
+        run: .\scripts\export-review-batch.ps1 -EnvFile .\.env -Ids 187
       - uses: actions/upload-artifact@v4
         with:
           name: review-batch-current
