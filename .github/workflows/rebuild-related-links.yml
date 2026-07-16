@@ -8,7 +8,7 @@ on:
 permissions:
   contents: read
 jobs:
-  apply:
+  preview:
     runs-on: windows-latest
     timeout-minutes: 30
     steps:
@@ -24,14 +24,12 @@ jobs:
           GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
           GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
           "@|Set-Content .env -Encoding UTF8
-      - name: Apply verified related-links rebuild
+      - name: Preview remaining related-links rebuild
         shell: powershell
-        run: .\scripts\rebuild-related-links.ps1 -Mode Apply -Confirm 'WEITERFUEHRENDE LINKS NEU BAUEN' -EnvFile .\.env
+        run: .\scripts\rebuild-related-links.ps1 -Mode Preview -EnvFile .\.env
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: related-links-rebuild-apply
-          path: |
-            reports/**
-            backups/**
+          name: related-links-rebuild-preview
+          path: reports/**
           if-no-files-found: error
