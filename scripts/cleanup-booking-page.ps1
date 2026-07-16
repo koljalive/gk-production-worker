@@ -37,7 +37,7 @@ $new=@'
 <section class="gkpr-cta"><h2>Verfügbarkeit an der eigenen Adresse prüfen</h2><p>Öffnen Sie den Anbieter-Check und vergleichen Sie das Ergebnis anschließend mit den technischen Voraussetzungen im Haus.</p><p><a class="gkpr-btn" href="https://glasfaser-kompass.telekom-profis.de/" target="_blank" rel="nofollow sponsored noopener">Telekom-Verfügbarkeit prüfen (Werbelink)</a></p></section>
 </div>
 '@
-if($old-cmatch'data-gk-clean="booking-v2"'){Write-Host 'FERTIG: Bereits bereinigt und verifiziert.';exit 0}
+if($old -cmatch 'data-gk-clean="booking-v2"'){$new=$old -replace 'gkpr-button','gkpr-btn';if($new -ceq $old){Write-Host 'FERTIG: Bereits bereinigt und verifiziert.';exit 0}}
 $root=Split-Path -Parent $PSScriptRoot
 $backup=Join-Path $root ('backups\booking-'+(Get-Date -Format 'yyyyMMdd-HHmmss'))
 New-Item $backup -ItemType Directory -Force|Out-Null
