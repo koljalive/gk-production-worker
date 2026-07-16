@@ -39,9 +39,9 @@ function Cards([long]$id,[string]$title){
 function Rebuild([long]$id,[string]$title,[string]$html){
  if($html -notmatch'Weiterf.hrende Artikel|GK_RELATED_START'){return $html}
  $token='@@GK_RELATED_CANONICAL@@';$script:placed=$false
- $html=[regex]::Replace($html,'(?is)<section\b[^>]*class\s*=\s*["''][^"'']*\bgk-related-box\b[^"'']*["''][^>]*>.*?</section>',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return''}})
- $html=[regex]::Replace($html,'(?is)<!--\s*GK_RELATED_START\s*-->.*?<!--\s*GK_RELATED_END\s*-->',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return''}})
- $html=[regex]::Replace($html,'(?is)<h2\b[^>]*>\s*Weiterf.hrende Artikel\s*</h2>.*?(?=<h2\b|\z)',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return''}})
+ $html=[regex]::Replace($html,'(?is)<section\b[^>]*class\s*=\s*["''][^"'']*\bgk-related-box\b[^"'']*["''][^>]*>.*?</section>',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return ''}})
+ $html=[regex]::Replace($html,'(?is)<!--\s*GK_RELATED_START\s*-->.*?<!--\s*GK_RELATED_END\s*-->',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return ''}})
+ $html=[regex]::Replace($html,'(?is)<h2\b[^>]*>\s*Weiterf.hrende Artikel\s*</h2>.*?(?=<h2\b|\z)',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return ''}})
  if(-not $script:placed){return $html};return $html.Replace($token,(Cards $id $title))
 }
 $v=@{};Get-Content $EnvFile|Where-Object{$_-match'^[^#].*='}|ForEach-Object{$p=$_-split'=',2;$v[$p[0].Trim()]=$p[1].Trim()};foreach($n in @('GK_SITE_URL','GK_SITE_AUDIT_TOKEN','GK_UNIFIED_API_TOKEN')){if([string]::IsNullOrWhiteSpace($v[$n])){throw "$n fehlt."}};$site=$v.GK_SITE_URL.TrimEnd('/');$ah=@{Authorization='Bearer '+$v.GK_SITE_AUDIT_TOKEN};$uh=@{Authorization='Bearer '+$v.GK_UNIFIED_API_TOKEN};$items=@();$page=1
