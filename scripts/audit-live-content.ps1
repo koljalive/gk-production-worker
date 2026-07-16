@@ -21,7 +21,8 @@ function Get-Findings([long]$Id, [string]$Title, [string]$Html) {
     foreach ($d in @($paragraphs | Group-Object | Where-Object Count -gt 1)) { Add 'DUPLICATE_PARAGRAPH' 'high' ("Absatz mehrfach vorhanden ({0}x): {1}" -f $d.Count,$d.Name.Substring(0,[Math]::Min(140,$d.Name.Length))) }
     $markers = [regex]::Matches($Html, '(?is)<!--\s*(?<marker>(?:GK|AI|SEO|TEMPLATE)[^>]{0,100})-->')
     foreach ($m in $markers) { Add 'TEMPLATE_MARKER' 'medium' $m.Groups['marker'].Value.Trim() }
-    if ($Html -match 'Ã.|Â.|â€|â€“|â€”|ðŸ|�') { Add 'MOJIBAKE' 'high' 'Verdächtige fehlerhafte Zeichenkodierung gefunden.' }
+    $badEncodingChars = @([char]0x00C3, [char]0x00C2, [char]0xFFFD)
+    if (@($badEncodingChars | Where-Object { $Html.Contains([string]$_) }).Count -gt 0) { Add 'MOJIBAKE' 'high' 'Verdächtige fehlerhafte Zeichenkodierung gefunden.' }
     if ([regex]::IsMatch($Html, '(?is)<p\b[^>]*>.*?<p\b')) { Add 'NESTED_PARAGRAPH' 'high' 'Verschachtelte Absatz-Tags gefunden.' }
     if ([regex]::IsMatch($Html, '(?is)<h[1-6]\b[^>]*>\s*(?:&nbsp;)?\s*</h[1-6]>')) { Add 'EMPTY_HEADING' 'medium' 'Leere Überschrift gefunden.' }
     $related = [regex]::Matches($Html, '(?is)<a\b[^>]*href\s*=\s*["''](?<url>https?://[^"'']+)["''][^>]*>') | ForEach-Object { [Net.WebUtility]::HtmlDecode($_.Groups['url'].Value).TrimEnd('/') }
@@ -30,7 +31,7 @@ function Get-Findings([long]$Id, [string]$Title, [string]$Html) {
 }
 
 if ($SelfTest) {
-    $sample = '<h1>Titel</h1><h2>Test</h2><p>Dies ist ein ausreichend langer doppelter Beispielabsatz für den reproduzierbaren Selbsttest des Inhaltsaudits mit mehr als achtzig Zeichen.</p><h2>Test</h2><p>Dies ist ein ausreichend langer doppelter Beispielabsatz für den reproduzierbaren Selbsttest des Inhaltsaudits mit mehr als achtzig Zeichen.</p><!-- GK_TEMPLATE --><p>kaputt Ã¤</p>'
+    $sample = '<h1>Titel</h1><h2>Test</h2><p>Dies ist ein ausreichend langer doppelter Beispielabsatz für den reproduzierbaren Selbsttest des Inhaltsaudits mit mehr als achtzig Zeichen.</p><h2>Test</h2><p>Dies ist ein ausreichend langer doppelter Beispielabsatz für den reproduzierbaren Selbsttest des Inhaltsaudits mit mehr als achtzig Zeichen.</p><!-- GK_TEMPLATE --><p>kaputt ' + [char]0x00C3 + '</p>'
     $codes = @(Get-Findings 1 'Test' $sample | ForEach-Object code)
     foreach ($required in @('CONTENT_H1','DUPLICATE_HEADING','DUPLICATE_PARAGRAPH','TEMPLATE_MARKER','MOJIBAKE')) { if ($required -notin $codes) { throw "Selbsttest fehlt: $required" } }
     Write-Host 'PASS Live-Content-Audit-Selbsttest'; exit 0
