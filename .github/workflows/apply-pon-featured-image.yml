@@ -1,10 +1,6 @@
 name: Apply PON Featured Image
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - .github/workflows/apply-pon-featured-image.yml
-      - scripts/apply-pon-featured-image.ps1
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
