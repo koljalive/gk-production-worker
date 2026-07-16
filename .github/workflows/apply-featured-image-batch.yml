@@ -5,6 +5,9 @@ on:
     paths:
       - .github/workflows/apply-featured-image-batch.yml
       - scripts/apply-featured-image-batch.ps1
+concurrency:
+  group: featured-image-batch
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
