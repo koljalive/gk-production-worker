@@ -2,7 +2,9 @@ name: Rebuild Related Links
 on:
   push:
     branches: [agent/verified-production-worker]
-    paths: [.github/workflows/rebuild-related-links.yml]
+    paths:
+      - .github/workflows/rebuild-related-links.yml
+      - scripts/rebuild-related-links.ps1
 permissions:
   contents: read
 jobs:
