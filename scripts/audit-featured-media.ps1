@@ -9,3 +9,4 @@ foreach($id in $Ids){$post=$null;$kind='post';try{$post=Invoke-RestMethod($site+
  $title=[Net.WebUtility]::HtmlDecode([string]$post.title.rendered);$rows+=[pscustomobject]@{id=$id;type=$kind;title=$title;url=[string]$post.link;media_id=$mediaId;media_url=$mediaUrl;alt=$alt;caption=([regex]::Replace($caption,'<[^>]+>',' ')).Trim();status=$status};Write-Host("MEDIUM: $id | $status | ID=$mediaId | $mediaUrl")
 }
 $path=Join-Path $out('featured-media-audit-'+(Get-Date -Format 'yyyyMMdd-HHmmss')+'.csv');$rows|Export-Csv $path -NoTypeInformation -Encoding UTF8;Write-Host('FERTIG: Geprüft='+$rows.Count+' | Zugeordnet='+@($rows|Where-Object{$_.status-eq'ASSIGNED'}).Count+' | Fehlend='+@($rows|Where-Object{$_.status-eq'MISSING'}).Count+' | Bericht='+$path)
+# Control token retest after secret provisioning.
