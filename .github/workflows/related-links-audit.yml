@@ -1,0 +1,32 @@
+name: Related Links Audit
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths: [.github/workflows/related-links-audit.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - shell: powershell
+        run: .\scripts\audit-related-links.ps1 -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: related-links-audit
+          path: reports/**
+          if-no-files-found: error
