@@ -1,0 +1,42 @@
+name: Live Content Audit
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - .github/workflows/live-content-audit.yml
+      - scripts/audit-live-content.ps1
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Self-test
+        shell: powershell
+        run: .\scripts\audit-live-content.ps1 -SelfTest
+      - name: Prepare protected configuration
+        shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          $missing=@('GK_SITE_URL','GK_SITE_AUDIT_TOKEN','GK_UNIFIED_API_TOKEN')|Where-Object{[string]::IsNullOrWhiteSpace((Get-Item "env:$_").Value)}
+          if($missing.Count){throw('Fehlende Secrets: '+($missing -join ', '))}
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - name: Audit current live content
+        shell: powershell
+        run: .\scripts\audit-live-content.ps1 -EnvFile .\.env
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: live-content-audit
+          path: reports/**
+          if-no-files-found: error
