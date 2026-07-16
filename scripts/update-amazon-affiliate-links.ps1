@@ -110,8 +110,13 @@ foreach ($queueItem in ($items | Sort-Object {[long]$_.id} -Unique)) {
     $old = [string]$post.content
     $new = Add-AmazonTracking $old $StoreId
     $count = Assert-Tracked $new $StoreId
-    if ($count -eq 0 -or $new -ceq $old) { continue }
-    $status = 'READY'
+    if ($count -eq 0) { continue }
+    $status = if ($new -ceq $old) { 'ALREADY_CORRECT' } else { 'READY' }
+    if ($status -eq 'ALREADY_CORRECT') {
+        $results.Add([pscustomobject]@{ id=$id; title=[string]$post.title; amazon_links=$count; status=$status })
+        Write-Host ("${id}: $status | Amazon-Links=$count | " + [string]$post.title)
+        continue
+    }
     if ($Mode -eq 'Apply') {
         [IO.File]::WriteAllText((Join-Path $backupDir ("post-$id.html")), $old, [Text.UTF8Encoding]::new($false))
         $payload = [Text.Encoding]::UTF8.GetBytes((@{id=$id;content=$new} | ConvertTo-Json -Compress))
