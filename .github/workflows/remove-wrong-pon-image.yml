@@ -28,4 +28,4 @@ jobs:
         with:
           name: pon-image-removal-backup
           path: backups/media-*/**
-          if-no-files-found: error
+          if-no-files-found: warn
