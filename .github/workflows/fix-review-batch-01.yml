@@ -1,0 +1,33 @@
+name: Fix Review Batch 01
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths: [.github/workflows/fix-review-batch-01.yml]
+permissions:
+  contents: read
+jobs:
+  apply:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - name: Apply verified batch 01 fixes
+        shell: powershell
+        run: .\scripts\fix-review-batch-01.ps1 -Mode Apply -Confirm 'BATCH 01 BEREINIGEN' -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-batch-01-backups-report
+          path: |
+            backups/**
+            reports/**
+          if-no-files-found: error
