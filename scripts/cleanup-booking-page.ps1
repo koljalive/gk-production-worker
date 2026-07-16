@@ -34,10 +34,10 @@ $new=@'
 </div>
 </section>
 <section class="gkpr-note"><h2>Transparenzhinweis</h2><p>Der folgende Verf&#252;gbarkeitscheck ist ein Affiliate-Link. Wenn dar&#252;ber ein Vertrag zustande kommt, kann Glasfaser-Kompass eine Provision erhalten. F&#252;r Sie entstehen dadurch keine zus&#228;tzlichen Kosten. Verbindliche Preise und Vertragsbedingungen zeigt ausschlie&#223;lich der Anbieter vor Abschluss.</p></section>
-<section class="gkpr-cta"><h2>Verf&#252;gbarkeit an der eigenen Adresse pr&#252;fen</h2><p>&#214;ffnen Sie den Anbieter-Check und vergleichen Sie das Ergebnis anschlie&#223;end mit den technischen Voraussetzungen im Haus.</p><p><a class="gkpr-btn" href="https://glasfaser-kompass.telekom-profis.de/" target="_blank" rel="nofollow sponsored noopener">Telekom-Verf&#252;gbarkeit pr&#252;fen (Werbelink)</a></p></section>
+<section class="gkpr-cta"><h2>Verf&#252;gbarkeit an der eigenen Adresse pr&#252;fen</h2><p>Nutzen Sie den direkt folgenden, als Affiliate-Link gekennzeichneten Anbieter-Check und vergleichen Sie das Ergebnis anschlie&#223;end mit den technischen Voraussetzungen im Haus.</p></section>
 </div>
 '@
-if($old -cmatch 'data-gk-clean="booking-v2"' -and -not $old.Contains([string][char]0x00C3)){$new=$old -replace 'gkpr-button','gkpr-btn';if($new -ceq $old){Write-Host 'FERTIG: Bereits bereinigt und verifiziert.';exit 0}}
+if($old -cmatch 'data-gk-clean="booking-v2"' -and -not $old.Contains([string][char]0x00C3) -and $old -notmatch 'Telekom-Verf'){$new=$old -replace 'gkpr-button','gkpr-btn';if($new -ceq $old){Write-Host 'FERTIG: Bereits bereinigt und verifiziert.';exit 0}}
 $root=Split-Path -Parent $PSScriptRoot
 $backup=Join-Path $root ('backups\booking-'+(Get-Date -Format 'yyyyMMdd-HHmmss'))
 New-Item $backup -ItemType Directory -Force|Out-Null
