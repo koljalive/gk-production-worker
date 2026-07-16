@@ -29,12 +29,12 @@ jobs:
           GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
           GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
           "@|Set-Content .env -Encoding UTF8
-      - name: Preview remaining related-links rebuild
+      - name: Apply verified remaining related-links rebuild
         shell: powershell
-        run: .\scripts\rebuild-related-links.ps1 -Mode Preview -EnvFile .\.env
+        run: .\scripts\rebuild-related-links.ps1 -Mode Apply -Confirm 'WEITERFUEHRENDE LINKS NEU BAUEN' -EnvFile .\.env
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: related-links-rebuild-preview
+          name: related-links-rebuild-apply
           path: reports/**
           if-no-files-found: error
