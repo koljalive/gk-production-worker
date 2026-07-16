@@ -30,7 +30,7 @@ $catalog=@{
   @{url='https://glasfaser-kompass.de/was-prueft-ein-techniker-bei-einer-entstoerung/';title='Prüfung bei einer Entstörung';label='Praxis';desc='Welche Messungen und Eingrenzungen üblich sind.'})
 }
 function Cards([long]$id,[string]$title){
- $key=if($title-match'WLAN|Wi.?Fi|Mesh|Repeater|Access Point|Frequenz|Routerstandort'){'wlan'}elseif($title-match'Router|FRITZ|Speedport'){'router'}elseif($title-match'Glasfaser|FTTH|ONT|Gf-|Spleiß'){'fiber'}elseif($title-match'DSL|APL|TAE|Vectoring|CRC|Leitung|Entstörung'){'dsl'}else{'termin'}
+ $key=if($title-match'WLAN|Wi.?Fi|Mesh|Repeater|Access Point|Frequenz|Routerstandort'){'wlan'}elseif($title-match'Router|FRITZ|Speedport'){'router'}elseif($title-match'Glasfaser|FTTH|ONT|Gf-|Spleiß'){'fiber'}elseif($title-match'DSL|APL|TAE|Vectoring|CRC|Leitung|Entstörung'){'dsl'}elseif($title-match'Techniker|Termin|Keller|Außendienst'){'termin'}else{return $null}
  $chosen=@($catalog[$key]|Where-Object{$title -notlike ('*'+$_.title+'*')}|Select-Object -First 3)
  $html="<section class=`"gk-related-box`" aria-labelledby=`"gk-related-$id`">`n<h2 id=`"gk-related-$id`">Weiterführende Artikel</h2>`n<div class=`"gk-related-grid`">`n"
  foreach($x in $chosen){$html+="<a class=`"gk-related-card`" href=`"$($x.url)`"><span class=`"gk-related-label`">$($x.label)</span><strong>$($x.title)</strong><span>$($x.desc)</span></a>`n"}
@@ -38,11 +38,12 @@ function Cards([long]$id,[string]$title){
 }
 function Rebuild([long]$id,[string]$title,[string]$html){
  if($html -notmatch'Weiterf.hrende Artikel|GK_RELATED_START'){return $html}
+ $cards=Cards $id $title;if([string]::IsNullOrWhiteSpace($cards)){return $html}
  $token='@@GK_RELATED_CANONICAL@@';$script:placed=$false
  $html=[regex]::Replace($html,'(?is)<section\b[^>]*class\s*=\s*["''][^"'']*\bgk-related-box\b[^"'']*["''][^>]*>.*?</section>',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return ''}})
  $html=[regex]::Replace($html,'(?is)<!--\s*GK_RELATED_START\s*-->.*?<!--\s*GK_RELATED_END\s*-->',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return ''}})
  $html=[regex]::Replace($html,'(?is)<h2\b[^>]*>\s*Weiterf.hrende Artikel\s*</h2>.*?(?=<h2\b|\z)',{param($m)if(-not $script:placed){$script:placed=$true;return $token}else{return ''}})
- if(-not $script:placed){return $html};return $html.Replace($token,(Cards $id $title))
+ if(-not $script:placed){return $html};return $html.Replace($token,$cards)
 }
 $v=@{};Get-Content $EnvFile|Where-Object{$_-match'^[^#].*='}|ForEach-Object{$p=$_-split'=',2;$v[$p[0].Trim()]=$p[1].Trim()};foreach($n in @('GK_SITE_URL','GK_SITE_AUDIT_TOKEN','GK_UNIFIED_API_TOKEN')){if([string]::IsNullOrWhiteSpace($v[$n])){throw "$n fehlt."}};$site=$v.GK_SITE_URL.TrimEnd('/');$ah=@{Authorization='Bearer '+$v.GK_SITE_AUDIT_TOKEN};$uh=@{Authorization='Bearer '+$v.GK_UNIFIED_API_TOKEN};$items=@();$page=1
 do{$b=@(Invoke-RestMethod($site+'/wp-json/gk-site-audit/v1/items?page='+$page+'&per_page=100')-Headers $ah);if($b.Count-eq 1-and $null-ne$b[0].items){$b=@($b[0].items)};$items+=$b;$page++}while($b.Count-eq 100)
