@@ -3,7 +3,9 @@ name: Amazon Affiliate Migration
 on:
   push:
     branches: [agent/verified-production-worker]
-    paths: [.github/workflows/affiliate-migration.yml]
+    paths:
+      - .github/workflows/affiliate-migration.yml
+      - scripts/update-amazon-affiliate-links.ps1
 
 permissions:
   contents: read
