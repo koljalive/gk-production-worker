@@ -1,0 +1,11 @@
+param([string]$EnvFile='.\.env',[long[]]$Ids=@())
+$ErrorActionPreference='Stop'
+$v=@{};Get-Content $EnvFile|Where-Object{$_ -match '^[^#].*='}|ForEach-Object{$p=$_ -split '=',2;$v[$p[0].Trim()]=$p[1].Trim()}
+if([string]::IsNullOrWhiteSpace($v['GK_SITE_URL'])){throw 'GK_SITE_URL fehlt.'}
+$site=$v['GK_SITE_URL'].TrimEnd('/');$root=if(Test-Path(Join-Path $PSScriptRoot '..\GkProductionWorker.sln')){Split-Path -Parent $PSScriptRoot}else{$PSScriptRoot};$out=Join-Path $root 'reports';New-Item $out -ItemType Directory -Force|Out-Null;$rows=@()
+foreach($id in $Ids){$post=$null;$kind='post';try{$post=Invoke-RestMethod($site+"/wp-json/wp/v2/posts/$id`?_fields=id,link,title,featured_media")-TimeoutSec 30}catch{$kind='page';try{$post=Invoke-RestMethod($site+"/wp-json/wp/v2/pages/$id`?_fields=id,link,title,featured_media")-TimeoutSec 30}catch{$rows+=[pscustomobject]@{id=$id;type='unknown';title='';url='';media_id=0;media_url='';alt='';caption='';status='POST_NOT_PUBLIC'};Write-Host("MEDIUM: $id | POST_NOT_PUBLIC");continue}}
+ $mediaId=[long]$post.featured_media;$mediaUrl='';$alt='';$caption='';$status=if($mediaId-gt 0){'ASSIGNED'}else{'MISSING'}
+ if($mediaId-gt 0){try{$media=Invoke-RestMethod($site+"/wp-json/wp/v2/media/$mediaId`?_fields=id,source_url,alt_text,caption,media_details")-TimeoutSec 30;$mediaUrl=[string]$media.source_url;$alt=[string]$media.alt_text;$caption=[string]$media.caption.rendered}catch{$status='MEDIA_NOT_PUBLIC'}}
+ $title=[Net.WebUtility]::HtmlDecode([string]$post.title.rendered);$rows+=[pscustomobject]@{id=$id;type=$kind;title=$title;url=[string]$post.link;media_id=$mediaId;media_url=$mediaUrl;alt=$alt;caption=([regex]::Replace($caption,'<[^>]+>',' ')).Trim();status=$status};Write-Host("MEDIUM: $id | $status | ID=$mediaId | $mediaUrl")
+}
+$path=Join-Path $out('featured-media-audit-'+(Get-Date -Format 'yyyyMMdd-HHmmss')+'.csv');$rows|Export-Csv $path -NoTypeInformation -Encoding UTF8;Write-Host('FERTIG: Geprüft='+$rows.Count+' | Zugeordnet='+@($rows|Where-Object{$_.status-eq'ASSIGNED'}).Count+' | Fehlend='+@($rows|Where-Object{$_.status-eq'MISSING'}).Count+' | Bericht='+$path)
