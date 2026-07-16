@@ -1,0 +1,40 @@
+name: Final Affiliate Cleanup
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - .github/workflows/final-affiliate-cleanup.yml
+      - scripts/cleanup-booking-page.ps1
+permissions:
+  contents: read
+jobs:
+  apply:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - name: Normalize Amazon tracking
+        shell: powershell
+        run: .\scripts\update-amazon-affiliate-links.ps1 -Mode Apply -Confirm 'AMAZON AFFILIATE AKTUALISIEREN' -EnvFile .\.env -StoreId glasfaserkomp-21
+      - name: Rebuild booking page
+        shell: powershell
+        run: .\scripts\cleanup-booking-page.ps1 -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-affiliate-backups-report
+          path: |
+            backups/**
+            reports/**
+          if-no-files-found: warn
