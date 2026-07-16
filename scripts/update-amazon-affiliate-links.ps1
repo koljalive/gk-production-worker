@@ -82,7 +82,11 @@ $auditHeaders = @{ Authorization = 'Bearer ' + $envValues['GK_SITE_AUDIT_TOKEN']
 $unifiedHeaders = @{ Authorization = 'Bearer ' + $envValues['GK_UNIFIED_API_TOKEN'] }
 $auditBase = $site + '/wp-json/gk-site-audit/v1/'
 $unifiedBase = $site + '/wp-json/gk-unified-api/v1/'
-$root = Split-Path -Parent $PSScriptRoot
+$root = if (Test-Path -LiteralPath (Join-Path $PSScriptRoot '..\GkProductionWorker.sln')) {
+    Split-Path -Parent $PSScriptRoot
+} else {
+    $PSScriptRoot
+}
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $backupDir = Join-Path $root ('backups\amazon-affiliate-' + $stamp)
 $reportDir = Join-Path $root 'reports'
