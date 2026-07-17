@@ -4,10 +4,10 @@ $v=@{};Get-Content $EnvFile|Where-Object{$_-match'^[^#].*='}|ForEach-Object{$p=$
 foreach($n in @('GK_SITE_URL','GK_UNIFIED_API_TOKEN')){if([string]::IsNullOrWhiteSpace($v[$n])){throw "$n fehlt."}}
 $site=$v.GK_SITE_URL.TrimEnd('/');$headers=@{Authorization='Bearer '+$v.GK_UNIFIED_API_TOKEN};$base=$site+'/wp-json/gk-unified-api/v1/'
 $impressum=@'
-<div class="gkpr" data-gk-legal="impressum-v1">
+<div class="gkpr" data-gk-legal="impressum-v2">
 <section class="gkpr-section"><h2>Angaben gem&#228;&#223; &#167; 5 DDG</h2><p><strong>IT Solutions</strong><br>Inhaber: Kolja Seebauer<br>Beisterweg 25<br>44227 Dortmund<br>Deutschland</p></section>
 <section class="gkpr-section"><h2>Kontakt</h2><p>Telefon: <a href="tel:+4923113700755">0231 13 70 07 55</a><br>Mobil: <a href="tel:+4915122443820">0151 22 44 38 20</a><br>E-Mail: <a href="mailto:kolja.seebauer@mail.de">kolja.seebauer@mail.de</a></p></section>
-<section class="gkpr-section"><h2>Verantwortlich f&#252;r den redaktionellen Inhalt</h2><p>Kolja Seebauer<br>Beisterweg 25<br>44227 Dortmund</p></section>
+<section class="gkpr-section"><h2>Verantwortlich gem&#228; &#167; 18 Abs. 2 MStV</h2><p>Kolja Seebauer<br>Beisterweg 25<br>44227 Dortmund</p></section>
 <section class="gkpr-section"><h2>Umsatzsteuer</h2><p>Es besteht keine Umsatzsteuer-Identifikationsnummer.</p></section>
 <section class="gkpr-section"><h2>Verbraucherstreitbeilegung</h2><p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p></section>
 </div>
@@ -26,7 +26,7 @@ $datenschutz=@'
 <section class="gkpr-section"><h2>10. Stand und Aktualisierung</h2><p>Stand: 17. Juli 2026. Diese Datenschutzerkl&#228;rung wird angepasst, wenn sich die Website oder die eingesetzten Dienste &#228;ndern.</p></section>
 </div>
 '@
-$pages=@(@{id=1011;marker='impressum-v1';content=$impressum},@{id=1012;marker='datenschutz-v1';content=$datenschutz});$root=Split-Path -Parent $PSScriptRoot;$backup=Join-Path $root('backups\legal-'+(Get-Date -Format 'yyyyMMdd-HHmmss'));New-Item $backup -ItemType Directory -Force|Out-Null
+$pages=@(@{id=1011;marker='impressum-v2';content=$impressum},@{id=1012;marker='datenschutz-v1';content=$datenschutz});$root=Split-Path -Parent $PSScriptRoot;$backup=Join-Path $root('backups\legal-'+(Get-Date -Format 'yyyyMMdd-HHmmss'));New-Item $backup -ItemType Directory -Force|Out-Null
 foreach($p in $pages){
  $readBody=[Text.Encoding]::UTF8.GetBytes((@{id=$p.id}|ConvertTo-Json -Compress))
  $before=Invoke-RestMethod ($base+'read-post') -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $readBody
@@ -40,6 +40,13 @@ foreach($p in $pages){
  if($live -cnotmatch ('data-gk-legal="'+$p.marker+'"') -or $live -cmatch 'Premium-Ratgeber|Expert Upgrade|gk-related-box'){throw "Nachpruefung fehlgeschlagen: $($p.id)"}
  Write-Host("$($p.id): UPDATED_AND_VERIFIED")
 }
+$public=Invoke-WebRequest ($site+'/impressum-2/?_gk='+(Get-Date -Format HHmmssfff)) -UseBasicParsing -TimeoutSec 45
+if([int]$public.StatusCode-ne200){throw 'Impressum ist nicht oeffentlich erreichbar.'}
+$publicText=[Net.WebUtility]::HtmlDecode([regex]::Replace([string]$public.Content,'(?is)<[^>]+>',' '))
+foreach($required in @('IT Solutions','Kolja Seebauer','Beisterweg 25','44227 Dortmund','0231 13 70 07 55','0151 22 44 38 20','kolja.seebauer@mail.de','18 Abs. 2 MStV')){if($publicText-notmatch[regex]::Escape($required)){throw "Impressum-Angabe fehlt live: $required"}}
+$home=Invoke-WebRequest ($site+'/?_gk='+(Get-Date -Format HHmmssfff)) -UseBasicParsing -TimeoutSec 45
+if([string]$home.Content-notmatch'(?i)href=["''][^"'']*impressum-2/?["'']'){throw 'Impressum ist auf der Startseite nicht verlinkt.'}
+Write-Host 'IMPRESSUM_LIVE: HTTP=200 | Pflichtangaben=VERIFIED | Startseitenlink=VERIFIED'
 $cache=Invoke-RestMethod ($base+'clear-cache') -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes('{}'))
 if($cache.cache_cleared -ne $true){throw 'Cache nicht geleert.'}
 Write-Host ('FERTIG: Rechtstext-Seiten=2 | Verifiziert=2 | Backup='+$backup)
