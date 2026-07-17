@@ -1,0 +1,20 @@
+name: Inspect Site Control Routes
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/inspect-site-control-routes.yml
+      - scripts/inspect-site-control-routes.ps1
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+        run: |
+          "GK_SITE_URL=$env:GK_SITE_URL"|Set-Content .env -Encoding UTF8
+          .\scripts\inspect-site-control-routes.ps1 -EnvFile .\.env
