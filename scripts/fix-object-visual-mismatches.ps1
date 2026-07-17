@@ -8,8 +8,8 @@ $targets=@(
  [pscustomobject]@{id=1004;media=28070;reason='Glasfaser-Komponenten'},[pscustomobject]@{id=1005;media=28076;reason='Glasfaser-Hardware'},
  [pscustomobject]@{id=1006;media=26201;reason='APL'},[pscustomobject]@{id=1008;media=28074;reason='WLAN'},
  [pscustomobject]@{id=1009;media=28070;reason='Technik-Lexikon'},[pscustomobject]@{id=21041;media=28074;reason='WLAN-Repeater'},
- [pscustomobject]@{id=21066;media=28073;reason='Internetanbieter'},[pscustomobject]@{id=21967;media=0;reason='Statusseite ohne Themenbild'},
- [pscustomobject]@{id=21968;media=0;reason='Statusseite ohne Themenbild'}
+ [pscustomobject]@{id=21066;media=28073;reason='Internetanbieter'},[pscustomobject]@{id=21967;media=28073;reason='Netz- und Bereitschaftsstatus'},
+ [pscustomobject]@{id=21968;media=28073;reason='Netz- und Portalstatus'}
 )
 $root=Split-Path -Parent $PSScriptRoot;$backup=Join-Path $root('backups\object-visual-fix-'+(Get-Date -Format 'yyyyMMdd-HHmmss'));New-Item $backup -ItemType Directory -Force|Out-Null
 $rows=@()
