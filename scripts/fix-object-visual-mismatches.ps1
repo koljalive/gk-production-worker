@@ -20,6 +20,6 @@ foreach($t in $targets){
  if($old-ne$t.media){$body=@{post_id=$t.id;attachment_id=$t.media}|ConvertTo-Json -Compress;Invoke-RestMethod ($site+'/wp-json/gk-control/v1/media/set-featured') -Method Post -Headers $control -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($body))|Out-Null}
  $check=Invoke-RestMethod($site+"/wp-json/wp/v2/$kind/$($t.id)?_fields=id,featured_media&_gk="+(Get-Date -Format HHmmssfff))-TimeoutSec 30;if([long]$check.featured_media-ne$t.media){throw "Zuweisung nicht verifiziert: $($t.id)"};Write-Host("$($t.id): VERIFIED | $old -> $($t.media)")
 }
-$rows|Export-Csv(Join-Path $backup 'backup.csv')-NoTypeInformation-Encoding UTF8
+$rows|Export-Csv(Join-Path $backup 'backup.csv')-NoTypeInformation -Encoding UTF8
 $cache=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/clear-cache') -Method Post -Headers $unified -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes('{}'));if($cache.cache_cleared-ne$true){throw 'Cache nicht geleert.'}
 Write-Host("FERTIG: Korrigiert=$($targets.Count) | Verifiziert=$($targets.Count) | Backup=$backup")
