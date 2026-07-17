@@ -44,8 +44,8 @@ $public=Invoke-WebRequest ($site+'/impressum-2/?_gk='+(Get-Date -Format HHmmssff
 if([int]$public.StatusCode-ne200){throw 'Impressum ist nicht oeffentlich erreichbar.'}
 $publicText=[Net.WebUtility]::HtmlDecode([regex]::Replace([string]$public.Content,'(?is)<[^>]+>',' '))
 foreach($required in @('IT Solutions','Kolja Seebauer','Beisterweg 25','44227 Dortmund','0231 13 70 07 55','0151 22 44 38 20','kolja.seebauer@mail.de','18 Abs. 2 MStV')){if($publicText-notmatch[regex]::Escape($required)){throw "Impressum-Angabe fehlt live: $required"}}
-$home=Invoke-WebRequest ($site+'/?_gk='+(Get-Date -Format HHmmssfff)) -UseBasicParsing -TimeoutSec 45
-if([string]$home.Content-notmatch'(?i)href=["''][^"'']*impressum-2/?["'']'){throw 'Impressum ist auf der Startseite nicht verlinkt.'}
+$homeResponse=Invoke-WebRequest ($site+'/?_gk='+(Get-Date -Format HHmmssfff)) -UseBasicParsing -TimeoutSec 45
+if([string]$homeResponse.Content-notmatch'(?i)href=["''][^"'']*impressum-2/?["'']'){throw 'Impressum ist auf der Startseite nicht verlinkt.'}
 Write-Host 'IMPRESSUM_LIVE: HTTP=200 | Pflichtangaben=VERIFIED | Startseitenlink=VERIFIED'
 $cache=Invoke-RestMethod ($base+'clear-cache') -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes('{}'))
 if($cache.cache_cleared -ne $true){throw 'Cache nicht geleert.'}
