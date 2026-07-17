@@ -33,9 +33,6 @@ jobs:
       - name: Correct DSL signal paths and APL schematics
         shell: powershell
         run: .\scripts\fix-dsl-signal-path.ps1 -EnvFile .\.env
-      - name: Suppress obsolete visual placeholders on every page
-        shell: powershell
-        run: .\scripts\suppress-legacy-visual-placeholders.ps1 -EnvFile .\.env
       - name: Verify legal notice
         shell: powershell
         run: .\scripts\restore-legal-pages.ps1 -EnvFile .\.env
