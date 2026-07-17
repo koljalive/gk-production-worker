@@ -16,7 +16,14 @@ jobs:
       - shell: powershell
         env:
           GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
-        run: '"GK_SITE_URL=$env:GK_SITE_URL"|Set-Content .env -Encoding UTF8'
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
       - shell: powershell
         run: .\scripts\audit-object-paths-visuals.ps1 -EnvFile .\.env
       - if: always()
