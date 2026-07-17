@@ -26,3 +26,4 @@ foreach($g in $groups){
 $rows|Export-Csv (Join-Path $backup 'backup.csv') -NoTypeInformation -Encoding UTF8
 $cache=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/clear-cache') -Method Post -Headers $unified -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes('{}'));if($cache.cache_cleared-ne$true){throw 'Cache nicht geleert.'}
 Write-Host('FERTIG: Seiten=6 | Verifiziert=6 | Backup='+$backup)
+& (Join-Path $PSScriptRoot 'fix-object-visual-mismatches.ps1') -EnvFile $EnvFile
