@@ -36,3 +36,5 @@ jobs:
           path: reports/featured-media-audit-*.csv
           if-no-files-found: error
 
+
+# final-visual-verification
