@@ -5,15 +5,10 @@ on:
     paths:
       - .github/workflows/rebuild-related-links.yml
       - scripts/rebuild-related-links.ps1
-  pull_request:
-    branches: [main]
-    paths:
-      - .github/workflows/rebuild-related-links.yml
-      - scripts/rebuild-related-links.ps1
 permissions:
   contents: read
 jobs:
-  preview:
+  apply:
     runs-on: windows-latest
     timeout-minutes: 30
     steps:
@@ -29,12 +24,14 @@ jobs:
           GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
           GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
           "@|Set-Content .env -Encoding UTF8
-      - name: Preview remaining related-links rebuild
+      - name: Repair encoding and rebuild readable related links
         shell: powershell
-        run: .\scripts\rebuild-related-links.ps1 -Mode Preview -EnvFile .\.env
+        run: .\scripts\rebuild-related-links.ps1 -Mode Apply -Confirm "WEITERFUEHRENDE LINKS NEU BAUEN" -EnvFile .\.env
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: related-links-rebuild-preview
-          path: reports/**
+          name: related-links-rebuild-backup
+          path: |
+            reports/**
+            backups/**
           if-no-files-found: error
