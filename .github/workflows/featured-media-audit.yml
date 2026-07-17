@@ -32,3 +32,5 @@ jobs:
           name: featured-media-audit
           path: reports/featured-media-audit-*.csv
           if-no-files-found: error
+
+# verification-trigger 2026-07-17
