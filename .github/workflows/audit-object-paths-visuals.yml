@@ -1,0 +1,27 @@
+name: Audit Object Paths and Visuals
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - .github/workflows/audit-object-paths-visuals.yml
+      - scripts/audit-object-paths-visuals.ps1
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+        run: '"GK_SITE_URL=$env:GK_SITE_URL"|Set-Content .env -Encoding UTF8'
+      - shell: powershell
+        run: .\scripts\audit-object-paths-visuals.ps1 -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: object-paths-visuals-audit
+          path: reports/**
+          if-no-files-found: error
