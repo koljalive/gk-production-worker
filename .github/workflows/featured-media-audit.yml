@@ -10,7 +10,7 @@ permissions:
 jobs:
   audit:
     runs-on: windows-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v4
       - name: Prepare site configuration
@@ -33,6 +33,9 @@ jobs:
       - name: Correct DSL signal paths and APL schematics
         shell: powershell
         run: .\scripts\fix-dsl-signal-path.ps1 -EnvFile .\.env
+      - name: Suppress obsolete visual placeholders on every page
+        shell: powershell
+        run: .\scripts\suppress-legacy-visual-placeholders.ps1 -EnvFile .\.env
       - name: Verify legal notice
         shell: powershell
         run: .\scripts\restore-legal-pages.ps1 -EnvFile .\.env
@@ -48,6 +51,9 @@ jobs:
       - name: Audit mobile images and placeholders
         shell: powershell
         run: .\scripts\audit-mobile-images.ps1 -EnvFile .\.env
+      - name: Audit all internal links, content images and visual orientation
+        shell: powershell
+        run: .\scripts\audit-object-paths-visuals.ps1 -EnvFile .\.env
       - uses: actions/upload-artifact@v4
         with:
           name: featured-media-audit
@@ -55,6 +61,10 @@ jobs:
             reports/featured-media-audit-*.csv
             reports/dsl-signal-audit-*.json
             reports/mobile-image-audit-*.json
+            reports/object-paths-*.csv
+            reports/content-images-*.csv
+            reports/featured-visuals-*.csv
+            reports/object-visual-summary-*.json
           if-no-files-found: error
 
 
