@@ -34,7 +34,6 @@ foreach ($kind in @('posts','pages')) {
 }
 
 $signal = Invoke-RestMethod ($site + '/wp-json/wp/v2/media/28085?_fields=source_url,alt_text') -TimeoutSec 45
-$style = '<style id="gk-frontend-dedup">.gk9-authorbox,.gk9-tarifcheck{display:none!important}</style>'
 $root = Split-Path -Parent $PSScriptRoot
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
 $backupDir = Join-Path $root ("backups\frontend-fix-$stamp")
@@ -52,9 +51,10 @@ foreach ($item in ($items | Sort-Object { [long]$_.id } -Unique)) {
   $new = $old
   $reasons = New-Object Collections.Generic.List[string]
 
-  if ($new -notmatch 'id=["'']gk-frontend-dedup["'']') {
-    $new = $style + $new
-    $reasons.Add('HIDE_LEGACY_DYNAMIC_BLOCKS')
+  $legacyBefore = [regex]::Matches($new, '(?is)<div\b[^>]*class=["''][^"'']*gk9-(?:authorbox|tarifcheck)[^"'']*["''][^>]*>.*?</div>').Count
+  if ($legacyBefore -gt 0) {
+    $new = [regex]::Replace($new, '(?is)<div\b[^>]*class=["''][^"'']*gk9-(?:authorbox|tarifcheck)[^"'']*["''][^>]*>.*?</div>', '')
+    $reasons.Add('REMOVE_LEGACY_DUPLICATE_BLOCKS')
   }
 
   if ($new -match '(?is)<article\b[^>]*class=["''][^"'']*gk-auto-article[^"'']*["''][^>]*>.*?<h2>\s*FAQ\s*</h2>') {
@@ -62,7 +62,7 @@ foreach ($item in ($items | Sort-Object { [long]$_.id } -Unique)) {
     $reasons.Add('REMOVE_DUPLICATE_INLINE_FAQ')
   }
 
-  if ($title -match '(?i)DSL.?Bauteile|DSL.?Signalweg|APL.*TAE|TAE.*APL|Endleitung|Hausverkabelung') {
+  if ($title -match '(?i)DSL.?Bauteile|DSL.?Signalweg|APL.*TAE|TAE.*APL|Endleitung|Hausverkabelung' -and $new -notmatch 'gk-verified-signal-path') {
     $alt = [Net.WebUtility]::HtmlEncode($(if ([string]::IsNullOrWhiteSpace([string]$signal.alt_text)) { 'DSL-Signalweg von DSLAM und MFG ueber APL und TAE bis zum Router.' } else { [string]$signal.alt_text }))
     $figure = '<figure class="gk-article-visual gk-verified-signal-path"><img src="' + [string]$signal.source_url + '" alt="' + $alt + '" loading="lazy"><figcaption>DSL-Signalweg: DSLAM, MFG, APL, TAE und Router.</figcaption></figure>'
     if ($new -match '(?is)<figure\b[^>]*class=["''][^"'']*gk-article-visual[^"'']*["''][^>]*>.*?</figure>') {
@@ -82,7 +82,7 @@ foreach ($item in ($items | Sort-Object { [long]$_.id } -Unique)) {
     if ($updated.updated -ne $true) { throw "Update nicht bestaetigt: $id" }
     $verify = Invoke-RestMethod ($site + '/wp-json/gk-unified-api/v1/read-post') -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $request
     $saved = [string]$verify.content
-    if ($saved -notmatch 'gk-frontend-dedup') { throw "Frontend-Stil nicht gespeichert: $id" }
+    if ($reasons.Contains('REMOVE_LEGACY_DUPLICATE_BLOCKS') -and $saved -match 'gk9-(?:authorbox|tarifcheck)') { throw "Legacy-Doppelblock weiterhin gespeichert: $id" }
     if ($reasons.Contains('VERIFIED_DSL_SIGNAL_PATH') -and $saved -notmatch 'gk-verified-signal-path') { throw "Signalweg nicht gespeichert: $id" }
     $status = 'UPDATED_AND_VERIFIED'
   }
