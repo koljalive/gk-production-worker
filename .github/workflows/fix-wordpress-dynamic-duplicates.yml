@@ -1,5 +1,5 @@
 name: Fix WordPress Dynamic Duplicates
-# Authorization header recheck: 2026-07-20
+# Rewrite authorization recheck: 2026-07-20
 on:
   push:
     branches: [agent/verified-production-worker]
