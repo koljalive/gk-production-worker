@@ -5,6 +5,11 @@ on:
     paths:
       - scripts/identify-and-fix-dynamic-plugin.ps1
       - .github/workflows/fix-wordpress-dynamic-duplicates.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/identify-and-fix-dynamic-plugin.ps1
+      - .github/workflows/fix-wordpress-dynamic-duplicates.yml
   workflow_dispatch:
 permissions:
   contents: read
