@@ -28,6 +28,8 @@ jobs:
           "@|Set-Content .env -Encoding UTF8
           .\scripts\repair-site-editorial-content.ps1 -Mode Preview -EnvFile .\.env
           .\scripts\repair-site-editorial-content.ps1 -Mode Apply -Confirm "REDAKTION ALLE SEITEN BEREINIGEN" -EnvFile .\.env
+          .\scripts\fix-rendered-frontend.ps1 -Mode Preview -EnvFile .\.env
+          .\scripts\fix-rendered-frontend.ps1 -Mode Apply -Confirm "GERENDERTES FRONTEND BEREINIGEN" -EnvFile .\.env
       - uses: actions/upload-artifact@v4
         with:
           name: editorial-cleanup
