@@ -8,6 +8,7 @@ on:
     paths:
       - .github/workflows/repair-site-editorial-content.yml
       - scripts/repair-site-editorial-content.ps1
+      - scripts/fix-rendered-frontend.ps1
 permissions:
   contents: read
 jobs:
@@ -33,4 +34,6 @@ jobs:
           path: |
             reports/editorial-clean-*.csv
             backups/editorial-clean-*/**
+            reports/frontend-fix-*.csv
+            backups/frontend-fix-*/**
           if-no-files-found: error
