@@ -51,10 +51,10 @@ foreach ($item in ($items | Sort-Object { [long]$_.id } -Unique)) {
   $new = $old
   $reasons = New-Object Collections.Generic.List[string]
 
-  $legacyBefore = [regex]::Matches($new, '(?is)<div\b[^>]*class=["''][^"'']*gk9-(?:authorbox|tarifcheck)[^"'']*["''][^>]*>.*?</div>').Count
-  if ($legacyBefore -gt 0) {
-    $new = [regex]::Replace($new, '(?is)<div\b[^>]*class=["''][^"'']*gk9-(?:authorbox|tarifcheck)[^"'']*["''][^>]*>.*?</div>', '')
-    $reasons.Add('REMOVE_LEGACY_DUPLICATE_BLOCKS')
+  $storedDuplicateBefore = [regex]::Matches($new, '(?is)<section\b[^>]*class=["''][^"'']*gkpr-(?:author|affiliate)[^"'']*["''][^>]*>.*?</section>').Count
+  if ($storedDuplicateBefore -gt 0) {
+    $new = [regex]::Replace($new, '(?is)<section\b[^>]*class=["''][^"'']*gkpr-(?:author|affiliate)[^"'']*["''][^>]*>.*?</section>', '')
+    $reasons.Add('REMOVE_STORED_DUPLICATE_BLOCKS')
   }
 
   if ($new -match '(?is)<article\b[^>]*class=["''][^"'']*gk-auto-article[^"'']*["''][^>]*>.*?<h2>\s*FAQ\s*</h2>') {
@@ -82,7 +82,7 @@ foreach ($item in ($items | Sort-Object { [long]$_.id } -Unique)) {
     if ($updated.updated -ne $true) { throw "Update nicht bestaetigt: $id" }
     $verify = Invoke-RestMethod ($site + '/wp-json/gk-unified-api/v1/read-post') -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $request
     $saved = [string]$verify.content
-    if ($reasons.Contains('REMOVE_LEGACY_DUPLICATE_BLOCKS') -and $saved -match 'gk9-(?:authorbox|tarifcheck)') { throw "Legacy-Doppelblock weiterhin gespeichert: $id" }
+    if ($reasons.Contains('REMOVE_STORED_DUPLICATE_BLOCKS') -and $saved -match 'gkpr-(?:author|affiliate)') { throw "Gespeicherter Doppelblock weiterhin vorhanden: $id" }
     if ($reasons.Contains('VERIFIED_DSL_SIGNAL_PATH') -and $saved -notmatch 'gk-verified-signal-path') { throw "Signalweg nicht gespeichert: $id" }
     $status = 'UPDATED_AND_VERIFIED'
   }
