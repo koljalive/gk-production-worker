@@ -1,0 +1,42 @@
+name: Fix Rendered Frontend
+
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - scripts/fix-rendered-frontend.ps1
+      - .github/workflows/fix-rendered-frontend.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fix:
+    runs-on: windows-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare configuration
+        shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@ | Set-Content .env -Encoding UTF8
+      - name: Preview and apply rendered frontend repair
+        shell: powershell
+        run: |
+          .\scripts\fix-rendered-frontend.ps1 -Mode Preview -EnvFile .\.env
+          .\scripts\fix-rendered-frontend.ps1 -Mode Apply -Confirm "GERENDERTES FRONTEND BEREINIGEN" -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-frontend-fix
+          path: |
+            reports/frontend-fix-*.csv
+            backups/frontend-fix-*/**
+          if-no-files-found: error
