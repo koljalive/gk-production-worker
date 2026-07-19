@@ -1,0 +1,29 @@
+name: Full Editorial and Visual Audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/inspect-apl-object-content.yml
+      - scripts/inspect-apl-object-content.ps1
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+          .\scripts\inspect-apl-object-content.ps1 -EnvFile .\.env
+      - uses: actions/upload-artifact@v4
+        with:
+          name: full-editorial-visual-audit
+          path: reports/site-editorial-*.json
+          if-no-files-found: error
