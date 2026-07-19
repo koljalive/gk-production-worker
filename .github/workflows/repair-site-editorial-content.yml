@@ -1,0 +1,36 @@
+name: Repair All Editorial Content
+concurrency:
+  group: repair-all-editorial-content-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/repair-site-editorial-content.yml
+      - scripts/repair-site-editorial-content.ps1
+permissions:
+  contents: read
+jobs:
+  repair:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+          .\scripts\repair-site-editorial-content.ps1 -Mode Preview -EnvFile .\.env
+          .\scripts\repair-site-editorial-content.ps1 -Mode Apply -Confirm "REDAKTION ALLE SEITEN BEREINIGEN" -EnvFile .\.env
+      - uses: actions/upload-artifact@v4
+        with:
+          name: editorial-cleanup
+          path: |
+            reports/editorial-clean-*.csv
+            backups/editorial-clean-*/**
+          if-no-files-found: error
