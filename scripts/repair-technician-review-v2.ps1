@@ -68,19 +68,16 @@ $targets = @(
     @{ slug = 'router-im-keller'; featured = $routerMediaId }
 )
 
-$all = @()
-foreach ($kind in @('posts', 'pages')) {
-    $page = 1
-    do {
-        try {
-            $batch = @(Invoke-RestMethod ($site + "/wp-json/wp/v2/$kind`?status=publish&per_page=100&page=$page&_fields=id,slug,link,featured_media,title") -TimeoutSec 60)
-        } catch {
-            if ($_.Exception.Response -and [int]$_.Exception.Response.StatusCode -eq 400) { $batch = @() } else { throw }
-        }
-        $all += $batch
-        $page++
-    } while ($batch.Count -eq 100)
+function Resolve-Item([string]$Slug) {
+    foreach ($kind in @('posts', 'pages')) {
+        $items = @(Invoke-RestMethod ($site + "/wp-json/wp/v2/$kind`?slug=$Slug&_fields=id,slug,link,featured_media,title") -TimeoutSec 60)
+        if ($items.Count -gt 0) { return $items[0] }
+    }
+    throw "Zielseite fehlt: $Slug"
 }
+
+$resolved = @{}
+foreach ($target in $targets) { $resolved[$target.slug] = Resolve-Item $target.slug }
 
 $root = Split-Path -Parent $PSScriptRoot
 $stamp = Get-Date -Format 'yyyyMMdd-HHmmss'
@@ -91,8 +88,7 @@ New-Item $backupDir, $reportDir, $evidenceDir -ItemType Directory -Force | Out-N
 $rows = @()
 
 foreach ($target in $targets) {
-    $item = $all | Where-Object slug -eq $target.slug | Select-Object -First 1
-    if ($null -eq $item) { throw "Zielseite fehlt: $($target.slug)" }
+    $item = $resolved[$target.slug]
     $post = Read-Post ([long]$item.id)
     $old = [string]$post.content
     $new = Remove-Wrong-Figures $old
@@ -135,7 +131,7 @@ if ($cache.cache_cleared -ne $true) { throw 'Cache-Leerung nicht bestätigt.' }
 
 $wrongToken = '(?i)(koax_huep|gk-symbol-koax|gkap-dsl-apl-kupfer-hausanschluss)'
 foreach ($target in $targets) {
-    $item = $all | Where-Object slug -eq $target.slug | Select-Object -First 1
+    $item = $resolved[$target.slug]
     $url = [string]$item.link + '?gk_v4=' + (Get-Date -Format 'HHmmssfff')
     $html = [string](Invoke-WebRequest $url -UseBasicParsing -TimeoutSec 60).Content
     [IO.File]::WriteAllText((Join-Path $evidenceDir ("$($target.slug).html")), $html, [Text.UTF8Encoding]::new($false))
