@@ -24,11 +24,15 @@ jobs:
           GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
           GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
           GK_CONTROL_TOKEN: ${{ secrets.GK_CONTROL_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
         run: |
           @"
           GK_SITE_URL=$env:GK_SITE_URL
           GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
           GK_CONTROL_TOKEN=$env:GK_CONTROL_TOKEN
+          WP_USERNAME=$env:WP_USERNAME
+          WP_APPLICATION_PASSWORD=$env:WP_APPLICATION_PASSWORD
           "@ | Set-Content .env -Encoding utf8
       - name: Apply targeted repair with backups
         shell: pwsh
@@ -48,10 +52,14 @@ jobs:
             $url = "https://glasfaser-kompass.de/$slug/?visual_abnahme=1"
             $desktop = Join-Path $shotDir "$slug-desktop.png"
             $mobile = Join-Path $shotDir "$slug-mobile.png"
-            & $edge --headless=new --no-first-run --disable-extensions --disable-gpu --hide-scrollbars --window-size=1440,3000 --screenshot="$desktop" $url 2>$null
+            $desktopProfile = Join-Path $env:RUNNER_TEMP ("edge-desktop-" + $slug)
+            & $edge --headless=new --no-first-run --disable-extensions --disable-gpu --hide-scrollbars --user-data-dir="$desktopProfile" --window-size=1440,3000 --screenshot="$desktop" $url 2>$null
             if (-not (Test-Path $desktop)) { throw "Desktop-Rendering fehlgeschlagen: $slug" }
-            & $edge --headless=new --no-first-run --disable-extensions --disable-gpu --hide-scrollbars --window-size=390,2400 --user-agent="Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36" --screenshot="$mobile" $url 2>$null
+            Get-Process msedge -ErrorAction SilentlyContinue | Stop-Process -Force
+            $mobileProfile = Join-Path $env:RUNNER_TEMP ("edge-mobile-" + $slug)
+            & $edge --headless=new --no-first-run --disable-extensions --disable-gpu --hide-scrollbars --user-data-dir="$mobileProfile" --window-size=390,2400 --user-agent="Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36" --screenshot="$mobile" $url 2>$null
             if (-not (Test-Path $mobile)) { throw "Mobil-Rendering fehlgeschlagen: $slug" }
+            Get-Process msedge -ErrorAction SilentlyContinue | Stop-Process -Force
           }
       - name: Upload backups, HTML and screenshots
         if: always()
