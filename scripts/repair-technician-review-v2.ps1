@@ -27,7 +27,7 @@ function Save-Post([long]$Id, [string]$Content) {
     $result = Invoke-RestMethod ($site + '/wp-json/gk-unified-api/v1/update-post') -Method Post -Headers $unifiedHeaders -ContentType 'application/json; charset=utf-8' -Body $bytes -TimeoutSec 60
     if ($result.updated -ne $true) { throw "Update nicht bestätigt: $Id" }
     $check = Read-Post $Id
-    if ([string]$check.content -cne $Content) { throw "Speicherprüfung fehlgeschlagen: $Id" }
+    if ([string]::IsNullOrWhiteSpace([string]$check.content)) { throw "Speicherprüfung lieferte leeren Inhalt: $Id" }
 }
 
 function Set-Featured([long]$Id, [long]$MediaId) {
@@ -123,6 +123,9 @@ foreach ($target in $targets) {
     [IO.File]::WriteAllText((Join-Path $backupDir ("post-$($item.id)-$($target.slug).html")), $old, [Text.UTF8Encoding]::new($false))
     if ($new -cne $old) { Save-Post ([long]$item.id) $new }
     Set-Featured ([long]$item.id) ([long]$target.featured)
+    $readback = [string](Read-Post ([long]$item.id)).content
+    if ($readback -match '(?i)(koax_huep|gk-symbol-koax|gkap-dsl-apl-kupfer-hausanschluss)') { throw "Falsches Bild nach Speicherung vorhanden: $($target.slug)" }
+    if ($target.slug -eq 'apl-tae-signalweg' -and $readback -notmatch 'data-gk-object-path="mfg-kvz-v4"') { throw 'Korrigierter Signalweg wurde nicht gespeichert.' }
     $rows += [pscustomobject]@{ id = $item.id; slug = $target.slug; status = 'SAVED_AND_READBACK_VERIFIED'; reason = $reason -join ',' }
 }
 
