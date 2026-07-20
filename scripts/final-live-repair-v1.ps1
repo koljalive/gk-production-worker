@@ -11,10 +11,9 @@ $backup=Join-Path $root ('backups\final-live-repair-'+$stamp)
 $report=Join-Path $root 'reports'
 New-Item $backup,$report -ItemType Directory -Force|Out-Null
 
-function Utf8([string]$value){[Text.Encoding]::UTF8.GetBytes($value)}
-function Read-Post([long]$id){Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/read-post') -Method Post -Headers $uh -ContentType 'application/json; charset=utf-8' -Body (Utf8 ((@{id=$id}|ConvertTo-Json -Compress))) -TimeoutSec 60}
+function Read-Post([long]$id){Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/read-post') -Method Post -Headers $uh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes((@{id=$id}|ConvertTo-Json -Compress))) -TimeoutSec 60}
 function Save-Post([long]$id,[string]$content){
-  $result=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/update-post') -Method Post -Headers $uh -ContentType 'application/json; charset=utf-8' -Body (Utf8 ((@{id=$id;content=$content}|ConvertTo-Json -Compress))) -TimeoutSec 60
+  $result=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/update-post') -Method Post -Headers $uh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes((@{id=$id;content=$content}|ConvertTo-Json -Compress))) -TimeoutSec 60
   if($result.updated-ne$true){throw "Speicherung nicht bestätigt: $id"}
   $check=Read-Post $id
   if(([string]$check.content)-cne$content){throw "Speicherprüfung fehlgeschlagen: $id"}
@@ -106,4 +105,7 @@ if($Mode-eq'Apply'){
 }
 $path=Join-Path $report ("final-live-repair-$Mode-$stamp.csv")
 $rows|Export-Csv $path -NoTypeInformation -Encoding UTF8
-Write-Host ("FERTIG: Modus=$Mode | Geändert=$($rows.Count) | Bericht=$path")
+$skipped=@($rows|Where-Object status -eq 'SKIPPED_READ_ERROR').Count
+$changed=@($rows|Where-Object status -ne 'SKIPPED_READ_ERROR').Count
+Write-Host ("FERTIG: Modus=$Mode | Geändert=$changed | Übersprungen=$skipped | Bericht=$path")
+if($skipped){throw "Abnahme fehlgeschlagen: $skipped Beiträge konnten nicht gelesen werden."}
