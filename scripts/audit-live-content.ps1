@@ -1,3 +1,4 @@
+# Full quality audit trigger 2026-07-20
 param([string]$EnvFile = '.\.env', [switch]$SelfTest)
 $ErrorActionPreference = 'Stop'
 
