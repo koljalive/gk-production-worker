@@ -1,0 +1,27 @@
+name: Inventory All Schemata
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/inventory-schemata.ps1
+      - .github/workflows/inventory-schemata.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inventory:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inventory media and assignments
+        shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+        run: .\scripts\inventory-schemata.ps1
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: complete-schema-inventory
+          path: reports/schema-inventory/**
+          if-no-files-found: error
