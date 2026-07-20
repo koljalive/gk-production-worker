@@ -11,6 +11,6 @@ $usage|Export-Csv (Join-Path $out 'usage.csv') -NoTypeInformation -Encoding UTF8
 $cr=foreach($i in $items){$h=[string]$i.content.rendered;[pscustomobject]@{id=[long]($i.id|Select-Object -First 1);type=[string]$i.type;title=[Net.WebUtility]::HtmlDecode([string]$i.title.rendered);slug=[string]$i.slug;link=[string]$i.link;featured_media=[long]($i.featured_media|Select-Object -First 1);image_count=[regex]::Matches($h,'(?is)<img\b').Count;svg_count=[regex]::Matches($h,'(?i)\.svg').Count}}
 $cr|Export-Csv (Join-Path $out 'content.csv') -NoTypeInformation -Encoding UTF8
 $s=[pscustomobject]@{media=$media.Count;items=$items.Count;usages=@($usage).Count;candidates=@($mr|Where-Object candidate).Count};$s|ConvertTo-Json|Set-Content (Join-Path $out 'summary.json') -Encoding UTF8
-foreach($m in @($mr|Where-Object{$_.candidate-and$_.mime-ne'image/svg+xml'}|Sort-Object id)){Write-Host('MEDIA|'+$m.id+'|'+$m.mime+'|'+$m.width+'x'+$m.height+'|'+$m.filename+'|'+$m.title+'|'+$m.alt)}
-foreach($u in @($usage|Where-Object{$_.url-match'(?i)\.svg(?:\?|$)'}|Sort-Object post_id)){Write-Host('SVGUSE|'+$u.post_id+'|'+$u.title+'|'+$u.url+'|'+$u.alt)}
+foreach($m in @($mr|Where-Object{$_.mime-ne'image/svg+xml'-and$_.filename-match'(?i)(schema|diagram|signal|objekt|visual|gk-|apl|tae|ont|gf-|dsl|glasfaser)'}|Sort-Object id -Descending|Select-Object -First 80)){Write-Host('MEDIA|'+$m.id+'|'+$m.mime+'|'+$m.width+'x'+$m.height+'|'+$m.filename+'|'+$m.title+'|'+$m.alt)}
+foreach($u in @($usage|Where-Object{$_.url-match'(?i)\.svg(?:\?|$)'}|Sort-Object post_id|Select-Object -First 40)){Write-Host('SVGUSE|'+$u.post_id+'|'+$u.title+'|'+$u.url+'|'+$u.alt)}
 Write-Host('FERTIG: '+($s|ConvertTo-Json -Compress))
