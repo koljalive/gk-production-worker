@@ -42,13 +42,16 @@ jobs:
           ) | Where-Object { Test-Path $_ } | Select-Object -First 1
           if (-not $edge) { throw 'Microsoft Edge wurde nicht gefunden.' }
           New-Item evidence/screenshots -ItemType Directory -Force | Out-Null
+          $shotDir = (Resolve-Path evidence/screenshots).Path
           $slugs = 'apl-tae-signalweg','ftth-anschlussarten-erklaert','gf-ap-erklaert','router-im-keller'
           foreach ($slug in $slugs) {
             $url = "https://glasfaser-kompass.de/$slug/?visual_abnahme=1"
-            & $edge --headless --disable-gpu --hide-scrollbars --window-size=1440,3000 --screenshot="evidence/screenshots/$slug-desktop.png" $url
-            if ($LASTEXITCODE -ne 0) { throw "Desktop-Rendering fehlgeschlagen: $slug" }
-            & $edge --headless --disable-gpu --hide-scrollbars --window-size=390,2400 --user-agent="Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36" --screenshot="evidence/screenshots/$slug-mobile.png" $url
-            if ($LASTEXITCODE -ne 0) { throw "Mobil-Rendering fehlgeschlagen: $slug" }
+            $desktop = Join-Path $shotDir "$slug-desktop.png"
+            $mobile = Join-Path $shotDir "$slug-mobile.png"
+            & $edge --headless=new --no-first-run --disable-extensions --disable-gpu --hide-scrollbars --window-size=1440,3000 --screenshot="$desktop" $url 2>$null
+            if (-not (Test-Path $desktop)) { throw "Desktop-Rendering fehlgeschlagen: $slug" }
+            & $edge --headless=new --no-first-run --disable-extensions --disable-gpu --hide-scrollbars --window-size=390,2400 --user-agent="Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 Chrome/126.0 Mobile Safari/537.36" --screenshot="$mobile" $url 2>$null
+            if (-not (Test-Path $mobile)) { throw "Mobil-Rendering fehlgeschlagen: $slug" }
           }
       - name: Upload backups, HTML and screenshots
         if: always()
