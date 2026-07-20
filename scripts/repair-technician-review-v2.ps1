@@ -6,13 +6,15 @@ Get-Content $EnvFile | Where-Object { $_ -match '^[^#].*=' } | ForEach-Object {
     $parts = $_ -split '=', 2
     $values[$parts[0].Trim()] = $parts[1].Trim()
 }
-foreach ($name in @('GK_SITE_URL', 'GK_UNIFIED_API_TOKEN', 'GK_CONTROL_TOKEN')) {
+foreach ($name in @('GK_SITE_URL', 'GK_UNIFIED_API_TOKEN', 'GK_CONTROL_TOKEN', 'WP_USERNAME', 'WP_APPLICATION_PASSWORD')) {
     if ([string]::IsNullOrWhiteSpace($values[$name])) { throw "$name fehlt." }
 }
 
 $site = $values.GK_SITE_URL.TrimEnd('/')
 $unifiedHeaders = @{ Authorization = 'Bearer ' + $values.GK_UNIFIED_API_TOKEN }
 $controlHeaders = @{ Authorization = 'Bearer ' + $values.GK_CONTROL_TOKEN }
+$basicPair = '{0}:{1}' -f $values.WP_USERNAME, $values.WP_APPLICATION_PASSWORD
+$basicHeaders = @{ Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($basicPair)) }
 $signalMediaId = 29146
 $fiberMediaId = 29147
 $routerMediaId = 23278
@@ -87,6 +89,18 @@ $evidenceDir = Join-Path $root 'evidence'
 New-Item $backupDir, $reportDir, $evidenceDir -ItemType Directory -Force | Out-Null
 $rows = @()
 
+$plugins = @(Invoke-RestMethod ($site + '/wp-json/wp/v2/plugins?context=edit&per_page=100') -Headers $basicHeaders -TimeoutSec 60)
+$pluginRows = @($plugins | ForEach-Object { [pscustomobject]@{ plugin = [string]$_.plugin; name = [string]$_.name; status = [string]$_.status; description = [string]$_.description.raw } })
+$pluginRows | Export-Csv (Join-Path $reportDir ("plugins-before-v2-$stamp.csv")) -NoTypeInformation -Encoding UTF8
+$injectors = @($pluginRows | Where-Object { (($_.plugin + ' ' + $_.name + ' ' + $_.description) -match '(?i)(gkkg|knowledge.?graph|objektpfad)') })
+if ($injectors.Count -ne 1) { throw "Objektpfad-Plugin nicht eindeutig: Treffer=$($injectors.Count)" }
+if ($injectors[0].status -eq 'active') {
+    $encodedPlugin = [uri]::EscapeDataString($injectors[0].plugin)
+    $payload = [Text.Encoding]::UTF8.GetBytes((@{ status = 'inactive' } | ConvertTo-Json -Compress))
+    $disabled = Invoke-RestMethod ($site + '/wp-json/wp/v2/plugins/' + $encodedPlugin) -Method Post -Headers $basicHeaders -ContentType 'application/json; charset=utf-8' -Body $payload -TimeoutSec 60
+    if ([string]$disabled.status -ne 'inactive') { throw 'Objektpfad-Plugin wurde nicht deaktiviert.' }
+}
+
 foreach ($target in $targets) {
     $item = $resolved[$target.slug]
     $post = Read-Post ([long]$item.id)
@@ -95,12 +109,7 @@ foreach ($target in $targets) {
     $reason = @()
 
     if ($target.slug -eq 'apl-tae-signalweg') {
-        $new = [regex]::Replace($new, '(?is)<section\b[^>]*data-gk-object-path=["''][^"'']+["''][^>]*>.*?</section>', '')
-        $new = [regex]::Replace($new, '(?is)<section\b[^>]*data-gk-dsl-signalweg=["''][^"'']+["''][^>]*>.*?</section>', '')
-        $new = [regex]::Replace($new, '(?is)<section\b[^>]*class=["''][^"'']*(?:gkve72-wrap|gkkg73-wrap)[^"'']*["''][^>]*>.*?</section>', '')
-        $guard = '<style id="gk-signalweg-v4-guard">.gkve72-wrap,.gkkg73-wrap{display:none!important}</style>'
-        $section = '<section class="gk-object-path-corrected" data-gk-object-path="mfg-kvz-v4"><h2>Korrekter VDSL-/FTTC-Signalweg</h2><p><strong>MFG mit DSLAM/MSAN → KVz → Kupfer-Zugangsnetz → APL → Endleitung → erste TAE → DSL-Router</strong></p><p>Der DSLAM beziehungsweise MSAN ist die aktive Technik <strong>im Multifunktionsgehäuse</strong>. Das MFG ist daher keine eigene Signalstufe vor oder hinter dem DSLAM. Der Kabelverzweiger (KVz) ist ein separater passiver Verteilpunkt des Kupfernetzes. MFG und KVz werden als graue Straßengehäuse dargestellt.</p><figure class="gk-signalweg-v4"><img src="' + [string]$signal.source_url + '" alt="VDSL-Signalweg mit DSLAM oder MSAN im grauen MFG, danach grauer KVz, APL, Endleitung, erste TAE und Router." width="1200" height="630"><figcaption>DSLAM/MSAN im MFG → KVz → APL → Endleitung → erste TAE → Router.</figcaption></figure></section>'
-        $new = $guard + $section + $new
+        $new = '<article class="gk-clean-article" data-gk-object-path="mfg-kvz-v5"><figure class="gk-signalweg-v5"><img src="' + [string]$signal.source_url + '" alt="VDSL-Signalweg mit DSLAM oder MSAN im grauen MFG, danach grauer KVz, Kupfernetz, APL, Endleitung, erste TAE und Router." width="1200" height="630"><figcaption>DSLAM/MSAN im MFG → KVz → Kupfer-Zugangsnetz → APL → Endleitung → erste TAE → Router.</figcaption></figure><h2>Korrekter VDSL-/FTTC-Signalweg</h2><p><strong>MFG mit DSLAM/MSAN → KVz → Kupfer-Zugangsnetz → APL → Endleitung → erste TAE → DSL-Router</strong></p><p>Der DSLAM beziehungsweise MSAN ist die aktive Technik <strong>im Multifunktionsgehäuse</strong>. Das MFG ist keine zusätzliche Signalstufe. Der Kabelverzweiger (KVz) ist ein separater passiver Verteilpunkt des Kupfernetzes. MFG und KVz sind Straßengehäuse und werden in der Abbildung grau dargestellt.</p><h2>Vom MFG bis zum Router</h2><ol><li><strong>DSLAM/MSAN im MFG:</strong> stellt das DSL-Signal bereit.</li><li><strong>KVz:</strong> verteilt die Kupferkabel passiv.</li><li><strong>APL:</strong> schließt das Betreiber-Kupfernetz am Gebäude ab.</li><li><strong>Endleitung:</strong> verbindet APL und erste TAE.</li><li><strong>Erste TAE:</strong> regulärer Übergabe- und Messpunkt in den Kundenräumen.</li><li><strong>Router:</strong> synchronisiert sein DSL-Modem mit dem Port im DSLAM/MSAN.</li></ol><h2>Praxis bei der Fehlersuche</h2><p>Ist die Messung am APL gut, an der ersten TAE aber deutlich schlechter, liegt die Ursache häufig in Endleitung, Klemmstelle oder Dose. Sind die Werte bereits am APL auffällig, wird im Betreiber-Kupfernetz weiter eingegrenzt.</p><h2>Offizielle Quellen</h2><ul><li><a href="https://www.telekom.de/hilfe">Deutsche Telekom Hilfe</a></li><li><a href="https://www.bundesnetzagentur.de/DE/Vportal/TK/InternetTelefon/Internetgeschwindigkeit/start.html">Bundesnetzagentur</a></li></ul></article>'
         $reason += 'DSL_SIGNALWEG_AND_LEGACY_BLOCKS_REPAIRED'
     }
 
@@ -125,7 +134,7 @@ foreach ($target in $targets) {
     Set-Featured ([long]$item.id) ([long]$target.featured)
     $readback = [string](Read-Post ([long]$item.id)).content
     if ($readback -match '(?i)(koax_huep|gk-symbol-koax|gkap-dsl-apl-kupfer-hausanschluss)') { throw "Falsches Bild nach Speicherung vorhanden: $($target.slug)" }
-    if ($target.slug -eq 'apl-tae-signalweg' -and $readback -notmatch 'data-gk-object-path="mfg-kvz-v4"') { throw 'Korrigierter Signalweg wurde nicht gespeichert.' }
+    if ($target.slug -eq 'apl-tae-signalweg' -and $readback -notmatch 'data-gk-object-path="mfg-kvz-v5"') { throw 'Korrigierter Signalweg wurde nicht gespeichert.' }
     $rows += [pscustomobject]@{ id = $item.id; slug = $target.slug; status = 'SAVED_AND_READBACK_VERIFIED'; reason = $reason -join ',' }
 }
 
@@ -140,7 +149,8 @@ foreach ($target in $targets) {
     [IO.File]::WriteAllText((Join-Path $evidenceDir ("$($target.slug).html")), $html, [Text.UTF8Encoding]::new($false))
     if ($html -match $wrongToken) { throw "Falsches Koaxialbild öffentlich vorhanden: $($target.slug)" }
     if ($target.slug -eq 'apl-tae-signalweg') {
-        foreach ($required in @('data-gk-object-path="mfg-kvz-v4"', 'MFG mit DSLAM/MSAN', 'KVz')) {
+        if ($html -match 'gkkg73-wrap|Diese Prozesskette zeigt, wo das aktuelle Objekt') { throw 'Fehlerhafter dynamischer Objektpfad ist weiterhin öffentlich.' }
+        foreach ($required in @('data-gk-object-path="mfg-kvz-v5"', 'MFG mit DSLAM/MSAN', 'KVz')) {
             if ($html -notmatch [regex]::Escape($required)) { throw "Signalweg öffentlich nicht nachgewiesen: $required" }
         }
     }
