@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Apply and verify complete deterministic repair
-        shell: powershell
+        shell: pwsh
         env:
           GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
           GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
