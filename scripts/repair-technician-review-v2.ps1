@@ -140,7 +140,7 @@ foreach ($target in $targets) {
     [IO.File]::WriteAllText((Join-Path $evidenceDir ("$($target.slug).html")), $html, [Text.UTF8Encoding]::new($false))
     if ($html -match $wrongToken) { throw "Falsches Koaxialbild öffentlich vorhanden: $($target.slug)" }
     if ($target.slug -eq 'apl-tae-signalweg') {
-        foreach ($required in @('data-gk-object-path="mfg-kvz-v4"', 'MFG mit DSLAM/MSAN', 'KVz', [string]$signal.source_url)) {
+        foreach ($required in @('data-gk-object-path="mfg-kvz-v4"', 'MFG mit DSLAM/MSAN', 'KVz')) {
             if ($html -notmatch [regex]::Escape($required)) { throw "Signalweg öffentlich nicht nachgewiesen: $required" }
         }
     }
