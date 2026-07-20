@@ -2,12 +2,9 @@ param([ValidateSet('Preview','Apply')][string]$Mode='Preview')
 $ErrorActionPreference='Stop'
 $site=$env:GK_SITE_URL.TrimEnd('/')
 $token=$env:GK_UNIFIED_API_TOKEN
-$wpUser=$env:WP_USERNAME
-$wpPassword=$env:WP_APPLICATION_PASSWORD
-foreach($value in @($site,$token,$wpUser,$wpPassword)){if([string]::IsNullOrWhiteSpace($value)){throw 'Erforderliche Zugangsdaten fehlen.'}}
+foreach($value in @($site,$token)){if([string]::IsNullOrWhiteSpace($value)){throw 'Erforderliche Zugangsdaten fehlen.'}}
 $uh=@{Authorization='Bearer '+$token}
-$basic=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($wpUser+':'+$wpPassword))
-$wh=@{Authorization='Basic '+$basic}
+$wh=@{}
 $root=Split-Path -Parent $PSScriptRoot
 $stamp=Get-Date -Format 'yyyyMMdd-HHmmss'
 $backup=Join-Path $root ('backups\final-live-repair-'+$stamp)
@@ -87,18 +84,16 @@ $replacements['splitter-erklaert']=@"
 
 $items=@()
 foreach($kind in @('posts','pages')){$page=1;do{try{$batch=@(Invoke-RestMethod ($site+"/wp-json/wp/v2/$kind`?status=publish&per_page=100&page=$page&_fields=id,slug,title,author") -Headers $wh -TimeoutSec 60);if($batch.Count-eq1-and$batch[0]-is[Array]){$batch=@($batch[0])}}catch{if($_.Exception.Response-and[int]$_.Exception.Response.StatusCode-eq400){$batch=@()}else{throw}};$items+=@($batch|ForEach-Object{[pscustomobject]@{kind=$kind;id=[long]$_.id;slug=[string]$_.slug;title=[string]$_.title.rendered;author=[long]$_.author}});$page++}while($batch.Count-eq100)}
-$me=Invoke-RestMethod ($site+'/wp-json/wp/v2/users/me?context=edit') -Headers $wh -TimeoutSec 60
 $rows=@()
 foreach($item in $items){
   $post=Read-Post $item.id;$old=[string]$post.content
   $new=if($replacements.ContainsKey($item.slug)){[string]$replacements[$item.slug]}else{Clean $old $item.slug}
-  $reasons=@();if($new-cne$old){$reasons+='CONTENT'};if($item.author-le0){$reasons+='AUTHOR'}
+  $reasons=@();if($new-cne$old){$reasons+='CONTENT'}
   if(-not$reasons.Count){continue}
   $status='READY'
   if($Mode-eq'Apply'){
     [IO.File]::WriteAllText((Join-Path $backup ("post-$($item.id).html")),$old,[Text.UTF8Encoding]::new($false))
     if($new-cne$old){Save-Post $item.id $new}
-    if($item.author-le0){Invoke-RestMethod ($site+"/wp-json/wp/v2/$($item.kind)/$($item.id)") -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body (Utf8 ((@{author=[long]$me.id}|ConvertTo-Json -Compress))) -TimeoutSec 60|Out-Null}
     $status='UPDATED_AND_VERIFIED'
   }
   $rows+=[pscustomobject]@{id=$item.id;slug=$item.slug;title=$item.title;status=$status;reason=($reasons-join',')}
