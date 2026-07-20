@@ -1,3 +1,4 @@
+# Post-repair verification 2026-07-20
 name: Final Site Verification
 concurrency:
   group: final-site-verification-${{ github.event.pull_request.number || github.ref }}
