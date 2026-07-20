@@ -1,3 +1,4 @@
+# UTF-8 execution required; workflow uses PowerShell Core.
 param([ValidateSet('Preview','Apply')][string]$Mode='Preview')
 $ErrorActionPreference='Stop'
 $site=$env:GK_SITE_URL.TrimEnd('/')
