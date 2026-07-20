@@ -86,7 +86,7 @@ $replacements['splitter-erklaert']=@"
 "@
 
 $items=@()
-foreach($kind in @('posts','pages')){$page=1;do{try{$batch=@(Invoke-RestMethod ($site+"/wp-json/wp/v2/$kind`?status=publish&per_page=100&page=$page&_fields=id,slug,title,author") -Headers $wh -TimeoutSec 60)}catch{if($_.Exception.Response-and[int]$_.Exception.Response.StatusCode-eq400){$batch=@()}else{throw}};$items+=@($batch|ForEach-Object{[pscustomobject]@{kind=$kind;id=[long]$_.id;slug=[string]$_.slug;title=[string]$_.title.rendered;author=[long]$_.author}});$page++}while($batch.Count-eq100)}
+foreach($kind in @('posts','pages')){$page=1;do{try{$batch=@(Invoke-RestMethod ($site+"/wp-json/wp/v2/$kind`?status=publish&per_page=100&page=$page&_fields=id,slug,title,author") -Headers $wh -TimeoutSec 60);if($batch.Count-eq1-and$batch[0]-is[Array]){$batch=@($batch[0])}}catch{if($_.Exception.Response-and[int]$_.Exception.Response.StatusCode-eq400){$batch=@()}else{throw}};$items+=@($batch|ForEach-Object{[pscustomobject]@{kind=$kind;id=[long]$_.id;slug=[string]$_.slug;title=[string]$_.title.rendered;author=[long]$_.author}});$page++}while($batch.Count-eq100)}
 $me=Invoke-RestMethod ($site+'/wp-json/wp/v2/users/me?context=edit') -Headers $wh -TimeoutSec 60
 $rows=@()
 foreach($item in $items){
