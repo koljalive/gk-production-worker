@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GK Final Frontend Guard
  * Description: Bereinigt dynamische Altlinks, Rechtsseiten-Blöcke, Autorenanzeige und Theme-Reste nach dem Rendern.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: IT Solutions – Kolja Seebauer
  * Requires at least: 6.4
  * Requires PHP: 8.0
@@ -30,7 +30,8 @@ final class GK_Final_Frontend_Guard {
 
     public static function start_buffer(): void {
         if (is_admin() || wp_doing_ajax() || wp_is_json_request()) { return; }
-        self::$is_legal = is_page(['impressum-2', 'datenschutz-2', 'kontakt-2']);
+        $request_path = trim((string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
+        self::$is_legal = is_page(['impressum-2', 'datenschutz-2', 'kontakt-2']) || in_array($request_path, ['impressum-2', 'datenschutz-2', 'kontakt-2'], true);
         self::$is_front = is_front_page();
         self::$slug = is_singular() ? (string) get_post_field('post_name', get_queried_object_id()) : '';
         ob_start([self::class, 'clean_html']);
@@ -55,14 +56,14 @@ final class GK_Final_Frontend_Guard {
             if (str_contains($slug, 'apl') || str_contains($slug, 'tae') || str_contains($slug, 'dsl')) {
                 return home_url('/wp-content/plugins/gk-render-guard/assets/apl.png');
             }
+            if (preg_match('/router|wlan|mesh|repeater|fritzbox|speedport/', $slug)) {
+                return home_url('/wp-content/plugins/gk-render-guard/assets/wlan-heimnetz.png');
+            }
             if (str_contains($slug, 'gf-ap') || str_contains($slug, 'glasfaser') || str_contains($slug, 'ftth')) {
                 return home_url('/wp-content/plugins/gk-render-guard/assets/gf-ap.png');
             }
             if (str_contains($slug, 'ont')) {
                 return home_url('/wp-content/plugins/gk-render-guard/assets/ont.png');
-            }
-            if (preg_match('/router|wlan|mesh|repeater/', $slug)) {
-                return home_url('/wp-content/plugins/gk-render-guard/assets/wlan-heimnetz.png');
             }
         }
         return (string) $url;
