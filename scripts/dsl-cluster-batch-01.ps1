@@ -2,8 +2,12 @@ param([ValidateSet('Preview','Apply')][string]$Mode='Preview')
 $ErrorActionPreference='Stop'
 $site=$env:GK_SITE_URL.TrimEnd('/')
 $token=$env:GK_UNIFIED_API_TOKEN
-if([string]::IsNullOrWhiteSpace($site)-or[string]::IsNullOrWhiteSpace($token)){throw 'GK_SITE_URL und GK_UNIFIED_API_TOKEN sind erforderlich.'}
+$wpUser=$env:WP_USERNAME
+$wpPass=$env:WP_APPLICATION_PASSWORD
+if([string]::IsNullOrWhiteSpace($site)-or[string]::IsNullOrWhiteSpace($token)-or[string]::IsNullOrWhiteSpace($wpUser)-or[string]::IsNullOrWhiteSpace($wpPass)){throw 'GK_SITE_URL, GK_UNIFIED_API_TOKEN, WP_USERNAME und WP_APPLICATION_PASSWORD sind erforderlich.'}
 $headers=@{Authorization='Bearer '+$token}
+$basic=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($wpUser+':'+$wpPass))
+$wpHeaders=@{Authorization='Basic '+$basic}
 $root=Split-Path -Parent $PSScriptRoot
 $stamp=Get-Date -Format 'yyyyMMdd-HHmmss'
 $backup=Join-Path $root ('backups\dsl-cluster-batch-01-'+$stamp)
@@ -20,10 +24,14 @@ function Strip([string]$html){
   [regex]::Replace($text,'\s+',' ').Trim()
 }
 function Save-Post([long]$id,[string]$content){
-  $body=[Text.Encoding]::UTF8.GetBytes((@{id=$id;content=$content}|ConvertTo-Json -Compress))
-  $result=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/update-post') -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 90
-  if($result.updated-ne$true){throw "Speicherung nicht bestätigt: $id"}
-  $stored=[string](Read-Post $id).content
+  # Der Unified-Endpunkt wurde hier bewusst nicht verwendet: Bei mehrwurzeligem
+  # Artikel-HTML bestätigte er Readback, während WordPress öffentlich nur den
+  # ersten Block auslieferte. Die native WP-REST-API ist die maßgebliche Quelle.
+  $body=[Text.Encoding]::UTF8.GetBytes((@{content=$content}|ConvertTo-Json -Compress))
+  $result=Invoke-RestMethod ($site+"/wp-json/wp/v2/posts/$id") -Method Post -Headers $wpHeaders -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 90
+  if([long]$result.id-ne$id){throw "WordPress-Speicherung nicht bestätigt: $id"}
+  $check=Invoke-RestMethod ($site+"/wp-json/wp/v2/posts/$id`?context=edit&_fields=id,content") -Headers $wpHeaders -TimeoutSec 90
+  $stored=[string]$check.content.raw
   if((Strip $stored)-cne(Strip $content)){throw "Readback stimmt nicht überein: $id"}
 }
 function Figure([string]$file,[string]$alt,[string]$caption){
