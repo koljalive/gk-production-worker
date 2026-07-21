@@ -46,7 +46,9 @@ function Fix-Links([string]$x,[hashtable]$titles){
   $x=$x.Replace($site+'/author/',$site+'/ueber-den-autor/')
   $x=$x.Replace('/author/','/ueber-den-autor/')
   $x=$x.Replace($site+'/dsl-stoerungen-verstehen-und-beheben/',$site+'/dsl-stoerungen-verstehen/')
+  $x=$x.Replace('/dsl-stoerungen-verstehen-und-beheben/','/dsl-stoerungen-verstehen/')
   $x=$x.Replace($site+'/glasfaseranschluss-einfach-erklaert-der-grosse-ratgeber/',$site+'/glasfaseranschluss-erklaert/')
+  $x=$x.Replace('/glasfaseranschluss-einfach-erklaert-der-grosse-ratgeber/','/glasfaseranschluss-erklaert/')
   $pattern='(?is)<a\b(?<before>[^>]*?)href=["''](?<url>(?:https?://glasfaser-kompass\.de/)?\?p=211\d+)["''](?<after>[^>]*)>(?<inner>.*?)</a>'
   $x=[regex]::Replace($x,$pattern,{param($m)
     $label=Norm $m.Groups['inner'].Value
@@ -158,6 +160,14 @@ if($items.Count-lt300){throw "Unvollständige Inventur: $($items.Count) Inhalte"
 $titleIndex=@{}
 foreach($i in $items){$n=Norm $i.title;if($n-and-not$titleIndex.ContainsKey($n)){$titleIndex[$n]=$i.link}}
 if($Mode-eq'Preview'){Write-Host "FERTIG: Modus=Preview | Inventar=$($items.Count) | Vollständigkeit bestätigt";exit 0}
+# Redaktionelle Identität und Startseitentitel bereinigen.
+$profileBody=@{name='Kolja Seebauer';first_name='Kolja';last_name='Seebauer';slug='kolja-seebauer';description='Telekommunikationspraktiker und Autor von Glasfaser-Kompass.'}|ConvertTo-Json -Compress
+try{Invoke-RestMethod ($site+'/wp-json/wp/v2/users/me') -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($profileBody)) -TimeoutSec 90|Out-Null}catch{Write-Host ('HINWEIS: Autorenprofil konnte nicht aktualisiert werden: '+$_.Exception.Message)}
+$home=$items|Where-Object id -eq 21003|Select-Object -First 1
+if($home){
+  $homeBody=@{title='Glasfaser, DSL, Router und WLAN aus der Praxis'}|ConvertTo-Json -Compress
+  try{Invoke-RestMethod ($site+'/wp-json/wp/v2/pages/21003') -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($homeBody)) -TimeoutSec 90|Out-Null}catch{Write-Host ('HINWEIS: Startseitentitel konnte nicht aktualisiert werden: '+$_.Exception.Message)}
+}
 $rows=@();$failures=@()
 foreach($i in $items){
   try{
