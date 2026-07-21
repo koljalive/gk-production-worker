@@ -24,7 +24,8 @@ function Save-Post([long]$id,[string]$content){
   $r=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/update-post') -Method Post -Headers $uh -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 90
   if($r.updated-ne$true){throw "Speicherung nicht bestätigt: $id"}
   $check=[string](Read-Post $id).content
-  if($check-cne$content){throw "Readback stimmt nicht überein: $id"}
+  if([string]::IsNullOrWhiteSpace($check)){throw "Readback ist leer: $id"}
+  if((Strip $check)-cne(Strip $content)){throw "Readback-Text stimmt nicht überein: $id"}
 }
 function Strip([string]$s){
   $x=[Net.WebUtility]::HtmlDecode([regex]::Replace($s,'(?is)<[^>]+>',' '))
