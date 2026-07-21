@@ -51,18 +51,18 @@ final class GK_Final_Frontend_Guard {
 
     public static function social_image($url): string {
         if (is_singular()) {
-            $slug = (string) get_post_field('post_name', get_queried_object_id());
+            $slug = self::$slug !== '' ? self::$slug : (string) get_post_field('post_name', get_queried_object_id());
             if (str_contains($slug, 'apl') || str_contains($slug, 'tae') || str_contains($slug, 'dsl')) {
-                return plugins_url('gk-render-guard/assets/apl.png');
+                return home_url('/wp-content/plugins/gk-render-guard/assets/apl.png');
             }
             if (str_contains($slug, 'gf-ap') || str_contains($slug, 'glasfaser') || str_contains($slug, 'ftth')) {
-                return plugins_url('gk-render-guard/assets/gf-ap.png');
+                return home_url('/wp-content/plugins/gk-render-guard/assets/gf-ap.png');
             }
             if (str_contains($slug, 'ont')) {
-                return plugins_url('gk-render-guard/assets/ont.png');
+                return home_url('/wp-content/plugins/gk-render-guard/assets/ont.png');
             }
             if (preg_match('/router|wlan|mesh|repeater/', $slug)) {
-                return plugins_url('gk-render-guard/assets/wlan-heimnetz.png');
+                return home_url('/wp-content/plugins/gk-render-guard/assets/wlan-heimnetz.png');
             }
         }
         return (string) $url;
