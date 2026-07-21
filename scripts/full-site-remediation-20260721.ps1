@@ -160,6 +160,13 @@ if($items.Count-lt300){throw "Unvollständige Inventur: $($items.Count) Inhalte"
 $titleIndex=@{}
 foreach($i in $items){$n=Norm $i.title;if($n-and-not$titleIndex.ContainsKey($n)){$titleIndex[$n]=$i.link}}
 if($Mode-eq'Preview'){Write-Host "FERTIG: Modus=Preview | Inventar=$($items.Count) | Vollständigkeit bestätigt";exit 0}
+# Verfügbare Steuerungsrouten für die dynamische Renderer-Bereinigung protokollieren.
+try{
+  $index=Invoke-RestMethod ($site+'/wp-json/') -TimeoutSec 90
+  foreach($rp in $index.routes.PSObject.Properties|Where-Object{$_.Name-match'(?i)(gk-control|plugin|render|option|setting|css)'}){
+    Write-Host ('ROUTE_SCHEMA '+$rp.Name+' '+($rp.Value|ConvertTo-Json -Depth 12 -Compress))
+  }
+}catch{Write-Host ('HINWEIS: Routenindex nicht lesbar: '+$_.Exception.Message)}
 # Redaktionelle Identität und Startseitentitel bereinigen.
 $profileBody=@{name='Kolja Seebauer';first_name='Kolja';last_name='Seebauer';slug='kolja-seebauer';description='Telekommunikationspraktiker und Autor von Glasfaser-Kompass.'}|ConvertTo-Json -Compress
 try{Invoke-RestMethod ($site+'/wp-json/wp/v2/users/me') -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($profileBody)) -TimeoutSec 90|Out-Null}catch{Write-Host ('HINWEIS: Autorenprofil konnte nicht aktualisiert werden: '+$_.Exception.Message)}
