@@ -127,13 +127,15 @@ foreach($kind in @('posts','pages')){
 if($items.Count-lt300){throw "Unvollständige Inventur: $($items.Count) Inhalte"}
 $titleIndex=@{}
 foreach($i in $items){$n=Norm $i.title;if($n-and-not$titleIndex.ContainsKey($n)){$titleIndex[$n]=$i.link}}
+if($Mode-eq'Preview'){Write-Host "FERTIG: Modus=Preview | Inventar=$($items.Count) | Vollständigkeit bestätigt";exit 0}
 $rows=@();$failures=@()
 foreach($i in $items){
   try{
     $old=[string](Read-Post $i.id).content
     $new=Remove-Injected $old
     $new=Fix-Links $new $titleIndex
-    $new=$new.Replace('Verantwortlich gemä §','Verantwortlich gemäß §')
+    $new=[regex]::Replace($new,'(?i)Verantwortlich\s+gem(?:ä|&auml;|&#0*228;)\s*(?:§|&sect;|&#0*167;)','Verantwortlich gemäß §')
+    $new=$new.Replace('.gk9-tarifcheck,.gkpr-affiliate{display:none!important}','')
     $new=[regex]::Replace($new,'(?is)(<section\b[^>]*>.*?</section>)(?:\s*\1)+','$1')
     $new=[regex]::Replace($new,'(?is)(<p\b[^>]*>\s*Die wichtigste Regel lautet: Anschluss, Router, Verkabelung, WLAN und Endgerät müssen getrennt betrachtet werden\.?\s*</p>)(?:\s*\1)+','$1')
     $special=Special-Article $i.slug
@@ -165,7 +167,7 @@ if($Mode-eq'Apply'){
     $public=[string](Invoke-WebRequest ($it.link+'?final_audit='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -TimeoutSec 90).Content
     if($public-match'(?is)<img\b[^>]*(?:dsl-kupfer-signalweg|ftth-signalweg|koax_huep|gk-symbol-koax)[^>]*>'){throw "Öffentlich gerendertes Altbild weiterhin vorhanden: $slug"}
     if($slug-eq'apl-und-gf-ap-unterschied'-and($public-notmatch'apl\.png'-or$public-notmatch'gf-ap\.png')){throw 'APL/Gf-AP-Vergleich nicht vollständig öffentlich.'}
-    if($slug-eq'impressum-2'-and$public-notmatch'Verantwortlich gemäß § 18 Abs\. 2 MStV'){throw 'Korrigierte Verantwortlichenangabe ist öffentlich nicht nachgewiesen.'}
+    if($slug-eq'impressum-2'-and(Strip $public)-notmatch'Verantwortlich gemäß § 18 Abs\. 2 MStV'){throw 'Korrigierte Verantwortlichenangabe ist öffentlich nicht nachgewiesen.'}
   }
 }
 $rows|Export-Csv (Join-Path $report "full-site-remediation-$Mode-$stamp.csv") -NoTypeInformation -Encoding UTF8
