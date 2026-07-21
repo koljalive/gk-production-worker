@@ -23,6 +23,10 @@ function Strip([string]$html){
   $text=[Net.WebUtility]::HtmlDecode([regex]::Replace($html,'(?is)<[^>]+>',' '))
   [regex]::Replace($text,'\s+',' ').Trim()
 }
+function Read-WpRaw([long]$id){
+  $post=Invoke-RestMethod ($site+"/wp-json/wp/v2/posts/$id`?context=edit&_fields=id,content") -Headers $wpHeaders -TimeoutSec 90
+  [string]$post.content.raw
+}
 function Save-Post([long]$id,[string]$content){
   # Der Unified-Endpunkt wurde hier bewusst nicht verwendet: Bei mehrwurzeligem
   # Artikel-HTML bestätigte er Readback, während WordPress öffentlich nur den
@@ -107,10 +111,12 @@ $targets=@(
 $rows=@()
 foreach($target in $targets){
   $id=[long]$target.id;$new=[string]$articles[$id]
-  $old=[string](Read-Post $id).content
-  if([string]::IsNullOrWhiteSpace($old)){throw "Leerer Ausgangsinhalt: $id"}
+  $old=Read-WpRaw $id
   $status=if((Strip $old)-ceq(Strip $new)){'UNCHANGED'}elseif($Mode-eq'Preview'){'READY'}else{'UPDATED'}
   if($status-eq'UPDATED'){
+    # Ein leerer Inhalt kann das Ergebnis des zuvor abgebrochenen Unified-API-
+    # Schreibversuchs sein. Die vollständigen Vorher-Backups liegen im Artefakt
+    # des Laufs 29864109547; dieser Lauf sichert zusätzlich den aktuellen Stand.
     [IO.File]::WriteAllText((Join-Path $backup ("post-$id-$($target.slug).html")),$old,[Text.UTF8Encoding]::new($false))
     Save-Post $id $new
   }
