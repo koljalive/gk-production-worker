@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GK Final Frontend Guard
  * Description: Bereinigt dynamische Altlinks, Rechtsseiten-Blöcke, Autorenanzeige und Theme-Reste nach dem Rendern.
- * Version: 1.0.2
+ * Version: 1.0.3
  * Author: IT Solutions – Kolja Seebauer
  * Requires at least: 6.4
  * Requires PHP: 8.0
@@ -26,6 +26,7 @@ final class GK_Final_Frontend_Guard {
         add_filter('rank_math/opengraph/facebook/image', [self::class, 'social_image'], PHP_INT_MAX);
         add_filter('rank_math/opengraph/twitter/image', [self::class, 'social_image'], PHP_INT_MAX);
         add_filter('rank_math/opengraph/twitter/card_type', static fn() => 'summary_large_image', PHP_INT_MAX);
+        add_action('wp_head', [self::class, 'legal_visibility_guard'], PHP_INT_MAX);
     }
 
     public static function start_buffer(): void {
@@ -35,6 +36,12 @@ final class GK_Final_Frontend_Guard {
         self::$is_front = is_front_page();
         self::$slug = is_singular() ? (string) get_post_field('post_name', get_queried_object_id()) : '';
         ob_start([self::class, 'clean_html']);
+    }
+
+    public static function legal_visibility_guard(): void {
+        $request_path = trim((string) parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
+        if (!in_array($request_path, ['impressum-2', 'datenschutz-2', 'kontakt-2'], true)) { return; }
+        echo '<style id="gk-final-legal-guard">.gk9-tarifcheck,.gkpr-affiliate,.gk9-authorbox,.gkpr-author{display:none!important}</style>';
     }
 
     public static function author_name($name): string {
