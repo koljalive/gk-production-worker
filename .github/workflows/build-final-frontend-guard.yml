@@ -19,13 +19,13 @@ jobs:
         run: |
           mkdir -p dist
           cd wordpress
-          zip -r ../dist/gk-final-frontend-guard-1.0.0.zip gk-final-frontend-guard
+          zip -r ../dist/gk-final-frontend-guard-1.0.1.zip gk-final-frontend-guard
       - name: Verify package
         run: |
-          unzip -t dist/gk-final-frontend-guard-1.0.0.zip
-          unzip -p dist/gk-final-frontend-guard-1.0.0.zip gk-final-frontend-guard/gk-final-frontend-guard.php | grep -q "Version: 1.0.0"
+          unzip -t dist/gk-final-frontend-guard-1.0.1.zip
+          unzip -p dist/gk-final-frontend-guard-1.0.1.zip gk-final-frontend-guard/gk-final-frontend-guard.php | grep -q "Version: 1.0.1"
       - uses: actions/upload-artifact@v4
         with:
-          name: gk-final-frontend-guard-1.0.0
-          path: dist/gk-final-frontend-guard-1.0.0.zip
+          name: gk-final-frontend-guard-1.0.1
+          path: dist/gk-final-frontend-guard-1.0.1.zip
           if-no-files-found: error
