@@ -144,10 +144,10 @@ foreach($i in $items){
     if($i.slug-match'^(impressum|datenschutz|kontakt)'){
       $new=[regex]::Replace($new,'(?is)<section\b[^>]*class=["''][^"'']*(?:affiliate|tarifcheck)[^"'']*["''][^>]*>.*?</section>','')
       $new=[regex]::Replace($new,'(?is)<h2[^>]*>\s*Internet an Ihrer Adresse verfügbar\?\s*</h2>.*?(?=<h2|$)','')
-      if($new-notmatch'data-gk-legal-cleanup'){$new='<style data-gk-legal-cleanup="v1">.gk9-tarifcheck,.gkpr-affiliate{display:none!important}</style>'+"`n"+$new}
     }
     $new=$new.Trim()
     $changed=$new-cne$old
+    if($changed-and(Strip $new)-ceq(Strip $old)){$changed=$false}
     if($changed-and$Mode-eq'Apply'){
       [IO.File]::WriteAllText((Join-Path $backup ("post-$($i.id)-$($i.slug).html")),$old,[Text.UTF8Encoding]::new($false))
       Save-Post $i.id $new
@@ -165,7 +165,7 @@ if($Mode-eq'Apply'){
     $public=[string](Invoke-WebRequest ($it.link+'?final_audit='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -TimeoutSec 90).Content
     if($public-match'(?is)<img\b[^>]*(?:dsl-kupfer-signalweg|ftth-signalweg|koax_huep|gk-symbol-koax)[^>]*>'){throw "Öffentlich gerendertes Altbild weiterhin vorhanden: $slug"}
     if($slug-eq'apl-und-gf-ap-unterschied'-and($public-notmatch'apl\.png'-or$public-notmatch'gf-ap\.png')){throw 'APL/Gf-AP-Vergleich nicht vollständig öffentlich.'}
-    if($slug-match'^(impressum|datenschutz)'-and$public-notmatch'data-gk-legal-cleanup="v1"'){throw "Ausblendung kommerzieller Kästen auf Pflichtseite fehlt: $slug"}
+    if($slug-eq'impressum-2'-and$public-notmatch'Verantwortlich gemäß § 18 Abs\. 2 MStV'){throw 'Korrigierte Verantwortlichenangabe ist öffentlich nicht nachgewiesen.'}
   }
 }
 $rows|Export-Csv (Join-Path $report "full-site-remediation-$Mode-$stamp.csv") -NoTypeInformation -Encoding UTF8
