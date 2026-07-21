@@ -6,15 +6,13 @@ Get-Content $EnvFile | Where-Object { $_ -match '^[^#].*=' } | ForEach-Object {
     $parts = $_ -split '=', 2
     $values[$parts[0].Trim()] = $parts[1].Trim()
 }
-foreach ($name in @('GK_SITE_URL', 'GK_UNIFIED_API_TOKEN', 'GK_CONTROL_TOKEN', 'WP_USERNAME', 'WP_APPLICATION_PASSWORD')) {
+foreach ($name in @('GK_SITE_URL', 'GK_UNIFIED_API_TOKEN', 'GK_CONTROL_TOKEN')) {
     if ([string]::IsNullOrWhiteSpace($values[$name])) { throw "$name fehlt." }
 }
 
 $site = $values.GK_SITE_URL.TrimEnd('/')
 $unifiedHeaders = @{ Authorization = 'Bearer ' + $values.GK_UNIFIED_API_TOKEN }
 $controlHeaders = @{ Authorization = 'Bearer ' + $values.GK_CONTROL_TOKEN }
-$basicPair = '{0}:{1}' -f $values.WP_USERNAME, $values.WP_APPLICATION_PASSWORD
-$basicHeaders = @{ Authorization = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($basicPair)) }
 $signalMediaId = 29146
 $fiberMediaId = 29147
 $routerMediaId = 23278
@@ -88,18 +86,6 @@ $reportDir = Join-Path $root 'reports'
 $evidenceDir = Join-Path $root 'evidence'
 New-Item $backupDir, $reportDir, $evidenceDir -ItemType Directory -Force | Out-Null
 $rows = @()
-
-$plugins = @(Invoke-RestMethod ($site + '/wp-json/wp/v2/plugins?context=edit&per_page=100') -Headers $basicHeaders -TimeoutSec 60)
-$pluginRows = @($plugins | ForEach-Object { [pscustomobject]@{ plugin = [string]$_.plugin; name = [string]$_.name; status = [string]$_.status; description = [string]$_.description.raw } })
-$pluginRows | Export-Csv (Join-Path $reportDir ("plugins-before-v2-$stamp.csv")) -NoTypeInformation -Encoding UTF8
-$injectors = @($pluginRows | Where-Object { (($_.plugin + ' ' + $_.name + ' ' + $_.description) -match '(?i)(gkkg|knowledge.?graph|objektpfad)') })
-if ($injectors.Count -ne 1) { throw "Objektpfad-Plugin nicht eindeutig: Treffer=$($injectors.Count)" }
-if ($injectors[0].status -eq 'active') {
-    $encodedPlugin = [uri]::EscapeDataString($injectors[0].plugin)
-    $payload = [Text.Encoding]::UTF8.GetBytes((@{ status = 'inactive' } | ConvertTo-Json -Compress))
-    $disabled = Invoke-RestMethod ($site + '/wp-json/wp/v2/plugins/' + $encodedPlugin) -Method Post -Headers $basicHeaders -ContentType 'application/json; charset=utf-8' -Body $payload -TimeoutSec 60
-    if ([string]$disabled.status -ne 'inactive') { throw 'Objektpfad-Plugin wurde nicht deaktiviert.' }
-}
 
 foreach ($target in $targets) {
     $item = $resolved[$target.slug]
