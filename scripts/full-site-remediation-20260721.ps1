@@ -87,6 +87,36 @@ function Topic-Figure([string]$slug,[string]$title){
   return ''
 }
 function Special-Article([string]$slug){
+  if($slug-eq'kontakt-2'){
+    return @"
+<section class="gk-clean-article">
+<h2>Kontakt zu Glasfaser-Kompass</h2>
+<p>Sie haben eine redaktionelle Frage, möchten einen fachlichen Hinweis geben oder einen Fehler melden? Schreiben Sie bitte direkt an Kolja Seebauer.</p>
+<h3>IT Solutions</h3>
+<p>Inhaber: Kolja Seebauer<br>Beisterweg 25<br>44227 Dortmund</p>
+<p><strong>Telefon:</strong> <a href="tel:+4923113700755">0231 13 70 07 55</a><br><strong>Mobil:</strong> <a href="tel:+4915122443820">0151 22 44 38 20</a><br><strong>E-Mail:</strong> <a href="mailto:kolja.seebauer@mail.de">kolja.seebauer@mail.de</a></p>
+<h2>Technische Anfragen richtig vorbereiten</h2>
+<p>Bitte nennen Sie Anschlussart, Anbieter, Routermodell, betroffene Geräte und die genaue Fehlermeldung. Veröffentlichen Sie keine Zugangsdaten, Kundennummern oder vollständigen Leitungsdaten.</p>
+<p><strong>Wichtig:</strong> Glasfaser-Kompass ist kein Netzbetreiber-Support und kann keine Leitung schalten oder Störung im Betreiber-Netz bearbeiten. Bei Ausfall oder Arbeiten an Netzabschlüssen wenden Sie sich an den zuständigen Anbieter beziehungsweise Fachbetrieb.</p>
+</section>
+"@
+  }
+  if($slug-eq'apl-tae-signalweg'){
+    return @"
+<article class="gk-clean-article">
+<h2>Der korrekte VDSL-/FTTC-Signalweg</h2>
+<p><strong>MFG mit DSLAM/MSAN → KVz → Kupfer-Zugangsnetz → APL → Endleitung → erste TAE → DSL-Router</strong></p>
+<p>Der DSLAM beziehungsweise MSAN ist die aktive Technik <strong>im</strong> Multifunktionsgehäuse. Das MFG ist deshalb keine zusätzliche Signalstufe. Der Kabelverzweiger (KVz) ist ein separater passiver Verteilpunkt des Kupfernetzes. MFG und KVz sind graue Straßengehäuse.</p>
+<h3>Die Stationen in der Praxis</h3>
+<ol><li><strong>DSLAM/MSAN im MFG:</strong> stellt das DSL-Signal bereit.</li><li><strong>KVz:</strong> verteilt die Kupferkabel passiv.</li><li><strong>APL:</strong> schließt das Betreiber-Kupfernetz am Gebäude ab.</li><li><strong>Endleitung:</strong> verbindet APL und erste TAE.</li><li><strong>Erste TAE:</strong> regulärer Anschluss- und Messpunkt in den Kundenräumen.</li><li><strong>DSL-Router:</strong> synchronisiert sein DSL-Modem mit dem Port im DSLAM/MSAN.</li></ol>
+<h2>Fehler am richtigen Abschnitt eingrenzen</h2>
+<p>Ist die Messung am APL gut, an der ersten TAE aber deutlich schlechter, liegt die Ursache häufig in Endleitung, Klemmstelle oder Dose. Sind die Werte bereits am APL auffällig, wird im Betreiber-Kupfernetz weiter eingegrenzt.</p>
+<h2>Abweichung bei ADSL</h2>
+<p>Bei älteren ADSL-Ausbauvarianten kann die aktive DSL-Technik in der Vermittlungsstelle stehen. Die dargestellte Reihenfolge bezieht sich auf den üblichen FTTC-/VDSL-Ausbau mit aktiver Technik im MFG.</p>
+<p><strong>Sicherheit:</strong> APL, KVz und MFG nicht eigenmächtig öffnen oder verändern. Arbeiten und Messungen an Netzabschlüssen gehören in die Hände des Netzbetreibers oder autorisierten Fachpersonals.</p>
+</article>
+"@
+  }
   if($slug-eq'apl-und-gf-ap-unterschied'){
     $photos=(Topic-Figure $slug 'APL und Gf-AP')
     return @"
@@ -162,12 +192,13 @@ if($failures.Count){$failures|Export-Csv (Join-Path $report "full-site-failures-
 if($Mode-eq'Apply'){
   $cache=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/clear-cache') -Method Post -Headers $uh -ContentType 'application/json' -Body '{}' -TimeoutSec 90
   if($cache.cache_cleared-ne$true){throw 'Cache-Leerung nicht bestätigt.'}
-  foreach($slug in @('apl-tae-signalweg','apl-und-gf-ap-unterschied','router-kaufen-oder-mieten-vergleich','impressum-2','datenschutz-2')){
+  foreach($slug in @('apl-tae-signalweg','apl-und-gf-ap-unterschied','router-kaufen-oder-mieten-vergleich','impressum-2','datenschutz-2','kontakt-2')){
     $it=$items|Where-Object slug -eq $slug|Select-Object -First 1
     $public=[string](Invoke-WebRequest ($it.link+'?final_audit='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -TimeoutSec 90).Content
     if($public-match'(?is)<img\b[^>]*(?:dsl-kupfer-signalweg|ftth-signalweg|koax_huep|gk-symbol-koax)[^>]*>'){throw "Öffentlich gerendertes Altbild weiterhin vorhanden: $slug"}
     if($slug-eq'apl-und-gf-ap-unterschied'-and($public-notmatch'apl\.png'-or$public-notmatch'gf-ap\.png')){throw 'APL/Gf-AP-Vergleich nicht vollständig öffentlich.'}
     if($slug-eq'impressum-2'-and(Strip $public)-notmatch'Verantwortlich gemäß § 18 Abs\. 2 MStV'){throw 'Korrigierte Verantwortlichenangabe ist öffentlich nicht nachgewiesen.'}
+    if($slug-eq'kontakt-2'-and((Strip $public)-notmatch'0231 13 70 07 55' -or (Strip $public)-notmatch'kolja\.seebauer@mail\.de')){throw 'Kontaktseite ist öffentlich nicht vollständig.'}
   }
 }
 $rows|Export-Csv (Join-Path $report "full-site-remediation-$Mode-$stamp.csv") -NoTypeInformation -Encoding UTF8
