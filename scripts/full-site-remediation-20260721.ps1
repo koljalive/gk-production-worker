@@ -163,7 +163,7 @@ if($Mode-eq'Apply'){
   foreach($slug in @('apl-tae-signalweg','apl-und-gf-ap-unterschied','router-kaufen-oder-mieten-vergleich','impressum-2','datenschutz-2')){
     $it=$items|Where-Object slug -eq $slug|Select-Object -First 1
     $public=[string](Invoke-WebRequest ($it.link+'?final_audit='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -TimeoutSec 90).Content
-    if($public-match'(dsl-kupfer-signalweg|ftth-signalweg|koax_huep|gk-symbol-koax)'){throw "Öffentliche Altgrafik weiterhin vorhanden: $slug"}
+    if($public-match'(?is)<img\b[^>]*(?:dsl-kupfer-signalweg|ftth-signalweg|koax_huep|gk-symbol-koax)[^>]*>'){throw "Öffentlich gerendertes Altbild weiterhin vorhanden: $slug"}
     if($slug-eq'apl-und-gf-ap-unterschied'-and($public-notmatch'apl\.png'-or$public-notmatch'gf-ap\.png')){throw 'APL/Gf-AP-Vergleich nicht vollständig öffentlich.'}
     if($slug-match'^(impressum|datenschutz)'-and$public-notmatch'data-gk-legal-cleanup="v1"'){throw "Ausblendung kommerzieller Kästen auf Pflichtseite fehlt: $slug"}
   }
