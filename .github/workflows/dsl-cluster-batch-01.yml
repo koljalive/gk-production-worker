@@ -19,12 +19,16 @@ jobs:
         env:
           GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
           GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
         run: .\scripts\dsl-cluster-batch-01.ps1 -Mode Preview
       - name: Apply, read back and verify live pages
         shell: pwsh
         env:
           GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
           GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
         run: .\scripts\dsl-cluster-batch-01.ps1 -Mode Apply
       - if: always()
         uses: actions/upload-artifact@v4
