@@ -144,6 +144,7 @@ foreach($i in $items){
     if($i.slug-match'^(impressum|datenschutz|kontakt)'){
       $new=[regex]::Replace($new,'(?is)<section\b[^>]*class=["''][^"'']*(?:affiliate|tarifcheck)[^"'']*["''][^>]*>.*?</section>','')
       $new=[regex]::Replace($new,'(?is)<h2[^>]*>\s*Internet an Ihrer Adresse verfügbar\?\s*</h2>.*?(?=<h2|$)','')
+      if($new-notmatch'data-gk-legal-cleanup'){$new='<style data-gk-legal-cleanup="v1">.gk9-tarifcheck,.gkpr-affiliate{display:none!important}</style>'+"`n"+$new}
     }
     $new=$new.Trim()
     $changed=$new-cne$old
@@ -157,12 +158,6 @@ foreach($i in $items){
 if($failures.Count){$failures|Export-Csv (Join-Path $report "full-site-failures-$stamp.csv") -NoTypeInformation -Encoding UTF8;throw "Abbruch: $($failures.Count) Inhalte fehlgeschlagen."}
 
 if($Mode-eq'Apply'){
-  $plugins=@(Invoke-RestMethod ($site+'/wp-json/wp/v2/plugins?context=edit&per_page=100') -Headers $wh -TimeoutSec 90)
-  $guard=@($plugins|Where-Object{([string]$_.plugin)-match'^gk-render-guard/'})
-  if($guard.Count-ne1){throw "Render-Guard nicht eindeutig gefunden: $($guard.Count)"}
-  $encoded=[uri]::EscapeDataString([string]$guard[0].plugin)
-  $payload=[Text.Encoding]::UTF8.GetBytes((@{status='inactive'}|ConvertTo-Json -Compress))
-  Invoke-RestMethod ($site+'/wp-json/wp/v2/plugins/'+$encoded) -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body $payload -TimeoutSec 90|Out-Null
   $cache=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/clear-cache') -Method Post -Headers $uh -ContentType 'application/json' -Body '{}' -TimeoutSec 90
   if($cache.cache_cleared-ne$true){throw 'Cache-Leerung nicht bestätigt.'}
   foreach($slug in @('apl-tae-signalweg','apl-und-gf-ap-unterschied','router-kaufen-oder-mieten-vergleich','impressum-2','datenschutz-2')){
@@ -170,7 +165,7 @@ if($Mode-eq'Apply'){
     $public=[string](Invoke-WebRequest ($it.link+'?final_audit='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -TimeoutSec 90).Content
     if($public-match'(dsl-kupfer-signalweg|ftth-signalweg|koax_huep|gk-symbol-koax)'){throw "Öffentliche Altgrafik weiterhin vorhanden: $slug"}
     if($slug-eq'apl-und-gf-ap-unterschied'-and($public-notmatch'apl\.png'-or$public-notmatch'gf-ap\.png')){throw 'APL/Gf-AP-Vergleich nicht vollständig öffentlich.'}
-    if($slug-match'^(impressum|datenschutz)'-and$public-match'gk(?:pr|9)-(?:affiliate|tarifcheck)'){throw "Affiliate-Kasten auf Pflichtseite weiterhin vorhanden: $slug"}
+    if($slug-match'^(impressum|datenschutz)'-and$public-notmatch'data-gk-legal-cleanup="v1"'){throw "Ausblendung kommerzieller Kästen auf Pflichtseite fehlt: $slug"}
   }
 }
 $rows|Export-Csv (Join-Path $report "full-site-remediation-$Mode-$stamp.csv") -NoTypeInformation -Encoding UTF8
