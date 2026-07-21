@@ -2,7 +2,7 @@
 /**
  * Plugin Name: GK Final Frontend Guard
  * Description: Bereinigt dynamische Altlinks, Rechtsseiten-Blöcke, Autorenanzeige und Theme-Reste nach dem Rendern.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Author: IT Solutions – Kolja Seebauer
  * Requires at least: 6.4
  * Requires PHP: 8.0
@@ -141,6 +141,17 @@ final class GK_Final_Frontend_Guard {
 
         if (self::$is_legal) {
             $html = self::strip_dynamic_sections($html);
+        }
+
+        if (self::$slug === 'dslam-erklaert') {
+            /* Ein älterer Renderer hängt diesen unvollständigen Block nach dem
+               reparierten Artikel an und überspringt darin den KVz. */
+            $html = (string) preg_replace(
+                '~<h2\b[^>]*>\s*Technischer Signalweg bei VDSL\s*</h2>.*?Bei reinen FTTH-Glasfaseranschlüssen.*?</p>~is',
+                '',
+                $html,
+                1
+            );
         }
 
         if (self::$is_front) {
