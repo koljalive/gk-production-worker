@@ -118,6 +118,7 @@ $items=@()
 foreach($kind in @('posts','pages')){
   for($page=1;$page-le20;$page++){
     try{$batch=@(Invoke-RestMethod ($site+"/wp-json/wp/v2/$kind`?status=publish&per_page=100&page=$page&_fields=id,slug,title,link") -TimeoutSec 90)}catch{if($_.Exception.Response-and[int]$_.Exception.Response.StatusCode-eq400){break}else{throw}}
+    if($batch.Count-eq1-and$batch[0]-is[Array]){$batch=@($batch[0])}
     if(-not$batch.Count){break};$items+=@($batch|ForEach-Object{[pscustomobject]@{kind=$kind;id=[long]$_.id;slug=[string]$_.slug;title=[string]$_.title.rendered;link=[string]$_.link}})
     if($batch.Count-lt100){break}
   }
