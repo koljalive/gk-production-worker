@@ -163,8 +163,8 @@ if($Mode-eq'Preview'){Write-Host "FERTIG: Modus=Preview | Inventar=$($items.Coun
 # Redaktionelle Identität und Startseitentitel bereinigen.
 $profileBody=@{name='Kolja Seebauer';first_name='Kolja';last_name='Seebauer';slug='kolja-seebauer';description='Telekommunikationspraktiker und Autor von Glasfaser-Kompass.'}|ConvertTo-Json -Compress
 try{Invoke-RestMethod ($site+'/wp-json/wp/v2/users/me') -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($profileBody)) -TimeoutSec 90|Out-Null}catch{Write-Host ('HINWEIS: Autorenprofil konnte nicht aktualisiert werden: '+$_.Exception.Message)}
-$home=$items|Where-Object id -eq 21003|Select-Object -First 1
-if($home){
+$homePage=$items|Where-Object id -eq 21003|Select-Object -First 1
+if($homePage){
   $homeBody=@{title='Glasfaser, DSL, Router und WLAN aus der Praxis'}|ConvertTo-Json -Compress
   try{Invoke-RestMethod ($site+'/wp-json/wp/v2/pages/21003') -Method Post -Headers $wh -ContentType 'application/json; charset=utf-8' -Body ([Text.Encoding]::UTF8.GetBytes($homeBody)) -TimeoutSec 90|Out-Null}catch{Write-Host ('HINWEIS: Startseitentitel konnte nicht aktualisiert werden: '+$_.Exception.Message)}
 }
