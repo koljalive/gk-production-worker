@@ -112,7 +112,7 @@ final class GK_Final_Frontend_Guard {
         }
 
         $html = (string) preg_replace(
-            '~<div class=(["\\'])ast-footer-copyright\\1><p>.*?</p>\\s*</div>~is',
+            "~<div class=([\\\"'])ast-footer-copyright\\1><p>.*?</p>\\s*</div>~is",
             '<div class="ast-footer-copyright"><p>Copyright © ' . wp_date('Y') . ' Glasfaser-Kompass</p></div>',
             $html,
             1
@@ -121,10 +121,10 @@ final class GK_Final_Frontend_Guard {
         $social = self::social_image('');
         if ($social !== '') {
             $escaped = esc_url($social);
-            $html = (string) preg_replace('~<meta\\b[^>]*(?:property|name)=(["\\'])(?:og:image|twitter:image)\\1[^>]*>\\s*~is', '', $html);
+            $html = (string) preg_replace("~<meta\\b[^>]*(?:property|name)=([\\\"'])(?:og:image|twitter:image)\\1[^>]*>\\s*~is", '', $html);
             $html = str_replace('</head>', '<meta property="og:image" content="' . $escaped . '"><meta name="twitter:image" content="' . $escaped . '"></head>', $html);
         }
-        $html = (string) preg_replace('~<meta\\b[^>]*name=(["\\'])twitter:card\\1[^>]*>\\s*~is', '', $html);
+        $html = (string) preg_replace("~<meta\\b[^>]*name=([\\\"'])twitter:card\\1[^>]*>\\s*~is", '', $html);
         $html = str_replace('</head>', '<meta name="twitter:card" content="summary_large_image"></head>', $html);
 
         return $html;
