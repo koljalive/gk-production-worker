@@ -24,10 +24,9 @@ jobs:
           $h=@{Authorization='Basic '+$basic}
           $uh=@{Authorization='Bearer '+$env:GK_UNIFIED_API_TOKEN}
           $plugin='gk-render-guard/gk-render-guard'
-          $encoded=[uri]::EscapeDataString($plugin)
           function Set-Status([string]$status){
             $body=[Text.Encoding]::UTF8.GetBytes((@{status=$status}|ConvertTo-Json -Compress))
-            Invoke-RestMethod ($site+'/wp-json/wp/v2/plugins/'+$encoded) -Method Post -Headers $h -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 60 | Out-Null
+            Invoke-RestMethod ($site+'/wp-json/wp/v2/plugins/'+$plugin) -Method Post -Headers $h -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 60 | Out-Null
           }
           function Clear-Cache {
             $r=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/clear-cache') -Method Post -Headers $uh -ContentType 'application/json' -Body '{}' -TimeoutSec 60
