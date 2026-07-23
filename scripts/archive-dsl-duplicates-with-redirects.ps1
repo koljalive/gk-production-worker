@@ -67,7 +67,7 @@ function Assert-Post([object]$Post, [long]$Id, [string]$Slug, [string]$Status) {
 
 function Get-LiveResponse([string]$Url) {
     try {
-        Invoke-WebRequest -Uri $Url -MaximumRedirection 0 -SkipHttpErrorCheck -TimeoutSec 45
+        Invoke-WebRequest -Uri $Url -MaximumRedirection 0 -SkipHttpErrorCheck -TimeoutSec 45 -Headers @{ 'Cache-Control'='no-cache'; 'Pragma'='no-cache' }
     } catch {
         if ($_.Exception.Response) { return $_.Exception.Response }
         throw
@@ -106,9 +106,16 @@ foreach ($pair in $pairs) {
         $verifySource = Read-Post $pair.Source
         Assert-Post $verifySource $pair.Source $pair.SourceSlug 'draft'
         Clear-SiteCache
-        $live = Get-LiveResponse $sourceUrl
-        $location = [string]$live.Headers.Location
-        if ([int]$live.StatusCode -ne 301 -or $location.TrimEnd('/') -cne $targetUrl.TrimEnd('/')) {
+        $live = $null
+        $location = ''
+        for ($attempt = 1; $attempt -le 12; $attempt++) {
+            $checkUrl = $sourceUrl + '?gk_redirect_check=' + $stamp + '-' + $attempt
+            $live = Get-LiveResponse $checkUrl
+            $location = [string]$live.Headers.Location
+            if ([int]$live.StatusCode -eq 301 -and $location.StartsWith($targetUrl, [StringComparison]::OrdinalIgnoreCase)) { break }
+            if ($attempt -lt 12) { Start-Sleep -Seconds 5 }
+        }
+        if ([int]$live.StatusCode -ne 301 -or -not $location.StartsWith($targetUrl, [StringComparison]::OrdinalIgnoreCase)) {
             Invoke-Wp "$site/wp-json/wp/v2/posts/$($pair.Source)" 'POST' @{ status = 'publish' } | Out-Null
             Clear-SiteCache
             throw "Redirect-Prüfung fehlgeschlagen; Quelle wurde zurückveröffentlicht: $sourceUrl -> $([int]$live.StatusCode) $location"
