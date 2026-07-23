@@ -84,8 +84,9 @@ foreach ($pair in $pairs) {
     $sourceUrl = "$site/$($pair.SourceSlug)/"
     $targetUrl = "$site/$($pair.TargetSlug)/"
     $before = Get-LiveResponse $sourceUrl
-    if ([int]$before.StatusCode -ne 200) {
-        throw "Alt-URL liefert vor Änderung nicht 200: $sourceUrl ($([int]$before.StatusCode))"
+    $beforeLocation = [string]$before.Headers.Location
+    if ([int]$before.StatusCode -ne 301 -or -not $beforeLocation.StartsWith($targetUrl, [StringComparison]::OrdinalIgnoreCase)) {
+        throw "Redirect-Vorbedingung fehlgeschlagen: $sourceUrl -> $([int]$before.StatusCode) $beforeLocation"
     }
 
     $source | ConvertTo-Json -Depth 30 | Set-Content (Join-Path $backupDir "source-$($pair.Source).json") -Encoding UTF8
