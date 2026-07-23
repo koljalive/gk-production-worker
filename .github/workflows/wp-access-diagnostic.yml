@@ -5,6 +5,8 @@ on:
     branches: [agent/wp-recovery]
     paths:
       - .github/workflows/wp-access-diagnostic.yml
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
