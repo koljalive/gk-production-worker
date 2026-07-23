@@ -1,0 +1,46 @@
+name: WordPress Access Diagnostic
+
+on:
+  push:
+    branches: [agent/wp-recovery]
+    paths:
+      - .github/workflows/wp-access-diagnostic.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify protected WordPress API access
+        shell: bash
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$GK_SITE_URL"
+          test -n "$GK_UNIFIED_API_TOKEN"
+          base="${GK_SITE_URL%/}"
+          health_code="$(curl --silent --show-error --output health.json --write-out '%{http_code}' \
+            --header "Authorization: Bearer $GK_UNIFIED_API_TOKEN" \
+            "$base/wp-json/gk-unified-api/v1/health")"
+          test "$health_code" = "200"
+          read_code="$(curl --silent --show-error --output post.json --write-out '%{http_code}' \
+            --request POST \
+            --header "Authorization: Bearer $GK_UNIFIED_API_TOKEN" \
+            --header 'Content-Type: application/json' \
+            --data '{"id":20313}' \
+            "$base/wp-json/gk-unified-api/v1/read-post")"
+          test "$read_code" = "200"
+          python - <<'PY'
+          import json
+          h=json.load(open("health.json",encoding="utf-8-sig"))
+          p=json.load(open("post.json",encoding="utf-8-sig"))
+          print("HEALTH_OK", bool(h.get("ok")))
+          print("POST_ID", p.get("id"))
+          print("POST_STATUS", p.get("status"))
+          PY
