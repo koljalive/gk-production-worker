@@ -1,0 +1,37 @@
+name: Restore Pre-Change WordPress Revisions
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - recovery/rollback_today.py
+      - .github/workflows/wp-revision-rollback.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wp-revision-rollback
+  cancel-in-progress: false
+
+jobs:
+  rollback:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore and verify pre-change revisions
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: python recovery/rollback_today.py
+      - name: Preserve rollback evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wordpress-pre-change-rollback
+          path: recovery-output/**
+          if-no-files-found: warn
