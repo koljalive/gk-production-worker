@@ -29,4 +29,4 @@ jobs:
           path: reports/**
           if-no-files-found: error
 
-# rerun after final dedup
+# final rerun after remaining structured-block cleanup
