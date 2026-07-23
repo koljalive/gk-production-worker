@@ -66,11 +66,21 @@ function Assert-Post([object]$Post, [long]$Id, [string]$Slug, [string]$Status) {
 }
 
 function Get-LiveResponse([string]$Url) {
+    $handler = [Net.Http.HttpClientHandler]::new()
+    $handler.AllowAutoRedirect = $false
+    $client = [Net.Http.HttpClient]::new($handler)
     try {
-        Invoke-WebRequest -Uri $Url -MaximumRedirection 0 -SkipHttpErrorCheck -TimeoutSec 45 -Headers @{ 'Cache-Control'='no-cache'; 'Pragma'='no-cache' }
-    } catch {
-        if ($_.Exception.Response) { return $_.Exception.Response }
-        throw
+        $client.Timeout = [TimeSpan]::FromSeconds(45)
+        $client.DefaultRequestHeaders.CacheControl = [Net.Http.Headers.CacheControlHeaderValue]::new()
+        $client.DefaultRequestHeaders.CacheControl.NoCache = $true
+        $response = $client.GetAsync($Url).GetAwaiter().GetResult()
+        return [pscustomobject]@{
+            StatusCode = [int]$response.StatusCode
+            Headers = @{ Location = if ($response.Headers.Location) { $response.Headers.Location.ToString() } else { '' } }
+        }
+    } finally {
+        $client.Dispose()
+        $handler.Dispose()
     }
 }
 
