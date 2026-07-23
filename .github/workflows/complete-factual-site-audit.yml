@@ -1,0 +1,80 @@
+name: Complete Factual Site Audit
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - .github/workflows/complete-factual-site-audit.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: complete-factual-site-audit
+  cancel-in-progress: false
+jobs:
+  audit-and-publish:
+    runs-on: windows-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Build and test
+        shell: pwsh
+        run: |
+          dotnet build GkProductionWorker.sln -c Release -warnaserror
+          dotnet run --project tests/GkProductionWorker.Tests -c Release
+      - name: Prepare production configuration
+        shell: pwsh
+        run: |
+          Copy-Item config.example.json config.json
+      - name: Verify connections
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_API_BASE_URL: ${{ secrets.GK_SITE_URL }}/wp-json/gk-site-audit/v1/
+          GK_API_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: dotnet run --project src/GkProductionWorker -c Release -- doctor --config config.json
+      - name: Process complete audit queue
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_API_BASE_URL: ${{ secrets.GK_SITE_URL }}/wp-json/gk-site-audit/v1/
+          GK_API_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          $ErrorActionPreference='Stop'
+          for($batch=1;$batch -le 40;$batch++){
+            Write-Host "BATCH $batch"
+            $output = dotnet run --project src/GkProductionWorker -c Release -- publish --confirm JA --limit 10 --config config.json 2>&1
+            $output | Write-Host
+            if($LASTEXITCODE -ne 0){throw "Production Worker failed in batch $batch"}
+            $line = ($output | Select-String 'Fertig:' | Select-Object -Last 1).Line
+            if($line -match 'Fertig:\s+0\s+geprüft'){break}
+          }
+      - name: Final status
+        if: always()
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_API_BASE_URL: ${{ secrets.GK_SITE_URL }}/wp-json/gk-site-audit/v1/
+          GK_API_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: dotnet run --project src/GkProductionWorker -c Release -- status --config config.json
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: complete-factual-site-audit
+          path: |
+            reports/**
+            logs/**
+            backups/**
+            state/**
+          if-no-files-found: warn
