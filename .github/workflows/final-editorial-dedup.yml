@@ -1,0 +1,35 @@
+name: Final Editorial Deduplication
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths:
+      - scripts/final-deduplicate-editorial-blocks.ps1
+      - .github/workflows/final-editorial-dedup.yml
+permissions:
+  contents: read
+jobs:
+  deduplicate:
+    runs-on: windows-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preview
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: .\scripts\final-deduplicate-editorial-blocks.ps1 -Mode Preview
+      - name: Apply with readback
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: .\scripts\final-deduplicate-editorial-blocks.ps1 -Mode Apply
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-editorial-dedup
+          path: |
+            reports/**
+            backups/**
+          if-no-files-found: warn
