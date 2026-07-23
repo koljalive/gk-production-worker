@@ -1,0 +1,37 @@
+name: Archive DSL Duplicates With Redirects
+
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - scripts/archive-dsl-duplicates-with-redirects.ps1
+      - .github/workflows/archive-dsl-duplicates-with-redirects.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  archive:
+    runs-on: windows-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preview and apply guarded redirects
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: |
+          .\scripts\archive-dsl-duplicates-with-redirects.ps1 -Mode Preview
+          .\scripts\archive-dsl-duplicates-with-redirects.ps1 -Mode Apply -Confirm 'DSL DUBLETTEN ARCHIVIEREN'
+      - name: Upload backups and reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsl-redirect-archive
+          path: |
+            backups/dsl-redirect-archive-*/**
+            reports/dsl-redirect-archive-*.csv
+          if-no-files-found: error
