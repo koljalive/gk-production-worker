@@ -1,0 +1,31 @@
+name: Social Publishing Access Diagnostic
+
+on:
+  push:
+    branches: [agent/wp-cleanup]
+    paths:
+      - diagnostics/social_access.py
+      - .github/workflows/social-access-diagnostic.yml
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspect social publishing access
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+          META_ACCESS_TOKEN: ${{ secrets.META_ACCESS_TOKEN }}
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+          IG_BUSINESS_ACCOUNT_ID: ${{ secrets.IG_BUSINESS_ACCOUNT_ID }}
+          META_APP_ID: ${{ secrets.META_APP_ID }}
+          META_APP_SECRET: ${{ secrets.META_APP_SECRET }}
+        run: python diagnostics/social_access.py
