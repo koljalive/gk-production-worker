@@ -1,0 +1,20 @@
+name: Read Factual Audit Progress
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths: [.github/workflows/read-factual-audit-progress.yml]
+permissions:
+  contents: read
+jobs:
+  status:
+    runs-on: windows-latest
+    steps:
+      - shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+        run: |
+          $site=$env:GK_SITE_URL.TrimEnd('/')
+          $h=@{Authorization='Bearer '+$env:GK_SITE_AUDIT_TOKEN}
+          $s=Invoke-RestMethod ($site+'/wp-json/gk-site-audit/v1/status') -Headers $h -TimeoutSec 60
+          Write-Host ('AUDIT_STATUS='+($s|ConvertTo-Json -Depth 12 -Compress))
