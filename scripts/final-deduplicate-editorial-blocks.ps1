@@ -124,6 +124,44 @@ function Remove-Exact-Duplicate-Paragraphs([string]$html, [ref]$changed) {
   })
 }
 
+function Remove-Exact-Duplicate-StructuredBlocks([string]$html, [ref]$changed) {
+  $value = $html
+  foreach ($pattern in @(
+    '(?is)<article\b[^>]*class=["''][^"'']*(?:card|related)[^"'']*["''][^>]*>.*?</article>',
+    '(?is)<h2\b[^>]*>.*?</h2>\s*<table\b[^>]*>.*?</table>'
+  )) {
+    $seen = New-Object 'Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
+    $value = [regex]::Replace($value, $pattern, {
+      param($match)
+      $key = Visible-Text $match.Value
+      if ($key.Length -lt 30 -or $seen.Add($key)) {
+        return $match.Value
+      }
+      $changed.Value = $true
+      return ''
+    })
+  }
+  $value
+}
+
+function Remove-Duplicate-Internal-List-Links([string]$html, [ref]$changed) {
+  $seen = New-Object 'Collections.Generic.HashSet[string]' ([StringComparer]::OrdinalIgnoreCase)
+  [regex]::Replace($html, '(?is)<li\b[^>]*>.*?</li>', {
+    param($match)
+    $href = [Net.WebUtility]::HtmlDecode(
+      [regex]::Match($match.Value, '(?is)href\s*=\s*["''](?<url>[^"'']+)["'']').Groups['url'].Value
+    ).TrimEnd('/')
+    if (-not $href -or $href -notmatch '^https://glasfaser-kompass\.de/') {
+      return $match.Value
+    }
+    if ($seen.Add($href)) {
+      return $match.Value
+    }
+    $changed.Value = $true
+    return ''
+  })
+}
+
 $items = @()
 foreach ($kind in @('posts','pages')) {
   for ($page = 1; $page -le 20; $page++) {
@@ -169,6 +207,10 @@ foreach ($item in $items) {
   $updated = Rename-Duplicate-Headings $updated ([ref]$headingChanged)
   $paragraphChanged = $false
   $updated = Remove-Exact-Duplicate-Paragraphs $updated ([ref]$paragraphChanged)
+  $structuredChanged = $false
+  $updated = Remove-Exact-Duplicate-StructuredBlocks $updated ([ref]$structuredChanged)
+  $listLinkChanged = $false
+  $updated = Remove-Duplicate-Internal-List-Links $updated ([ref]$listLinkChanged)
   $updated = $updated.Trim()
 
   if ($updated -ceq $original) {
@@ -190,6 +232,8 @@ foreach ($item in $items) {
     sources_merged = $sourceChanged
     headings_renamed = $headingChanged
     paragraphs_removed = $paragraphChanged
+    structured_blocks_removed = $structuredChanged
+    duplicate_list_links_removed = $listLinkChanged
     mojibake_repaired = $mojibakeChanged
   })
 }
