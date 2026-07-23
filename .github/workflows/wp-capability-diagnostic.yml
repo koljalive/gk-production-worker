@@ -1,0 +1,38 @@
+name: WordPress Capability Diagnostic
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  capabilities:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Test available protected routes
+        shell: bash
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: |
+          set -euo pipefail
+          base="${GK_SITE_URL%/}"
+          bearer="Authorization: Bearer $GK_UNIFIED_API_TOKEN"
+          health="$(curl -sS -o health.json -w '%{http_code}' -H "$bearer" "$base/wp-json/gk-unified-api/v1/health")"
+          read_post="$(curl -sS -o read-post.json -w '%{http_code}' -X POST -H "$bearer" -H 'Content-Type: application/json' --data '{"id":20313}' "$base/wp-json/gk-unified-api/v1/read-post")"
+          read_page="$(curl -sS -o read-page.json -w '%{http_code}' -X POST -H "$bearer" -H 'Content-Type: application/json' --data '{"id":21004}' "$base/wp-json/gk-unified-api/v1/read-page")"
+          basic_posts="NO_CREDS"
+          basic_pages="NO_CREDS"
+          if [ -n "$WP_USERNAME" ] && [ -n "$WP_APPLICATION_PASSWORD" ]; then
+            basic_posts="$(curl -sS -o basic-post.json -w '%{http_code}' -u "$WP_USERNAME:$WP_APPLICATION_PASSWORD" "$base/wp-json/wp/v2/posts/20313?context=edit")"
+            basic_pages="$(curl -sS -o basic-page.json -w '%{http_code}' -u "$WP_USERNAME:$WP_APPLICATION_PASSWORD" "$base/wp-json/wp/v2/pages/21004?context=edit")"
+          fi
+          printf 'HEALTH=%s\nREAD_POST=%s\nREAD_PAGE=%s\nBASIC_POST=%s\nBASIC_PAGE=%s\n' "$health" "$read_post" "$read_page" "$basic_posts" "$basic_pages"
+          test "$health" = 200
+          test "$read_post" = 200
