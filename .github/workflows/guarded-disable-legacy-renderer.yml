@@ -43,13 +43,13 @@ jobs:
             Set-Status 'inactive'
             Clear-Cache
             Start-Sleep -Seconds 5
-            $home=Get-Html '/'
+            $homeHtml=Get-Html '/'
             $dslam=Get-Html '/dslam-erklaert/'
             $router=Get-Html '/router-im-keller/'
             $asset=Invoke-WebRequest ($site+'/wp-content/plugins/gk-render-guard/assets/apl.png?renderer_check=1') -UseBasicParsing -TimeoutSec 60
-            if($home-notmatch'Praxiswissen aus dem Telekommunikations-Alltag'){throw 'Stored premium homepage is not public'}
-            if($home-notmatch'Wobei brauchen Sie Hilfe'){throw 'Homepage entry paths missing'}
-            if($home-match'Einordnung von Gf-AP, Gf-TA, ONT und Router\.</p>\s*</article>\s*<article'){throw 'Generic repeated homepage cards remain'}
+            if($homeHtml-notmatch'Praxiswissen aus dem Telekommunikations-Alltag'){throw 'Stored premium homepage is not public'}
+            if($homeHtml-notmatch'Wobei brauchen Sie Hilfe'){throw 'Homepage entry paths missing'}
+            if($homeHtml-match'Einordnung von Gf-AP, Gf-TA, ONT und Router\.</p>\s*</article>\s*<article'){throw 'Generic repeated homepage cards remain'}
             if($dslam-notmatch'Der korrekte FTTC-/VDSL-Signalweg'){throw 'DSLAM specialist repair missing'}
             if($router-notmatch'Routerstandort zuerst bewerten|Router im Keller'){throw 'Router article missing after deactivation'}
             if([int]$asset.StatusCode-ne200){throw 'Specialist image asset unavailable'}
