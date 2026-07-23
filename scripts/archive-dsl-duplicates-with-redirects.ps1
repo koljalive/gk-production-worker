@@ -8,7 +8,7 @@ if ($Mode -eq 'Apply' -and $Confirm -cne 'DSL DUBLETTEN ARCHIVIEREN') {
     throw 'Bestätigung fehlt.'
 }
 
-foreach ($name in @('GK_SITE_URL','WP_USERNAME','WP_APPLICATION_PASSWORD')) {
+foreach ($name in @('GK_SITE_URL','GK_UNIFIED_API_TOKEN','WP_USERNAME','WP_APPLICATION_PASSWORD')) {
     if ([string]::IsNullOrWhiteSpace((Get-Item "env:$name" -ErrorAction SilentlyContinue).Value)) {
         throw "$name fehlt."
     }
@@ -51,6 +51,12 @@ function Invoke-Wp([string]$Uri, [string]$Method = 'GET', [object]$Body = $null)
 
 function Read-Post([long]$Id) {
     Invoke-Wp "$site/wp-json/wp/v2/posts/$Id`?context=edit"
+}
+
+function Clear-SiteCache {
+    $cacheHeaders = @{ Authorization = "Bearer $($env:GK_UNIFIED_API_TOKEN)" }
+    $result = Invoke-RestMethod -Uri "$site/wp-json/gk-unified-api/v1/clear-cache" -Method Post -Headers $cacheHeaders -ContentType 'application/json; charset=utf-8' -Body '{}' -TimeoutSec 60
+    if ($result.cache_cleared -ne $true) { throw 'Cache-Leerung wurde nicht bestätigt.' }
 }
 
 function Assert-Post([object]$Post, [long]$Id, [string]$Slug, [string]$Status) {
@@ -99,10 +105,12 @@ foreach ($pair in $pairs) {
 
         $verifySource = Read-Post $pair.Source
         Assert-Post $verifySource $pair.Source $pair.SourceSlug 'draft'
+        Clear-SiteCache
         $live = Get-LiveResponse $sourceUrl
         $location = [string]$live.Headers.Location
         if ([int]$live.StatusCode -ne 301 -or $location.TrimEnd('/') -cne $targetUrl.TrimEnd('/')) {
             Invoke-Wp "$site/wp-json/wp/v2/posts/$($pair.Source)" 'POST' @{ status = 'publish' } | Out-Null
+            Clear-SiteCache
             throw "Redirect-Prüfung fehlgeschlagen; Quelle wurde zurückveröffentlicht: $sourceUrl -> $([int]$live.StatusCode) $location"
         }
         $status = 'ARCHIVED_AND_301_VERIFIED'
