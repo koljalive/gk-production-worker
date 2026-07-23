@@ -18,9 +18,8 @@ def clean(slug,need,legacy):
   if not rows:continue
   item=rows[0];html=item["content"].get("raw",item["content"].get("rendered",""))
   for token in legacy:
-   pattern=r"<figure\b[^>]*>.*?"+re.escape(token)+r".*?</figure>"
-   while re.search(pattern,html,flags=re.I|re.S):
-    html=re.sub(pattern,"",html,count=1,flags=re.I|re.S)
+   pattern=r"<figure\b[^>]*>(?:(?!</figure>)[\s\S])*?"+re.escape(token)+r"(?:(?!</figure>)[\s\S])*?</figure>"
+   html=re.sub(pattern,"",html,flags=re.I)
   if need not in html:raise RuntimeError("Required replacement missing: "+slug)
   call(f"/wp-json/wp/v2/{kind}/{item['id']}","POST",{"content":html})
   verify=call(f"/wp-json/wp/v2/{kind}/{item['id']}?context=edit")["content"]["raw"]
