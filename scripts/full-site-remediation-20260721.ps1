@@ -220,3 +220,5 @@ if($Mode-eq'Apply'){
 }
 $rows|Export-Csv (Join-Path $report "full-site-remediation-$Mode-$stamp.csv") -NoTypeInformation -Encoding UTF8
 Write-Host ("FERTIG: Modus=$Mode | Inventar=$($items.Count) | Geändert="+@($rows|Where-Object changed).Count+" | Fehler=0")
+
+# Abschlusslauf erneut ausgelöst am 2026-07-23
