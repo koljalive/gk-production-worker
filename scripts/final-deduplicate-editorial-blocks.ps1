@@ -46,8 +46,7 @@ function Repair-Mojibake([string]$html) {
   $value = $html
   $replacements = [ordered]@{
     'Ã¤' = 'ä'; 'Ã¶' = 'ö'; 'Ã¼' = 'ü'; 'Ã„' = 'Ä'; 'Ã–' = 'Ö'; 'Ãœ' = 'Ü'
-    'ÃŸ' = 'ß'; 'Â ' = ' '; 'Â§' = '§'; 'â€“' = '–'; 'â€”' = '—'
-    'â€ž' = '„'; 'â€œ' = '“'; 'â€˜' = '‘'; 'â€™' = '’'; 'â€¦' = '…'
+    'ÃŸ' = 'ß'; 'Â ' = ' '; 'Â§' = '§'
   }
   foreach ($entry in $replacements.GetEnumerator()) {
     $value = $value.Replace([string]$entry.Key, [string]$entry.Value)
