@@ -1,0 +1,70 @@
+name: Guarded Disable Legacy Renderer
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths: [.github/workflows/guarded-disable-legacy-renderer.yml]
+permissions:
+  contents: read
+jobs:
+  disable:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          $ErrorActionPreference='Stop'
+          $site=$env:GK_SITE_URL.TrimEnd('/')
+          $basic=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($env:WP_USERNAME+':'+$env:WP_APPLICATION_PASSWORD))
+          $h=@{Authorization='Basic '+$basic}
+          $uh=@{Authorization='Bearer '+$env:GK_UNIFIED_API_TOKEN}
+          $plugin='gk-render-guard/gk-render-guard'
+          function Set-Status([string]$status){
+            $body=[Text.Encoding]::UTF8.GetBytes((@{status=$status}|ConvertTo-Json -Compress))
+            Invoke-RestMethod ($site+'/wp-json/wp/v2/plugins/'+$plugin) -Method Post -Headers $h -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 60 | Out-Null
+          }
+          function Clear-Cache {
+            $r=Invoke-RestMethod ($site+'/wp-json/gk-unified-api/v1/clear-cache') -Method Post -Headers $uh -ContentType 'application/json' -Body '{}' -TimeoutSec 60
+            if($r.cache_cleared-ne$true){throw 'Cache clear not confirmed'}
+          }
+          function Get-Html([string]$path){
+            return [string](Invoke-WebRequest ($site+$path+'?renderer_check='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -Headers @{'Cache-Control'='no-cache'} -TimeoutSec 90).Content
+          }
+          $before=Get-Html '/'
+          # Deactivate the obsolete renderer even when a later guard currently masks it.
+          # Its directory and image assets remain available while inactive.
+          $rollback=$true
+          try{
+            Set-Status 'inactive'
+            Clear-Cache
+            Start-Sleep -Seconds 5
+            $homeHtml=Get-Html '/'
+            $dslam=Get-Html '/dslam-erklaert/'
+            $router=Get-Html '/router-im-keller/'
+            $asset=Invoke-WebRequest ($site+'/wp-content/plugins/gk-render-guard/assets/apl.png?renderer_check=1') -UseBasicParsing -TimeoutSec 60
+            if($homeHtml-notmatch'Praxiswissen aus dem Telekommunikations-Alltag'){throw 'Stored premium homepage is not public'}
+            if($homeHtml-notmatch'Wobei brauchen Sie Hilfe'){throw 'Homepage entry paths missing'}
+            if($homeHtml-match'Einordnung von Gf-AP, Gf-TA, ONT und Router\.</p>\s*</article>\s*<article'){throw 'Generic repeated homepage cards remain'}
+            if($dslam-notmatch'Der korrekte FTTC-/VDSL-Signalweg'){throw 'DSLAM specialist repair missing'}
+            if($router-notmatch'Routerstandort zuerst bewerten|Router im Keller'){throw 'Router article missing after deactivation'}
+            if([int]$asset.StatusCode-ne200){throw 'Specialist image asset unavailable'}
+            foreach($slug in @('tal-erklaert-voll','kvz-erklaert-voll','hvt-erklaert-voll','vectoring-erklaert-voll','supervectoring-erklaert-voll','erste-tae-pruefen-2','apl-pruefen-2')){
+              try{Invoke-WebRequest ($site+'/'+$slug+'/?renderer_check=1') -MaximumRedirection 0 -UseBasicParsing -TimeoutSec 30|Out-Null;throw "Redirect unexpectedly returned 200: $slug"}catch{
+                $code=if($_.Exception.Response){[int]$_.Exception.Response.StatusCode}else{0}
+                if($code-ne301){throw "Redirect failed for $slug with HTTP $code"}
+              }
+            }
+            $rollback=$false
+            Write-Host 'FERTIG: GK Render Guard 1.4.0 deaktiviert; gespeicherte Premium-Inhalte, Fachartikel, Assets und 301-Weiterleitungen live verifiziert.'
+          } finally {
+            if($rollback){
+              Set-Status 'active'
+              Clear-Cache
+              Write-Host 'ROLLBACK: GK Render Guard reactivated.'
+            }
+          }

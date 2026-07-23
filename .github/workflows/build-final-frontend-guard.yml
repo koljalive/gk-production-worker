@@ -1,0 +1,31 @@
+name: Build GK Final Frontend Guard
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths:
+      - wordpress/gk-final-frontend-guard/**
+      - .github/workflows/build-final-frontend-guard.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate PHP
+        run: php -l wordpress/gk-final-frontend-guard/gk-final-frontend-guard.php
+      - name: Build installable ZIP
+        run: |
+          mkdir -p dist
+          cd wordpress
+          zip -r ../dist/gk-final-frontend-guard-1.1.7.zip gk-final-frontend-guard
+      - name: Verify package
+        run: |
+          unzip -t dist/gk-final-frontend-guard-1.1.7.zip
+          unzip -p dist/gk-final-frontend-guard-1.1.7.zip gk-final-frontend-guard/gk-final-frontend-guard.php | grep -q "Version: 1.1.7"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gk-final-frontend-guard-1.1.7
+          path: dist/gk-final-frontend-guard-1.1.7.zip
+          if-no-files-found: error

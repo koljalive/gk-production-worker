@@ -1,0 +1,40 @@
+name: DSL Cluster Batch 01
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths:
+      - scripts/dsl-cluster-batch-01.ps1
+      - .github/workflows/dsl-cluster-batch-01.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  repair:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preview targeted DSL batch
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: .\scripts\dsl-cluster-batch-01.ps1 -Mode Preview
+      - name: Apply, read back and verify live pages
+        shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: .\scripts\dsl-cluster-batch-01.ps1 -Mode Apply
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsl-cluster-batch-01
+          path: |
+            reports/**
+            backups/**
+          if-no-files-found: warn

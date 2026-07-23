@@ -1,0 +1,32 @@
+name: Post Cleanup Stored Content Audit
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths: [.github/workflows/post-cleanup-content-audit.yml]
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: windows-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_SITE_AUDIT_TOKEN: ${{ secrets.GK_SITE_AUDIT_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_SITE_AUDIT_TOKEN=$env:GK_SITE_AUDIT_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@ | Set-Content .env -Encoding UTF8
+          .\scripts\audit-live-content.ps1 -EnvFile .\.env
+      - uses: actions/upload-artifact@v4
+        with:
+          name: post-cleanup-stored-content-audit
+          path: reports/**
+          if-no-files-found: error
+
+# final rerun after remaining structured-block cleanup
