@@ -93,14 +93,6 @@ foreach ($pair in $pairs) {
 
     $status = 'READY'
     if ($Mode -eq 'Apply') {
-        Invoke-Wp "$site/wp-json/rankmath/v1/updateRedirection" 'POST' @{
-            objectID = $pair.Source
-            objectType = 'post'
-            hasRedirect = $true
-            redirectionUrl = $targetUrl
-            redirectionType = '301'
-        } | Out-Null
-
         Invoke-Wp "$site/wp-json/wp/v2/posts/$($pair.Source)" 'POST' @{ status = 'draft' } | Out-Null
 
         $verifySource = Read-Post $pair.Source
