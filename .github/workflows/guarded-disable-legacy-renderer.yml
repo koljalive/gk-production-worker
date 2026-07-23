@@ -37,8 +37,8 @@ jobs:
             return [string](Invoke-WebRequest ($site+$path+'?renderer_check='+[DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()) -UseBasicParsing -Headers @{'Cache-Control'='no-cache'} -TimeoutSec 90).Content
           }
           $before=Get-Html '/'
-          $wasActive=$before -notmatch 'Praxiswissen aus dem Telekommunikations-Alltag'
-          if(-not$wasActive){Write-Host 'Legacy renderer already inactive or no longer overriding homepage.';exit 0}
+          # Deactivate the obsolete renderer even when a later guard currently masks it.
+          # Its directory and image assets remain available while inactive.
           $rollback=$true
           try{
             Set-Status 'inactive'
