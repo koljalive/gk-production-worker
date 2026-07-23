@@ -1,0 +1,32 @@
+name: Publish Verified Website Visuals
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - assets/gk-ftth-cable-photorealistic.png
+      - assets/gk-telecom-technician-photorealistic.png
+      - recovery/fix_verified_visuals.py
+      - .github/workflows/wp-verified-visuals.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wp-verified-visuals
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload, publish and verify corrected visuals
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: python recovery/fix_verified_visuals.py
