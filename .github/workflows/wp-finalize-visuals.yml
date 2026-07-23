@@ -1,0 +1,26 @@
+name: Finalize Corrected Website Visuals
+
+on:
+  push:
+    branches: [agent/wp-cleanup]
+    paths:
+      - .github/workflows/wp-finalize-visuals.yml
+
+permissions:
+  contents: read
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish replacement images and remove superseded visuals
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: |
+          python recovery/fix_verified_visuals.py
+          python recovery/remove_legacy_visuals.py
