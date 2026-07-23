@@ -1,0 +1,27 @@
+name: Remove Wrong PON Image
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fix:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - shell: powershell
+        run: .\scripts\remove-wrong-pon-image.ps1 -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pon-image-removal-backup
+          path: backups/media-*/**
+          if-no-files-found: warn

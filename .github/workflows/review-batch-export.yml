@@ -1,0 +1,37 @@
+name: Review Batch Export
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - .github/workflows/review-batch-export.yml
+      - scripts/export-review-batch.ps1
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/review-batch-export.yml
+      - scripts/export-review-batch.ps1
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare protected configuration
+        shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - name: Export DSL duplicate review batch
+        shell: powershell
+        run: .\scripts\export-review-batch.ps1 -EnvFile .\.env -Ids 75,1006,3011,3012,3013,3014,3015,3016,3017,5001,5002,5003,5004,5005,5006,5007,5008,9004,9005,11004,12003
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dsl-duplicate-review-batch
+          path: review-batch/**
+          if-no-files-found: error

@@ -1,0 +1,30 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  verify:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Restore
+        run: dotnet restore GkProductionWorker.sln
+      - name: Build
+        run: dotnet build GkProductionWorker.sln -c Release --no-restore /warnaserror
+      - name: Contract and safety tests
+        run: dotnet run --project tests/GkProductionWorker.Tests/GkProductionWorker.Tests.csproj -c Release --no-build
+      - name: Amazon affiliate migration self-test
+        shell: powershell
+        run: .\scripts\update-amazon-affiliate-links.ps1 -SelfTest
+      - name: Publish Windows x64
+        run: dotnet publish src/GkProductionWorker/GkProductionWorker.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o artifacts/win-x64
+      - name: Add migration script to artifact
+        shell: powershell
+        run: Copy-Item .\scripts\update-amazon-affiliate-links.ps1 .\artifacts\win-x64\
+      - uses: actions/upload-artifact@v4
+        with:
+          name: gk-production-worker-win-x64
+          path: artifacts/win-x64/**

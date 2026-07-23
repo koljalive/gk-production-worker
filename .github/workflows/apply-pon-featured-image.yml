@@ -1,0 +1,21 @@
+name: Apply PON Featured Image
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  apply:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_CONTROL_TOKEN: ${{ secrets.GK_CONTROL_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_CONTROL_TOKEN=$env:GK_CONTROL_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - shell: powershell
+        run: .\scripts\apply-pon-featured-image.ps1 -EnvFile .\.env

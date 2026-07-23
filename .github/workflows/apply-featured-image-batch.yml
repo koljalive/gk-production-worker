@@ -1,0 +1,33 @@
+name: Apply Featured Image Batch
+on:
+  workflow_dispatch:
+concurrency:
+  group: featured-image-batch
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  apply:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_CONTROL_TOKEN: ${{ secrets.GK_CONTROL_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_CONTROL_TOKEN=$env:GK_CONTROL_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - shell: powershell
+        run: .\scripts\apply-featured-image-batch.ps1 -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: featured-image-batch-backup
+          path: backups/featured-batch-*/**
+          if-no-files-found: warn

@@ -1,0 +1,48 @@
+{
+  "Api": {
+    "BaseUrl": "https://glasfaser-kompass.de/wp-json/gk-site-audit/v1/",
+    "Token": "",
+    "StatusPath": "status",
+    "QueuePath": "items?page={page}&per_page={limit}",
+    "ItemPath": "item/{id}",
+    "UpdatePaths": [
+      "content/{id}",
+      "items/{id}",
+      "audit/{id}/content"
+    ],
+    "ResultPath": "audit-result",
+    "HttpTimeoutSeconds": 90,
+    "MaxRetries": 4
+  },
+  "OpenAI": {
+    "ApiKey": "",
+    "Model": "gpt-4.1",
+    "Endpoint": "https://api.openai.com/v1/responses",
+    "Enabled": true,
+    "OfficialDomains": [
+      "bundesnetzagentur.de", "telekom.de", "vodafone.de", "o2online.de",
+      "1und1.de", "deutsche-glasfaser.de", "dns-net.de", "verbraucherzentrale.de",
+      "avm.de", "ieee.org", "itu.int"
+    ]
+  },
+  "UnifiedApi": {
+    "BaseUrl": "https://glasfaser-kompass.de/wp-json/gk-unified-api/v1/",
+    "Token": "",
+    "HealthPath": "health",
+    "ReadPath": "read-post",
+    "UpdatePath": "update-post",
+    "ClearCachePath": "clear-cache"
+  },
+  "Worker": {
+    "BatchSize": 10,
+    "PollSeconds": 60,
+    "MaxItemsPerRun": 300,
+    "PostIds": [],
+    "RequireTwoOfficialSources": true,
+    "CheckImagesAndAiObjects": true,
+    "ReportsDirectory": "reports",
+    "LogsDirectory": "logs",
+    "StateDirectory": "state",
+    "BackupsDirectory": "backups"
+  }
+}

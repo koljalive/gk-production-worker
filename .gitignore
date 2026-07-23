@@ -1,0 +1,10 @@
+bin/
+obj/
+artifacts/
+config.json
+.env
+logs/
+reports/
+state/
+*.user
+

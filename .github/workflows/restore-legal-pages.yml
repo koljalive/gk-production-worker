@@ -1,0 +1,32 @@
+name: Restore Legal Pages
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - .github/workflows/restore-legal-pages.yml
+      - scripts/restore-legal-pages.ps1
+permissions:
+  contents: read
+jobs:
+  apply:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+      - shell: powershell
+        run: .\scripts\restore-legal-pages.ps1 -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legal-pages-backup
+          path: backups/**
+          if-no-files-found: warn

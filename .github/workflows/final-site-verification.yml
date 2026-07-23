@@ -1,0 +1,30 @@
+# Post-repair verification 2026-07-20
+name: Final Site Verification
+concurrency:
+  group: final-site-verification-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/final-site-verification.yml
+      - scripts/audit-object-paths-visuals.ps1
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+        run: |
+          "GK_SITE_URL=$env:GK_SITE_URL"|Set-Content .env -Encoding UTF8
+          .\scripts\audit-object-paths-visuals.ps1 -EnvFile .\.env
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-site-verification
+          path: reports/*
+          if-no-files-found: error

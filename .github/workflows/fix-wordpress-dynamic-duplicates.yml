@@ -1,0 +1,38 @@
+name: Fix WordPress Dynamic Duplicates
+# Rewrite authorization recheck: 2026-07-20
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - scripts/identify-and-fix-dynamic-plugin.ps1
+      - .github/workflows/fix-wordpress-dynamic-duplicates.yml
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/identify-and-fix-dynamic-plugin.ps1
+      - .github/workflows/fix-wordpress-dynamic-duplicates.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fix:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Identify and remove duplicate renderer
+        shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: |
+          .\scripts\identify-and-fix-dynamic-plugin.ps1 -Mode Inspect
+          .\scripts\identify-and-fix-dynamic-plugin.ps1 -Mode Apply
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wordpress-dynamic-duplicate-audit
+          path: reports/*.csv
+          if-no-files-found: warn

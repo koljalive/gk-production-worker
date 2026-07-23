@@ -1,0 +1,37 @@
+name: Fix Dynamic Render Blocks
+on:
+  push:
+    branches: [agent/verified-production-worker]
+    paths:
+      - scripts/fix-dynamic-render-blocks.ps1
+      - .github/workflows/fix-dynamic-render-blocks.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fix:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - shell: powershell
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_CONTROL_TOKEN: ${{ secrets.GK_CONTROL_TOKEN }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          @"
+          GK_SITE_URL=$env:GK_SITE_URL
+          GK_CONTROL_TOKEN=$env:GK_CONTROL_TOKEN
+          GK_UNIFIED_API_TOKEN=$env:GK_UNIFIED_API_TOKEN
+          "@|Set-Content .env -Encoding UTF8
+          .\scripts\fix-dynamic-render-blocks.ps1 -Mode Preview -EnvFile .\.env
+          .\scripts\fix-dynamic-render-blocks.ps1 -Mode Apply -Confirm "DYNAMISCHE DOPPELBLOECKE BEREINIGEN" -EnvFile .\.env
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dynamic-render-block-fix
+          path: |
+            reports/dynamic-dedup-*.csv
+            backups/dynamic-dedup-*/**
+          if-no-files-found: error
