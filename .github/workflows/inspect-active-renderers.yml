@@ -1,0 +1,28 @@
+name: Inspect Active WordPress Renderers
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths: [.github/workflows/inspect-active-renderers.yml]
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          WP_USERNAME: ${{ secrets.WP_USERNAME }}
+          WP_APPLICATION_PASSWORD: ${{ secrets.WP_APPLICATION_PASSWORD }}
+        run: |
+          $ErrorActionPreference='Stop'
+          $site=$env:GK_SITE_URL.TrimEnd('/')
+          $basic=[Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($env:WP_USERNAME+':'+$env:WP_APPLICATION_PASSWORD))
+          $h=@{Authorization='Basic '+$basic}
+          $raw=Invoke-WebRequest ($site+'/wp-json/wp/v2/plugins?context=edit&per_page=100') -Headers $h -UseBasicParsing
+          Write-Host ('PLUGIN_HTTP='+[int]$raw.StatusCode)
+          Write-Host ('PLUGIN_RAW='+$raw.Content)
+          $front=Invoke-WebRequest ($site+'/wp-json/wp/v2/pages/21003?context=edit&_fields=id,slug,status,title,content') -Headers $h -UseBasicParsing
+          Write-Host ('FRONT_HTTP='+[int]$front.StatusCode)
+          Write-Host ('FRONT_RAW='+$front.Content)
