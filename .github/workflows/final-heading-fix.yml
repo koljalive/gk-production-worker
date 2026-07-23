@@ -1,0 +1,42 @@
+name: Final Heading Fix
+on:
+  push:
+    branches: [agent/full-site-remediation-20260721]
+    paths: [.github/workflows/final-heading-fix.yml]
+permissions:
+  contents: read
+jobs:
+  fix:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - shell: pwsh
+        env:
+          GK_SITE_URL: ${{ secrets.GK_SITE_URL }}
+          GK_UNIFIED_API_TOKEN: ${{ secrets.GK_UNIFIED_API_TOKEN }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $site = $env:GK_SITE_URL.TrimEnd('/')
+          $headers = @{ Authorization = 'Bearer ' + $env:GK_UNIFIED_API_TOKEN }
+          function Call([string]$path, [hashtable]$payload) {
+            $body = [Text.Encoding]::UTF8.GetBytes(($payload | ConvertTo-Json -Compress))
+            Invoke-RestMethod ($site + $path) -Method Post -Headers $headers -ContentType 'application/json; charset=utf-8' -Body $body -TimeoutSec 90
+          }
+          $id = 14007
+          $original = [string](Call '/wp-json/gk-unified-api/v1/read-post' @{ id = $id }).content
+          $seen = 0
+          $pattern = '(?is)<h2\b(?<attrs>[^>]*)>\s*Praktische Entscheidungsmatrix\s*</h2>'
+          $updated = [regex]::Replace($original, $pattern, {
+            param($m)
+            $script:seen++
+            if ($script:seen -eq 2) { return '<h2' + $m.Groups['attrs'].Value + '>Entscheidungsmatrix nach Anschlussart</h2>' }
+            $m.Value
+          })
+          if ($seen -ne 2 -or $updated -ceq $original) { throw "Unerwartete Trefferzahl: $seen" }
+          $result = Call '/wp-json/gk-unified-api/v1/update-post' @{ id = $id; content = $updated }
+          if ($result.updated -ne $true) { throw 'Speicherung nicht bestätigt.' }
+          $readback = [string](Call '/wp-json/gk-unified-api/v1/read-post' @{ id = $id }).content
+          if ($readback -cne $updated) { throw 'Readback stimmt nicht bytegenau überein.' }
+          $cache = Call '/wp-json/gk-unified-api/v1/clear-cache' @{}
+          if ($cache.cache_cleared -ne $true) { throw 'Cache-Leerung nicht bestätigt.' }
+          Write-Host 'FERTIG: Letzte doppelte Überschrift korrigiert und readback-verifiziert.'
