@@ -24,7 +24,7 @@ function Get-Findings([long]$Id, [string]$Title, [string]$Html) {
     foreach ($m in $markers) { Add 'TEMPLATE_MARKER' 'medium' $m.Groups['marker'].Value.Trim() }
     $badEncodingChars = @([char]0x00C3, [char]0x00C2, [char]0xFFFD)
     if (@($badEncodingChars | Where-Object { $Html.Contains([string]$_) }).Count -gt 0) { Add 'MOJIBAKE' 'high' 'Verdächtige fehlerhafte Zeichenkodierung gefunden.' }
-    if ([regex]::IsMatch($Html, '(?is)<p\b[^>]*>.*?<p\b')) { Add 'NESTED_PARAGRAPH' 'high' 'Verschachtelte Absatz-Tags gefunden.' }
+    if ([regex]::IsMatch($Html, '(?is)<p\b[^>]*>(?:(?!</p>).)*<p\b')) { Add 'NESTED_PARAGRAPH' 'high' 'Verschachtelte Absatz-Tags gefunden.' }
     if ([regex]::IsMatch($Html, '(?is)<h[1-6]\b[^>]*>\s*(?:&nbsp;)?\s*</h[1-6]>')) { Add 'EMPTY_HEADING' 'medium' 'Leere Überschrift gefunden.' }
     $related = [regex]::Matches($Html, '(?is)<a\b[^>]*href\s*=\s*["''](?<url>https?://[^"'']+)["''][^>]*>') | ForEach-Object { [Net.WebUtility]::HtmlDecode($_.Groups['url'].Value).TrimEnd('/') }
     foreach ($d in @($related | Group-Object | Where-Object Count -gt 1)) { Add 'DUPLICATE_LINK_TARGET' 'medium' ("Ziel mehrfach verlinkt ({0}x): {1}" -f $d.Count,$d.Name) }
