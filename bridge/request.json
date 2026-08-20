@@ -1,8 +1,10 @@
 {
-  "request_id": "gk-set-router-real-featured-20260820-1",
-  "action": "post",
-  "path": "/wp/v2/pages/21020",
-  "body": {
-    "featured_media": 29397
-  }
+  "request_id": "gk-real-photo-wifi-ap-20260820-1",
+  "action": "upload_media_url",
+  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Access-point-wireless.jpg",
+  "filename": "wlan-access-point-reales-foto.jpg",
+  "title": "WLAN Access Point an der Wand – reales Foto",
+  "alt_text": "Realer WLAN Access Point an einer Innenwand",
+  "caption": "Foto: Rodrigo César / Wikimedia Commons / Public Domain",
+  "description": "Reales Foto eines an der Wand montierten WLAN Access Points. Quelle: Wikimedia Commons, Public Domain. Original: https://commons.wikimedia.org/wiki/File:Access-point-wireless.jpg"
 }
