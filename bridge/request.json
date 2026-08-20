@@ -1,5 +1,8 @@
 {
-  "request_id": "gk-real-image-inventory-20260820-1",
-  "action": "get",
-  "path": "/wp/v2/media?context=edit&per_page=50&search=reales&_fields=id,title,source_url,alt_text,mime_type,media_details"
+  "request_id": "gk-set-telekom-readiness-real-splice-20260820-1",
+  "action": "post",
+  "path": "/wp/v2/pages/21967",
+  "body": {
+    "featured_media": 29398
+  }
 }
