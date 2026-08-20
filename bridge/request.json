@@ -1,5 +1,5 @@
 {
-  "request_id": "bootstrap-site-info-20260820-8",
+  "request_id": "audit-frontpage-21003-20260820-1",
   "action": "get",
-  "path": "/"
+  "path": "/wp/v2/pages/21003?context=edit"
 }
