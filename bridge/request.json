@@ -1,5 +1,5 @@
 {
-  "request_id": "gk10-audit-router-kaufberatung-21020-20260820-1",
+  "request_id": "gk10-audit-router-kaufberatung-21020-20260820-2",
   "action": "get",
   "path": "/wp/v2/pages/21020?context=edit&_fields=id,modified,status,link,slug,title,featured_media,content,excerpt,meta"
 }
