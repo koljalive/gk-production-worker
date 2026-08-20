@@ -7,7 +7,6 @@ $ErrorActionPreference = 'Stop'
 
 $repoUrl = 'https://github.com/koljalive/gk-production-worker'
 $installDir = 'C:\GKBridgeRunner'
-$taskName = 'GK Bridge Runner'
 $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent().Name
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
@@ -43,29 +42,38 @@ if (-not (Test-Path (Join-Path $installDir '.runner'))) {
 $runCmd = Join-Path $installDir 'run.cmd'
 if (-not (Test-Path $runCmd)) { throw "Runner-Startdatei fehlt: $runCmd" }
 
-Write-Host 'Installing persistent Windows logon task for current user...'
-$action = New-ScheduledTaskAction -Execute 'cmd.exe' -Argument ('/c "{0}"' -f $runCmd) -WorkingDirectory $installDir
-$trigger = New-ScheduledTaskTrigger -AtLogOn -User $currentUser
-$principal = New-ScheduledTaskPrincipal -UserId $currentUser -LogonType Interactive -RunLevel Highest
-$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit ([TimeSpan]::Zero) -RestartCount 20 -RestartInterval (New-TimeSpan -Minutes 1)
-Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force | Out-Null
+# Remove the scheduled-task variant. On some Windows setups the runner listener exits
+# immediately when hosted by Task Scheduler despite a successful task result.
+Unregister-ScheduledTask -TaskName 'GK Bridge Runner' -Confirm:$false -ErrorAction SilentlyContinue
 
+# Persist at interactive user logon through the Startup folder instead.
+$startupDir = [Environment]::GetFolderPath('Startup')
+$launcher = Join-Path $startupDir 'GK-Bridge-Runner.cmd'
+$launcherContent = "@echo off`r`ncd /d `"$installDir`"`r`ncall `"$runCmd`"`r`n"
+[IO.File]::WriteAllText($launcher, $launcherContent, (New-Object Text.ASCIIEncoding))
+
+# Stop stale listener/worker processes and launch one visible/minimized listener now.
 Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
     Where-Object { $_.ExecutablePath -like "$installDir*" -and $_.Name -match 'Runner\.(Listener|Worker)\.exe' } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 
-Start-ScheduledTask -TaskName $taskName
-Start-Sleep -Seconds 5
+Start-Process -FilePath 'cmd.exe' -ArgumentList @('/c', ('"{0}"' -f $launcher)) -WindowStyle Minimized
+Start-Sleep -Seconds 6
 
-$task = Get-ScheduledTask -TaskName $taskName
-$info = Get-ScheduledTaskInfo -TaskName $taskName
+$listener = Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
+    Where-Object { $_.ExecutablePath -like "$installDir*" -and $_.Name -eq 'Runner.Listener.exe' } |
+    Select-Object -First 1
 
 Write-Host ''
 Write-Host 'GK Bridge Runner eingerichtet.' -ForegroundColor Green
 Write-Host "Repository: $repoUrl"
 Write-Host 'Label: gk-bridge'
 Write-Host "Runner directory: $installDir"
-Write-Host "Scheduled task: $taskName"
-Write-Host "Task user: $currentUser"
-Write-Host "Task state: $($task.State)"
-Write-Host "Last task result: $($info.LastTaskResult)"
+Write-Host "Startup launcher: $launcher"
+Write-Host "Runner user: $currentUser"
+if ($listener) {
+    Write-Host "Listener state: RUNNING (PID $($listener.ProcessId))" -ForegroundColor Green
+} else {
+    Write-Host 'Listener state: NOT RUNNING' -ForegroundColor Red
+    Write-Host 'Der Runner-Listener ist unmittelbar wieder beendet worden.'
+}
