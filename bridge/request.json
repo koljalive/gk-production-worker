@@ -1,10 +1,5 @@
 {
-  "request_id": "gk-real-photo-fiber-splice-20260820-1",
-  "action": "upload_media_url",
-  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fiber_Splice.jpg",
-  "filename": "glasfaser-spleissmuffe-reales-foto.jpg",
-  "title": "Geöffnete Glasfaser-Spleißmuffe – reales Foto",
-  "alt_text": "Geöffnete reale Glasfaser-Spleißmuffe mit sichtbaren Glasfasern",
-  "caption": "Foto: Dhaluza / Wikimedia Commons",
-  "description": "Reales Foto einer geöffneten Glasfaser-Spleißmuffe. Quelle: Wikimedia Commons. Original: https://commons.wikimedia.org/wiki/File:Fiber_Splice.jpg"
+  "request_id": "gk-real-image-inventory-20260820-1",
+  "action": "get",
+  "path": "/wp/v2/media?context=edit&per_page=50&search=reales&_fields=id,title,source_url,alt_text,mime_type,media_details"
 }
