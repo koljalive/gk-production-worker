@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+
+actions:
 
 concurrency:
   group: gk-live-bridge
@@ -21,8 +23,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Execute guarded WordPress request
         shell: powershell
@@ -32,21 +32,11 @@ jobs:
             -RequestPath "$env:GITHUB_WORKSPACE\bridge\request.json" `
             -ResultPath "$env:GITHUB_WORKSPACE\bridge\result.json"
 
-      - name: Commit result
+      - name: Upload bridge result
         if: always()
-        shell: powershell
-        run: |
-          $ErrorActionPreference = 'Stop'
-          Set-Location $env:GITHUB_WORKSPACE
-          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
-          git config user.name "gk-live-bridge"
-          git config user.email "gk-live-bridge@users.noreply.github.com"
-          if (Test-Path 'bridge/result.json') {
-            git pull --rebase origin main
-            git add bridge/result.json
-            git diff --cached --quiet
-            if ($LASTEXITCODE -ne 0) {
-              git commit -m "GK bridge result [skip ci]"
-              git push origin HEAD:main
-            }
-          }
+        uses: actions/upload-artifact@v4
+        with:
+          name: gk-bridge-result-${{ github.run_id }}
+          path: bridge/result.json
+          if-no-files-found: error
+          retention-days: 7
