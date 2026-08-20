@@ -1,0 +1,57 @@
+name: GK Real Image Upgrade
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/real-image-upgrade-trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gk-real-image-upgrade
+  cancel-in-progress: false
+
+jobs:
+  upgrade:
+    runs-on: self-hosted
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Apply verified real-photo upgrades
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          & "$env:GITHUB_WORKSPACE\bridge\Run-GKRealImageUpgrade.ps1"
+
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gk-real-image-upgrade-${{ github.run_id }}
+          path: bridge/real-image-upgrade-result.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Persist report
+        if: success()
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          Set-Location $env:GITHUB_WORKSPACE
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk-image-upgrade"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk-image-upgrade@users.noreply.github.com"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" fetch origin main
+          git -c safe.directory="$env:GITHUB_WORKSPACE" reset --soft origin/main
+          git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/real-image-upgrade-result.json
+          git -c safe.directory="$env:GITHUB_WORKSPACE" diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK real-image upgrade result [skip ci]"
+            git -c safe.directory="$env:GITHUB_WORKSPACE" push origin HEAD:main
+          }
