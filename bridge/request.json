@@ -1,5 +1,8 @@
 {
-  "request_id": "gk-verify-real-photo-imports-20260820-1",
-  "action": "get",
-  "path": "/wp/v2/media?context=edit&per_page=20&search=reales&_fields=id,date,modified,slug,title,caption,alt_text,mime_type,source_url,media_details"
+  "request_id": "gk-set-router-real-featured-20260820-1",
+  "action": "post",
+  "path": "/wp/v2/pages/21020",
+  "body": {
+    "featured_media": 29397
+  }
 }
