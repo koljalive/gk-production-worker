@@ -1,8 +1,5 @@
 {
-  "request_id": "gk-force-home-real-ftth-20260820-1906",
-  "action": "post",
-  "path": "/wp/v2/pages/21003",
-  "body": {
-    "featured_media": 29401
-  }
+  "request_id": "gk-inspect-hubs-20260820-1936",
+  "action": "get",
+  "path": "/wp/v2/pages?context=edit&per_page=100&_fields=id,slug,title,featured_media"
 }
