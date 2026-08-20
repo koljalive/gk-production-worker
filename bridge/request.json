@@ -1,10 +1,10 @@
 {
-  "request_id": "gk-real-photo-ftth-termination-20260820-1",
+  "request_id": "gk-real-photo-fiber-installation-20260820-1",
   "action": "upload_media_url",
-  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fiber_to_the_Home-aansluiting_van_E-fiber.jpg",
-  "filename": "ftth-abschluss-reales-foto.jpg",
-  "title": "FTTH-Abschluss – reales Foto",
-  "alt_text": "Realer FTTH-Glasfaserabschluss an einer Wand",
-  "caption": "Foto: Maxmust / Wikimedia Commons / CC BY-SA 4.0",
-  "description": "Reales Foto eines FTTH-Abschlusses. Quelle: Wikimedia Commons, Lizenz CC BY-SA 4.0. Original: https://commons.wikimedia.org/wiki/File:Fiber_to_the_Home-aansluiting_van_E-fiber.jpg"
+  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fibre_To_The_Home_Sankt_Johann_in_Tirol.JPG",
+  "filename": "glasfaser-buendelrohre-reales-foto.jpg",
+  "title": "Glasfaser-Bündelrohre vor dem Einbau – reales Foto",
+  "alt_text": "Reale Glasfaser-Bündelrohre vor dem Einbau",
+  "caption": "Foto: HellasX / Wikimedia Commons / Public Domain",
+  "description": "Reales Foto von Glasfaser-Bündelrohren vor dem Einbau. Quelle: Wikimedia Commons, Public Domain. Original: https://commons.wikimedia.org/wiki/File:Fibre_To_The_Home_Sankt_Johann_in_Tirol.JPG"
 }
