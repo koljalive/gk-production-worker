@@ -1,0 +1,46 @@
+name: GK Live Bridge
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/request.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gk-live-bridge
+  cancel-in-progress: false
+
+jobs:
+  execute:
+    runs-on: [self-hosted, Windows, X64, gk-bridge]
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Execute guarded WordPress request
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & "$env:GITHUB_WORKSPACE\bridge\Invoke-GKLiveBridge.ps1" `
+            -RequestPath "$env:GITHUB_WORKSPACE\bridge\request.json" `
+            -ResultPath "$env:GITHUB_WORKSPACE\bridge\result.json"
+
+      - name: Commit result
+        if: always()
+        shell: powershell
+        run: |
+          Set-Location $env:GITHUB_WORKSPACE
+          git config user.name "gk-live-bridge"
+          git config user.email "gk-live-bridge@users.noreply.github.com"
+          git add bridge/result.json
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "GK bridge result [skip ci]"
+            git push origin HEAD:main
+          }
