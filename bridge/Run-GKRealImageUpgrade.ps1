@@ -29,7 +29,7 @@ function Set-Featured([int]$PageId,[int]$MediaId,[string]$Label,[hashtable]$Head
   $backupDir='C:\GKBridge\backups';New-Item -ItemType Directory -Force -Path $backupDir|Out-Null
   $stamp=Get-Date -Format 'yyyyMMdd-HHmmss';$backup=Join-Path $backupDir ("page-$PageId-$stamp-before-image.json")
   [IO.File]::WriteAllText($backup,($before|ConvertTo-Json -Depth 10),(New-Object Text.UTF8Encoding($false)))
-  $after=Invoke-WpJson 'POST' ("/wp/v2/pages/$PageId") $Headers ([ordered]@{featured_media=$MediaId})
+  $null=Invoke-WpJson 'POST' ("/wp/v2/pages/$PageId") $Headers ([ordered]@{featured_media=$MediaId})
   $verify=Invoke-WpJson 'GET' ("/wp/v2/pages/$PageId?context=edit&_fields=id,modified,status,link,title,featured_media") $Headers
   if([int]$verify.featured_media-ne$MediaId){throw "Featured-media verification failed on page $PageId"}
   $Report.Value+=@([ordered]@{page_id=$PageId;title=[string]$verify.title.raw;url=[string]$verify.link;old_featured_media=[int]$before.featured_media;new_featured_media=$MediaId;media_label=$Label;backup=$backup;verified=$true})
@@ -43,14 +43,23 @@ $headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variab
 $router=Find-Media 'FRITZ!Box 7590 – reales Routerfoto' $headers
 $ftth=Find-Media 'FTTH-Abschluss – reales Foto' $headers
 $fiber=Find-Media 'Glasfaser-Bündelrohre vor dem Einbau – reales Foto' $headers
+$wifi=Find-Media 'WLAN Access Point an der Wand – reales Foto' $headers
+$splice=Find-Media 'Geöffnete Glasfaser-Spleißmuffe – reales Foto' $headers
+
 $changes=@()
 Set-Featured 21020 ([int]$router.id) 'real-router-photo' $headers ([ref]$changes)
+Set-Featured 21006 ([int]$router.id) 'real-router-photo' $headers ([ref]$changes)
 Set-Featured 21003 ([int]$ftth.id) 'real-ftth-photo' $headers ([ref]$changes)
 Set-Featured 21004 ([int]$ftth.id) 'real-ftth-photo' $headers ([ref]$changes)
 Set-Featured 21022 ([int]$ftth.id) 'real-ftth-photo' $headers ([ref]$changes)
 Set-Featured 21066 ([int]$fiber.id) 'real-fiber-installation-photo' $headers ([ref]$changes)
+Set-Featured 21007 ([int]$wifi.id) 'real-wifi-access-point-photo' $headers ([ref]$changes)
+Set-Featured 21021 ([int]$wifi.id) 'real-wifi-access-point-photo' $headers ([ref]$changes)
+Set-Featured 21041 ([int]$wifi.id) 'real-wifi-access-point-photo' $headers ([ref]$changes)
+Set-Featured 21043 ([int]$wifi.id) 'real-wifi-access-point-photo' $headers ([ref]$changes)
+Set-Featured 21967 ([int]$splice.id) 'real-fiber-splice-photo' $headers ([ref]$changes)
 
-$out=[ordered]@{generated_at_utc=(Get-Date).ToUniversalTime().ToString('o');success=$true;media=[ordered]@{router=$router;ftth=$ftth;fiber=$fiber};changes=$changes}
+$out=[ordered]@{generated_at_utc=(Get-Date).ToUniversalTime().ToString('o');success=$true;media=[ordered]@{router=$router;ftth=$ftth;fiber=$fiber;wifi=$wifi;splice=$splice};changes=$changes}
 $path=Join-Path $env:GITHUB_WORKSPACE 'bridge/real-image-upgrade-result.json'
 [IO.File]::WriteAllText($path,($out|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)))
 Write-Host "Real-image upgrade complete: $($changes.Count) verified page changes"
