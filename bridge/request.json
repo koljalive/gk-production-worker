@@ -1,5 +1,5 @@
 {
-  "request_id": "gk10-find-wifi-photo-20260820-2037",
+  "request_id": "gk10-rankmath-audit-20260820-2039",
   "action": "get",
-  "path": "/wp/v2/media?context=edit&per_page=50&search=Access-point-wireless&_fields=id,title,source_url,alt_text,mime_type"
+  "path": "/wp-abilities/v1/abilities/rank-math/audit-site-seo/run"
 }
