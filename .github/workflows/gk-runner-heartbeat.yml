@@ -24,6 +24,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           Set-Location $env:GITHUB_WORKSPACE
+          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
           $payload = [ordered]@{
             ok = $true
             machine = $env:COMPUTERNAME
@@ -34,8 +35,10 @@ jobs:
           [IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/heartbeat-result.json'), $payload, (New-Object Text.UTF8Encoding($false)))
           git config user.name "gk-runner-heartbeat"
           git config user.email "gk-runner-heartbeat@users.noreply.github.com"
+          git pull --rebase origin main
           git add bridge/heartbeat-result.json
-          if (-not (git diff --cached --quiet)) {
+          git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
             git commit -m "GK runner heartbeat [skip ci]"
             git push origin HEAD:main
           }
