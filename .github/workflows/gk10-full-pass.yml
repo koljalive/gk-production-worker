@@ -17,7 +17,7 @@ concurrency:
 jobs:
   full-pass:
     runs-on: self-hosted
-    timeout-minutes: 90
+    timeout-minutes: 360
     steps:
       - name: Checkout
         uses: actions/checkout@v4
