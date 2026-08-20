@@ -84,7 +84,7 @@ function Invoke-Wp {
 }
 
 $result = [ordered]@{
-    bridge_version = '1.0.0'
+    bridge_version = '1.0.1'
     executed_at_utc = (Get-Date).ToUniversalTime().ToString('o')
     request = $null
     success = $false
@@ -106,7 +106,6 @@ try {
     if ([string]::IsNullOrWhiteSpace($path)) { throw 'Request path is empty.' }
     if (-not $path.StartsWith('/')) { $path = '/' + $path }
 
-    # Restrict writes to known WordPress REST families. Reads may use any wp-json relative path.
     if ($action -eq 'post') {
         $allowedWrite = $path -match '^/wp/v2/(pages|posts)/\d+(\?.*)?$' -or
                         $path -match '^/wp-abilities/v1/abilities/[A-Za-z0-9\-_/]+/run(\?.*)?$'
@@ -137,11 +136,10 @@ try {
     $base = 'https://glasfaser-kompass.de/wp-json'
     $url = $base + $path
 
-    # Guard and local backup before page/post writes.
     if ($action -eq 'post' -and $path -match '^/wp/v2/(pages|posts)/(\d+)') {
         $type = $Matches[1]
         $id = [int]$Matches[2]
-        $readUrl = "$base/wp/v2/$type/$id?context=edit"
+        $readUrl = '{0}/wp/v2/{1}/{2}?context=edit' -f $base,$type,$id
         $before = Invoke-Wp -Method 'GET' -Url $readUrl -Headers $headers
         if (-not $before.ok) { throw "Preflight read failed HTTP $($before.status): $($before.body)" }
 
@@ -171,7 +169,6 @@ try {
     $body = $null
     if ($action -eq 'post') {
         if (-not ($request.PSObject.Properties.Name -contains 'body')) { throw 'POST request requires body.' }
-        # Convert PSCustomObject recursively to normal PowerShell object accepted by ConvertTo-Json.
         $body = $request.body
     }
 
@@ -179,11 +176,11 @@ try {
     $result.response = $response
     if (-not $response.ok) { throw "WordPress request failed HTTP $($response.status): $($response.body)" }
 
-    # Verify content writes when body.content was supplied.
     if ($action -eq 'post' -and $path -match '^/wp/v2/(pages|posts)/(\d+)' -and ($request.body.PSObject.Properties.Name -contains 'content')) {
         $type = $Matches[1]
         $id = [int]$Matches[2]
-        $verify = Invoke-Wp -Method 'GET' -Url "$base/wp/v2/$type/$id?context=edit" -Headers $headers
+        $verifyUrl = '{0}/wp/v2/{1}/{2}?context=edit' -f $base,$type,$id
+        $verify = Invoke-Wp -Method 'GET' -Url $verifyUrl -Headers $headers
         if (-not $verify.ok) { throw "Verification read failed HTTP $($verify.status): $($verify.body)" }
         $verifyObj = $verify.body | ConvertFrom-Json
         $actualRaw = [string]$verifyObj.content.raw
