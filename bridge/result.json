@@ -1,27 +1,19 @@
 {
     "bridge_version":  "1.1.0",
-    "executed_at_utc":  "2026-08-20T16:33:19.2665544Z",
+    "executed_at_utc":  "2026-08-20T16:40:25.4752408Z",
     "request":  {
-                    "request_id":  "gk-real-photo-router-7590-20260820-1",
-                    "action":  "upload_media_url",
-                    "source_url":  "https://commons.wikimedia.org/wiki/Special:Redirect/file/FRITZ!Box_7590-Image29.jpg",
-                    "filename":  "fritzbox-7590-reales-routerfoto.jpg",
-                    "title":  "FRITZ!Box 7590 – reales Routerfoto",
-                    "alt_text":  "Rückseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-Anschlüssen",
-                    "caption":  "Foto: Janus / Wikimedia Commons / CC BY-SA 3.0",
-                    "description":  "Reales Produktfoto einer FRITZ!Box 7590. Quelle: Wikimedia Commons, Lizenz CC BY-SA 3.0. Original: https://commons.wikimedia.org/wiki/File:FRITZ!Box_7590-Image29.jpg"
+                    "request_id":  "gk-verify-real-photo-imports-20260820-1",
+                    "action":  "get",
+                    "path":  "/wp/v2/media?context=edit\u0026per_page=20\u0026search=reales\u0026_fields=id,date,modified,slug,title,caption,alt_text,mime_type,source_url,media_details"
                 },
     "success":  true,
     "preflight":  null,
     "response":  {
                      "ok":  true,
-                     "status":  201,
-                     "media_id":  29397,
-                     "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/fritzbox-7590-reales-routerfoto-scaled.jpg",
-                     "mime_type":  "image/jpeg",
-                     "alt_text":  "Rückseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-Anschlüssen",
-                     "caption":  "\u003cp\u003eFoto: Janus / Wikimedia Commons / CC BY-SA 3.0\u003c/p\u003e\n",
-                     "bytes":  4487392
+                     "status":  200,
+                     "content_type":  "application/json; charset=UTF-8",
+                     "body":  "[{\"id\":29397,\"date\":\"2026-08-20T16:33:33\",\"modified\":\"2026-08-20T16:33:37\",\"slug\":\"fritzbox-7590-reales-routerfoto\",\"title\":{\"raw\":\"FRITZ!Box 7590 \\u2013 reales Routerfoto\",\"rendered\":\"FRITZ!Box 7590 \\u2013 reales Routerfoto\"},\"caption\":{\"raw\":\"Foto: Janus \\/ Wikimedia Commons \\/ CC BY-SA 3.0\",\"rendered\":\"\u003cp\u003eFoto: Janus \\/ Wikimedia Commons \\/ CC BY-SA 3.0\u003c\\/p\u003e\\n\"},\"alt_text\":\"R\\u00fcckseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-Anschl\\u00fcssen\",\"mime_type\":\"image\\/jpeg\",\"media_details\":{\"width\":2560,\"height\":1420,\"file\":\"2026\\/08\\/fritzbox-7590-reales-routerfoto-scaled.jpg\",\"filesize\":331056,\"sizes\":{\"medium\":{\"file\":\"fritzbox-7590-reales-routerfoto-300x166.jpg\",\"width\":300,\"height\":166,\"filesize\":25635,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-300x166.jpg\"},\"large\":{\"file\":\"fritzbox-7590-reales-routerfoto-1024x568.jpg\",\"width\":1024,\"height\":568,\"filesize\":76556,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-1024x568.jpg\"},\"thumbnail\":{\"file\":\"fritzbox-7590-reales-routerfoto-150x150.jpg\",\"width\":150,\"height\":150,\"filesize\":22133,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-150x150.jpg\"},\"medium_large\":{\"file\":\"fritzbox-7590-reales-routerfoto-768x426.jpg\",\"width\":768,\"height\":426,\"filesize\":54485,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-768x426.jpg\"},\"1536x1536\":{\"file\":\"fritzbox-7590-reales-routerfoto-1536x852.jpg\",\"width\":1536,\"height\":852,\"filesize\":138670,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-1536x852.jpg\"},\"2048x2048\":{\"file\":\"fritzbox-7590-reales-routerfoto-2048x1136.jpg\",\"width\":2048,\"height\":1136,\"filesize\":221701,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-2048x1136.jpg\"},\"full\":{\"file\":\"fritzbox-7590-reales-routerfoto-scaled.jpg\",\"width\":2560,\"height\":1420,\"mime_type\":\"image\\/jpeg\",\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-scaled.jpg\"}},\"image_meta\":{\"aperture\":\"7.1\",\"credit\":\"\",\"camera\":\"NIKON D300\",\"caption\":\"\",\"created_timestamp\":\"1531583515\",\"copyright\":\"\",\"focal_length\":\"48\",\"iso\":\"200\",\"shutter_speed\":\"0.005\",\"title\":\"\",\"orientation\":\"1\",\"keywords\":[],\"alt\":\"\"},\"original_image\":\"fritzbox-7590-reales-routerfoto.jpg\"},\"source_url\":\"https:\\/\\/glasfaser-kompass.de\\/wp-content\\/uploads\\/2026\\/08\\/fritzbox-7590-reales-routerfoto-scaled.jpg\"}]",
+                     "error":  null
                  },
     "backup":  null,
     "error":  null
