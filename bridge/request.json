@@ -1,8 +1,10 @@
 {
-  "request_id": "gk10-router-21020-excerpt-20260820-1",
-  "action": "post",
-  "path": "/wp/v2/pages/21020",
-  "body": {
-    "excerpt": "Router Kaufberatung 2026: DSL, FTTH mit ONT und direkte Glasfaser richtig unterscheiden, passende Router-Klasse wählen und Fehlkäufe vermeiden."
-  }
+  "request_id": "gk-real-photo-router-7590-20260820-1",
+  "action": "upload_media_url",
+  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/FRITZ!Box_7590-Image29.jpg",
+  "filename": "fritzbox-7590-reales-routerfoto.jpg",
+  "title": "FRITZ!Box 7590 – reales Routerfoto",
+  "alt_text": "Rückseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-Anschlüssen",
+  "caption": "Foto: Janus / Wikimedia Commons / CC BY-SA 3.0",
+  "description": "Reales Produktfoto einer FRITZ!Box 7590. Quelle: Wikimedia Commons, Lizenz CC BY-SA 3.0. Original: https://commons.wikimedia.org/wiki/File:FRITZ!Box_7590-Image29.jpg"
 }
