@@ -1,5 +1,8 @@
 {
-  "request_id": "gk-read-router-inline-image-20260820-1",
-  "action": "get",
-  "path": "/wp/v2/pages/21020?context=edit&_fields=id,modified,title,featured_media,content"
+  "request_id": "gk-force-router-real-image-20260820-1902",
+  "action": "post",
+  "path": "/wp/v2/pages/21020",
+  "body": {
+    "featured_media": 29397
+  }
 }
