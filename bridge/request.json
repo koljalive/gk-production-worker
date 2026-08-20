@@ -1,10 +1,10 @@
 {
-  "request_id": "gk-real-photo-wifi-ap-20260820-1",
+  "request_id": "gk-real-photo-fiber-splice-20260820-1",
   "action": "upload_media_url",
-  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Access-point-wireless.jpg",
-  "filename": "wlan-access-point-reales-foto.jpg",
-  "title": "WLAN Access Point an der Wand – reales Foto",
-  "alt_text": "Realer WLAN Access Point an einer Innenwand",
-  "caption": "Foto: Rodrigo César / Wikimedia Commons / Public Domain",
-  "description": "Reales Foto eines an der Wand montierten WLAN Access Points. Quelle: Wikimedia Commons, Public Domain. Original: https://commons.wikimedia.org/wiki/File:Access-point-wireless.jpg"
+  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fiber_Splice.jpg",
+  "filename": "glasfaser-spleissmuffe-reales-foto.jpg",
+  "title": "Geöffnete Glasfaser-Spleißmuffe – reales Foto",
+  "alt_text": "Geöffnete reale Glasfaser-Spleißmuffe mit sichtbaren Glasfasern",
+  "caption": "Foto: Dhaluza / Wikimedia Commons",
+  "description": "Reales Foto einer geöffneten Glasfaser-Spleißmuffe. Quelle: Wikimedia Commons. Original: https://commons.wikimedia.org/wiki/File:Fiber_Splice.jpg"
 }
