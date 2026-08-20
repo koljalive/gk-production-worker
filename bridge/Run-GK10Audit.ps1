@@ -23,19 +23,36 @@ function Public-Probe([string]$Url){
     $r=Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 60
     $h=[string]$r.Content
     $canonical=([regex]::Match($h,'<link[^>]+rel=["'']canonical["''][^>]+href=["'']([^"'']+)')).Groups[1].Value
+    $imgs=@()
+    foreach($m in [regex]::Matches($h,'<img\b[^>]*>','IgnoreCase')){
+      $tag=$m.Value
+      $src=([regex]::Match($tag,'\bsrc=["'']([^"'']+)["'']','IgnoreCase')).Groups[1].Value
+      $alt=([regex]::Match($tag,'\balt=["'']([^"'']*)["'']','IgnoreCase')).Groups[1].Value
+      $cls=([regex]::Match($tag,'\bclass=["'']([^"'']*)["'']','IgnoreCase')).Groups[1].Value
+      if($src){$imgs+=@([ordered]@{src=$src;alt=$alt;class=$cls})}
+    }
     [pscustomobject]@{
       url=$Url;status=[int]$r.StatusCode;bytes=$h.Length;
       h1_count=([regex]::Matches($h,'<h1\b','IgnoreCase')).Count;
       table_count=([regex]::Matches($h,'<table\b','IgnoreCase')).Count;
       amazon_links=([regex]::Matches($h,'https?://(?:www\.)?amazon\.[^"''\s<]+','IgnoreCase')).Count;
       sponsored_links=([regex]::Matches($h,'rel=["''][^"'']*sponsored[^"'']*["'']','IgnoreCase')).Count;
-      canonical=$canonical;
-      noindex=($h -match 'noindex');
-      has_viewport=($h -match 'name=["'']viewport["'']');
-      has_og_image=($h -match 'property=["'']og:image["'']');
-      html=$null
+      canonical=$canonical;noindex=($h -match 'noindex');has_viewport=($h -match 'name=["'']viewport["'']');has_og_image=($h -match 'property=["'']og:image["'']');images=$imgs;html=$null
     }
   } catch { [pscustomobject]@{url=$Url;status=$null;error=$_.Exception.Message} }
+}
+function Get-ContentImages([string]$Html){
+  $arr=@()
+  foreach($m in [regex]::Matches($Html,'<img\b[^>]*>','IgnoreCase')){
+    $tag=$m.Value
+    $src=([regex]::Match($tag,'\bsrc=["'']([^"'']+)["'']','IgnoreCase')).Groups[1].Value
+    $alt=([regex]::Match($tag,'\balt=["'']([^"'']*)["'']','IgnoreCase')).Groups[1].Value
+    $cls=([regex]::Match($tag,'\bclass=["'']([^"'']*)["'']','IgnoreCase')).Groups[1].Value
+    $w=([regex]::Match($tag,'\bwidth=["'']?([0-9]+)','IgnoreCase')).Groups[1].Value
+    $h=([regex]::Match($tag,'\bheight=["'']?([0-9]+)','IgnoreCase')).Groups[1].Value
+    if($src){$arr+=@([ordered]@{src=$src;alt=$alt;class=$cls;width=$w;height=$h;tag=$tag})}
+  }
+  return @($arr)
 }
 
 $secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel'
@@ -45,22 +62,17 @@ try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pa
 $headers=@{Authorization="Basic $basic";Accept='application/json'}
 Remove-Variable basic -ErrorAction SilentlyContinue
 
-$out=[ordered]@{generated_at_utc=(Get-Date).ToUniversalTime().ToString('o');site=$null;rankmath=$null;pages=@();posts=@();key_pages=@();public=@();errors=@()}
-
+$out=[ordered]@{generated_at_utc=(Get-Date).ToUniversalTime().ToString('o');site=$null;rankmath=$null;pages=@();posts=@();key_pages=@();public=@();image_audit=@();media=@();errors=@()}
 $root=Get-Wp '/' $headers
 if($root.ok){$o=$root.body|ConvertFrom-Json;$out.site=[ordered]@{name=$o.name;url=$o.url;page_on_front=$o.page_on_front;page_for_posts=$o.page_for_posts;namespaces=$o.namespaces}}else{$out.errors+=@($root)}
-
 $rm=Get-Wp '/wp-abilities/v1/abilities/rank-math/audit-site-seo/run' $headers
 if($rm.ok){try{$out.rankmath=$rm.body|ConvertFrom-Json}catch{$out.rankmath=[ordered]@{raw=$rm.body}}}else{$out.errors+=@([ordered]@{area='rankmath';status=$rm.status;body=$rm.body})}
-
 $p=Get-Wp '/wp/v2/pages?context=edit&per_page=100&_fields=id,slug,status,link,modified,title,featured_media,content' $headers
 if($p.ok){$out.pages=@($p.body|ConvertFrom-Json)}else{$out.errors+=@([ordered]@{area='pages';status=$p.status;body=$p.body})}
-
 for($n=1;$n -le 4;$n++){
   $x=Get-Wp ("/wp/v2/posts?context=edit&per_page=100&page=$n&_fields=id,slug,status,link,modified,title,featured_media,content") $headers
   if($x.ok){$out.posts+=@($x.body|ConvertFrom-Json)} elseif($x.status -ne 400){$out.errors+=@([ordered]@{area="posts-$n";status=$x.status;body=$x.body})}
 }
-
 $keyIds=@(21003,21020,21021,21022,21053,21043,21041,21066,21009,21008,21007,21006,21005,21004,20824,21967,21968,1009)
 foreach($id in $keyIds){
   $found=@($out.pages|Where-Object id -eq $id)+@($out.posts|Where-Object id -eq $id)
@@ -70,9 +82,24 @@ foreach($id in $keyIds){
   }
 }
 
+$all=@($out.pages)+@($out.posts)
+$featuredIds=New-Object 'System.Collections.Generic.HashSet[int]'
+foreach($z in $all){
+  $raw=[string]$z.content.raw
+  $imgs=Get-ContentImages $raw
+  if([int]$z.featured_media -gt 0){[void]$featuredIds.Add([int]$z.featured_media)}
+  $suspicious=@($imgs|Where-Object{ $_.src -match 'exec-|diagram|schema|signalweg|illustr|infograf|bauformen|collage|skizze' -or $_.alt -match 'schem|diagramm|darstellung|signalweg|bauform|illustr' })
+  if($imgs.Count -gt 0 -or [int]$z.featured_media -gt 0){
+    $out.image_audit+=@([ordered]@{id=$z.id;type=($(if($out.pages.id -contains $z.id){'page'}else{'post'}));title=$z.title.raw;link=$z.link;status=$z.status;featured_media=[int]$z.featured_media;content_image_count=$imgs.Count;suspicious_count=$suspicious.Count;images=$imgs})
+  }
+}
+foreach($mid in $featuredIds){
+  $m=Get-Wp ("/wp/v2/media/$mid?context=edit&_fields=id,date,modified,slug,status,link,title,caption,alt_text,media_type,mime_type,source_url,media_details") $headers
+  if($m.ok){$out.media+=@($m.body|ConvertFrom-Json)}else{$out.errors+=@([ordered]@{area="media-$mid";status=$m.status;body=$m.body})}
+}
+
 $urls=@('https://glasfaser-kompass.de/','https://glasfaser-kompass.de/router-kaufberatung/','https://glasfaser-kompass.de/wlan-kaufberatung-2026/','https://glasfaser-kompass.de/glasfaser-hardware-2026/','https://glasfaser-kompass.de/internet-buchen/','https://glasfaser-kompass.de/ueber-den-autor/','https://glasfaser-kompass.de/telekom-readiness/','https://glasfaser-kompass.de/portal-status/')
 foreach($u in $urls){$out.public+=@(Public-Probe $u)}
-
 $path=Join-Path $env:GITHUB_WORKSPACE 'bridge/gk10-audit.json'
 $json=$out|ConvertTo-Json -Depth 30
 [IO.File]::WriteAllText($path,$json,(New-Object Text.UTF8Encoding($false)))
