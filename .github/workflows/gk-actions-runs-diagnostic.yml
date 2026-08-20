@@ -27,11 +27,13 @@ jobs:
             -H "Authorization: Bearer $GH_TOKEN" \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/$REPO/actions/runs?per_page=30" \
+            "https://api.github.com/repos/$REPO/actions/runs?per_page=50" \
             -o bridge/actions-runs-diagnostic.json
+          jq '{checked_at:(now|todate), runs:[.workflow_runs[] | select(.name=="GK10 Full 361 Pass") | {id,name,status,conclusion,head_sha,display_title,created_at,updated_at,html_url}]}' \
+            bridge/actions-runs-diagnostic.json > bridge/gk10-full-status.json
           git config user.name "gk-actions-diagnostic"
           git config user.email "gk-actions-diagnostic@users.noreply.github.com"
-          git add bridge/actions-runs-diagnostic.json
+          git add bridge/actions-runs-diagnostic.json bridge/gk10-full-status.json
           if ! git diff --cached --quiet; then
             git commit -m "GK actions runs diagnostic [skip ci]"
             git push origin HEAD:main
