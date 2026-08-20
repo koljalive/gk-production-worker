@@ -1,5 +1,5 @@
 {
-  "request_id": "audit-frontpage-21003-20260820-1",
+  "request_id": "audit-rankmath-site-20260820-1",
   "action": "get",
-  "path": "/wp/v2/pages/21003?context=edit"
+  "path": "/wp-abilities/v1/abilities/rank-math/audit-site-seo/run"
 }
