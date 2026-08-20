@@ -1,5 +1,5 @@
 {
-  "request_id": "gk-verify-glasfaser-photo-20260820-1938",
+  "request_id": "gk10-router-hub-inspect-20260820-1945",
   "action": "get",
-  "path": "/wp/v2/pages/21004?context=edit&_fields=id,modified,featured_media"
+  "path": "/wp/v2/pages/21006?context=edit&_fields=id,modified,slug,status,link,title,featured_media,content"
 }
