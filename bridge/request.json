@@ -1,10 +1,10 @@
 {
-  "request_id": "gk-real-photo-router-7590-20260820-1",
+  "request_id": "gk-real-photo-ftth-termination-20260820-1",
   "action": "upload_media_url",
-  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/FRITZ!Box_7590-Image29.jpg",
-  "filename": "fritzbox-7590-reales-routerfoto.jpg",
-  "title": "FRITZ!Box 7590 – reales Routerfoto",
-  "alt_text": "Rückseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-Anschlüssen",
-  "caption": "Foto: Janus / Wikimedia Commons / CC BY-SA 3.0",
-  "description": "Reales Produktfoto einer FRITZ!Box 7590. Quelle: Wikimedia Commons, Lizenz CC BY-SA 3.0. Original: https://commons.wikimedia.org/wiki/File:FRITZ!Box_7590-Image29.jpg"
+  "source_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Fiber_to_the_Home-aansluiting_van_E-fiber.jpg",
+  "filename": "ftth-abschluss-reales-foto.jpg",
+  "title": "FTTH-Abschluss – reales Foto",
+  "alt_text": "Realer FTTH-Glasfaserabschluss an einer Wand",
+  "caption": "Foto: Maxmust / Wikimedia Commons / CC BY-SA 4.0",
+  "description": "Reales Foto eines FTTH-Abschlusses. Quelle: Wikimedia Commons, Lizenz CC BY-SA 4.0. Original: https://commons.wikimedia.org/wiki/File:Fiber_to_the_Home-aansluiting_van_E-fiber.jpg"
 }
