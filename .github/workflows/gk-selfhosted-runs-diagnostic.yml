@@ -1,0 +1,46 @@
+name: GK Selfhosted Runs Diagnostic
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/selfhosted-diagnostic-trigger.txt'
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Inspect self-hosted workflows
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          api="https://api.github.com/repos/$REPO/actions/runs?per_page=100"
+          curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "$api" > /tmp/runs.json
+          jq '[.workflow_runs[] | select(.name=="GK Runner Heartbeat" or .name=="GK Live Bridge") | {id,name,status,conclusion,head_sha,event,created_at,updated_at,run_number,html_url}] | .[:12]' /tmp/runs.json > /tmp/selected.json
+          echo '{"runs":[]}' > bridge/selfhosted-runs-diagnostic.json
+          jq -c '.[]' /tmp/selected.json | while read -r run; do
+            id=$(echo "$run" | jq -r '.id')
+            curl -fsSL -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$REPO/actions/runs/$id/jobs?per_page=100" > /tmp/jobs.json
+            compact=$(jq '{jobs:[.jobs[] | {id,name,status,conclusion,runner_name,runner_group_name,labels,started_at,completed_at,steps:[.steps[]? | {name,status,conclusion,number}]}]}' /tmp/jobs.json)
+            jq --argjson run "$run" --argjson jobs "$compact" '.runs += [$run + $jobs]' bridge/selfhosted-runs-diagnostic.json > /tmp/out.json
+            mv /tmp/out.json bridge/selfhosted-runs-diagnostic.json
+          done
+          jq . bridge/selfhosted-runs-diagnostic.json > /tmp/final.json && mv /tmp/final.json bridge/selfhosted-runs-diagnostic.json
+      - name: Commit diagnostic
+        run: |
+          git config user.name "gk-selfhosted-diagnostic"
+          git config user.email "gk-selfhosted-diagnostic@users.noreply.github.com"
+          git add bridge/selfhosted-runs-diagnostic.json
+          if ! git diff --cached --quiet; then
+            git commit -m "GK selfhosted runs diagnostic [skip ci]"
+            git push origin HEAD:main
+          fi
