@@ -1,0 +1,202 @@
+{
+    "generated_at_utc":  "2026-08-20T18:35:47.7651135Z",
+    "success":  true,
+    "media":  {
+                  "router":  {
+                                 "id":  29400,
+                                 "title":  {
+                                               "raw":  "FRITZ!Box 7590 â€“ reales Routerfoto",
+                                               "rendered":  "FRITZ!Box 7590 â€“ reales Routerfoto"
+                                           },
+                                 "alt_text":  "RÃ¼ckseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-AnschlÃ¼ssen",
+                                 "mime_type":  "image/jpeg",
+                                 "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/fritzbox-7590-reales-routerfoto-2-scaled.jpg"
+                             },
+                  "ftth":  {
+                               "id":  29401,
+                               "title":  {
+                                             "raw":  "FTTH-Abschluss â€“ reales Foto",
+                                             "rendered":  "FTTH-Abschluss â€“ reales Foto"
+                                         },
+                               "alt_text":  "Realer FTTH-Glasfaserabschluss an einer Wand",
+                               "mime_type":  "image/jpeg",
+                               "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg"
+                           },
+                  "wifi":  {
+                               "id":  29403,
+                               "title":  {
+                                             "raw":  "WLAN Access Point an der Wand â€“ reales Foto",
+                                             "rendered":  "WLAN Access Point an der Wand â€“ reales Foto"
+                                         },
+                               "alt_text":  "Realer WLAN Access Point an einer Wand",
+                               "mime_type":  "image/jpeg",
+                               "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg"
+                           },
+                  "splice":  {
+                                 "id":  29398,
+                                 "title":  {
+                                               "raw":  "Geöffnete Glasfaser-Spleißmuffe – reales Foto",
+                                               "rendered":  "Geöffnete Glasfaser-Spleißmuffe – reales Foto"
+                                           },
+                                 "alt_text":  "Geöffnete reale Glasfaser-Spleißmuffe mit sichtbaren Glasfasern",
+                                 "mime_type":  "image/jpeg",
+                                 "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg"
+                             }
+              },
+    "changes":  [
+                    {
+                        "id":  21004,
+                        "title":  "Glasfaser",
+                        "url":  "https://glasfaser-kompass.de/glasfaser/",
+                        "old_featured":  29401,
+                        "new_featured":  29401,
+                        "old_hero":  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-glasfaser-ausbauweg.svg",
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg",
+                        "content_changed":  true,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21004-20260820-203529-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21006,
+                        "title":  "Router",
+                        "url":  "https://glasfaser-kompass.de/router/",
+                        "old_featured":  0,
+                        "new_featured":  29400,
+                        "old_hero":  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-router-kaufberatung.svg",
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/fritzbox-7590-reales-routerfoto-2-scaled.jpg",
+                        "content_changed":  true,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21006-20260820-203532-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21007,
+                        "title":  "WLAN \u0026amp; Heimnetz",
+                        "url":  "https://glasfaser-kompass.de/wlan-heimnetz/",
+                        "old_featured":  0,
+                        "new_featured":  29403,
+                        "old_hero":  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-wlan-frequenzbaender.svg",
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
+                        "content_changed":  true,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21007-20260820-203534-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21021,
+                        "title":  "WLAN Kaufberatung 2026",
+                        "url":  "https://glasfaser-kompass.de/wlan-kaufberatung/",
+                        "old_featured":  28075,
+                        "new_featured":  29403,
+                        "old_hero":  null,
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
+                        "content_changed":  false,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21021-20260820-203535-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21041,
+                        "title":  "WLAN-Repeater Kaufberatung 2026",
+                        "url":  "https://glasfaser-kompass.de/wlan-repeater-kaufberatung-2026/",
+                        "old_featured":  0,
+                        "new_featured":  29403,
+                        "old_hero":  null,
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
+                        "content_changed":  false,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21041-20260820-203537-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21043,
+                        "title":  "Mesh-System Kaufberatung 2026",
+                        "url":  "https://glasfaser-kompass.de/mesh-system-kaufberatung-2026/",
+                        "old_featured":  28075,
+                        "new_featured":  29403,
+                        "old_hero":  null,
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
+                        "content_changed":  false,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21043-20260820-203539-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21022,
+                        "title":  "Glasfaser-Hardware 2026",
+                        "url":  "https://glasfaser-kompass.de/glasfaser-hardware/",
+                        "old_featured":  28076,
+                        "new_featured":  29401,
+                        "old_hero":  null,
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg",
+                        "content_changed":  false,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21022-20260820-203540-before.json",
+                        "verified":  true
+                    },
+                    {
+                        "id":  21967,
+                        "title":  "Telekom-Readiness",
+                        "url":  "https://glasfaser-kompass.de/telekom-readiness/",
+                        "old_featured":  23281,
+                        "new_featured":  29398,
+                        "old_hero":  null,
+                        "new_photo":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg",
+                        "content_changed":  false,
+                        "backup":  "C:\\GKBridge\\backups\\gk10\\page-21967-20260820-203542-before.json",
+                        "verified":  true
+                    }
+                ],
+    "public":  [
+                   {
+                       "id":  21004,
+                       "url":  "https://glasfaser-kompass.de/glasfaser/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21006,
+                       "url":  "https://glasfaser-kompass.de/router/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21007,
+                       "url":  "https://glasfaser-kompass.de/wlan-heimnetz/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21021,
+                       "url":  "https://glasfaser-kompass.de/wlan-kaufberatung/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21041,
+                       "url":  "https://glasfaser-kompass.de/wlan-repeater-kaufberatung-2026/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21043,
+                       "url":  "https://glasfaser-kompass.de/mesh-system-kaufberatung-2026/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21022,
+                       "url":  "https://glasfaser-kompass.de/glasfaser-hardware/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   },
+                   {
+                       "id":  21967,
+                       "url":  "https://glasfaser-kompass.de/telekom-readiness/",
+                       "status":  200,
+                       "new_photo_visible":  true,
+                       "old_hero_still_visible":  false
+                   }
+               ]
+}
