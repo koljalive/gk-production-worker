@@ -1,6 +1,260 @@
 {
   "runs": [
     {
+      "id": 32389793524,
+      "name": "GK Live Bridge",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "7ff4bf4c322fb53386928be80b3193c9e2d6893d",
+      "event": "push",
+      "created_at": "2026-08-20T16:03:19Z",
+      "updated_at": "2026-08-20T16:03:51Z",
+      "run_number": 10,
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32389793524",
+      "jobs": [
+        {
+          "id": 96492881657,
+          "name": "execute",
+          "status": "completed",
+          "conclusion": "failure",
+          "runner_name": "GK-BRIDGE-WIN-TDD7LHE1HA0",
+          "runner_group_name": "Default",
+          "labels": [
+            "self-hosted"
+          ],
+          "started_at": "2026-08-20T16:03:24Z",
+          "completed_at": "2026-08-20T16:03:50Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Execute guarded WordPress request",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Commit result",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 4
+            },
+            {
+              "name": "Post Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 32389756555,
+      "name": "GK Live Bridge",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "b4e66fce2ec5716320af60f0cdcf24a455aa0a65",
+      "event": "push",
+      "created_at": "2026-08-20T16:02:56Z",
+      "updated_at": "2026-08-20T16:03:22Z",
+      "run_number": 9,
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32389756555",
+      "jobs": [
+        {
+          "id": 96492747355,
+          "name": "execute",
+          "status": "completed",
+          "conclusion": "failure",
+          "runner_name": "GK-BRIDGE-WIN-TDD7LHE1HA0",
+          "runner_group_name": "Default",
+          "labels": [
+            "self-hosted"
+          ],
+          "started_at": "2026-08-20T16:02:59Z",
+          "completed_at": "2026-08-20T16:03:21Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Execute guarded WordPress request",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Commit result",
+              "status": "completed",
+              "conclusion": "failure",
+              "number": 4
+            },
+            {
+              "name": "Post Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 32386966618,
+      "name": "GK Live Bridge",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "be0245514f07b6913a07a8f36b0e82b93c4640b9",
+      "event": "push",
+      "created_at": "2026-08-20T15:34:40Z",
+      "updated_at": "2026-08-20T15:35:11Z",
+      "run_number": 8,
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32386966618",
+      "jobs": [
+        {
+          "id": 96483698870,
+          "name": "execute",
+          "status": "completed",
+          "conclusion": "success",
+          "runner_name": "GK-BRIDGE-WIN-TDD7LHE1HA0",
+          "runner_group_name": "Default",
+          "labels": [
+            "self-hosted"
+          ],
+          "started_at": "2026-08-20T15:34:48Z",
+          "completed_at": "2026-08-20T15:35:11Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Execute guarded WordPress request",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Commit result",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 4
+            },
+            {
+              "name": "Post Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 8
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 9
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 32386935285,
+      "name": "GK Runner Heartbeat",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "9544e1397f6bdded410da0d904b35b9e9b254f70",
+      "event": "push",
+      "created_at": "2026-08-20T15:34:22Z",
+      "updated_at": "2026-08-20T15:34:47Z",
+      "run_number": 3,
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32386935285",
+      "jobs": [
+        {
+          "id": 96483594643,
+          "name": "heartbeat",
+          "status": "completed",
+          "conclusion": "success",
+          "runner_name": "GK-BRIDGE-WIN-TDD7LHE1HA0",
+          "runner_group_name": "Default",
+          "labels": [
+            "self-hosted"
+          ],
+          "started_at": "2026-08-20T15:34:25Z",
+          "completed_at": "2026-08-20T15:34:46Z",
+          "steps": [
+            {
+              "name": "Set up job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 1
+            },
+            {
+              "name": "Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 2
+            },
+            {
+              "name": "Write heartbeat",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 3
+            },
+            {
+              "name": "Post Checkout",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 6
+            },
+            {
+              "name": "Complete job",
+              "status": "completed",
+              "conclusion": "success",
+              "number": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": 32386423358,
       "name": "GK Runner Heartbeat",
       "status": "completed",
@@ -476,74 +730,6 @@
           ],
           "started_at": "2026-08-20T15:07:49Z",
           "completed_at": "2026-08-20T15:08:07Z",
-          "steps": [
-            {
-              "name": "Set up job",
-              "status": "completed",
-              "conclusion": "success",
-              "number": 1
-            },
-            {
-              "name": "Checkout",
-              "status": "completed",
-              "conclusion": "success",
-              "number": 2
-            },
-            {
-              "name": "Execute guarded WordPress request",
-              "status": "completed",
-              "conclusion": "failure",
-              "number": 3
-            },
-            {
-              "name": "Commit result",
-              "status": "completed",
-              "conclusion": "failure",
-              "number": 4
-            },
-            {
-              "name": "Post Checkout",
-              "status": "completed",
-              "conclusion": "success",
-              "number": 8
-            },
-            {
-              "name": "Complete job",
-              "status": "completed",
-              "conclusion": "success",
-              "number": 9
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": 32383016702,
-      "name": "GK Live Bridge",
-      "status": "completed",
-      "conclusion": "failure",
-      "head_sha": "9850d48c33c188fb13927fc2b3bab4e890e0c4e9",
-      "event": "push",
-      "created_at": "2026-08-20T14:55:08Z",
-      "updated_at": "2026-08-20T15:06:28Z",
-      "run_number": 1,
-      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32383016702",
-      "jobs": [
-        {
-          "id": 96470597083,
-          "name": "execute",
-          "status": "completed",
-          "conclusion": "failure",
-          "runner_name": "GK-BRIDGE-WIN-TDD7LHE1HA0",
-          "runner_group_name": "Default",
-          "labels": [
-            "self-hosted",
-            "Windows",
-            "X64",
-            "gk-bridge"
-          ],
-          "started_at": "2026-08-20T15:06:04Z",
-          "completed_at": "2026-08-20T15:06:27Z",
           "steps": [
             {
               "name": "Set up job",
