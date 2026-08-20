@@ -1,0 +1,41 @@
+name: GK Runner Heartbeat
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/heartbeat-trigger.txt'
+
+permissions:
+  contents: write
+
+jobs:
+  heartbeat:
+    runs-on: self-hosted
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Write heartbeat
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Set-Location $env:GITHUB_WORKSPACE
+          $payload = [ordered]@{
+            ok = $true
+            machine = $env:COMPUTERNAME
+            user = [Security.Principal.WindowsIdentity]::GetCurrent().Name
+            utc = (Get-Date).ToUniversalTime().ToString('o')
+            runner = $env:RUNNER_NAME
+          } | ConvertTo-Json -Compress
+          [IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/heartbeat-result.json'), $payload, (New-Object Text.UTF8Encoding($false)))
+          git config user.name "gk-runner-heartbeat"
+          git config user.email "gk-runner-heartbeat@users.noreply.github.com"
+          git add bridge/heartbeat-result.json
+          if (-not (git diff --cached --quiet)) {
+            git commit -m "GK runner heartbeat [skip ci]"
+            git push origin HEAD:main
+          }
