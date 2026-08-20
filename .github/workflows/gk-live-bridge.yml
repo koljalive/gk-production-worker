@@ -36,12 +36,16 @@ jobs:
         if: always()
         shell: powershell
         run: |
+          $ErrorActionPreference = 'Stop'
           Set-Location $env:GITHUB_WORKSPACE
+          git config --global --add safe.directory "$env:GITHUB_WORKSPACE"
           git config user.name "gk-live-bridge"
           git config user.email "gk-live-bridge@users.noreply.github.com"
           if (Test-Path 'bridge/result.json') {
+            git pull --rebase origin main
             git add bridge/result.json
-            if (-not (git diff --cached --quiet)) {
+            git diff --cached --quiet
+            if ($LASTEXITCODE -ne 0) {
               git commit -m "GK bridge result [skip ci]"
               git push origin HEAD:main
             }
