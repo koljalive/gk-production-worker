@@ -1,0 +1,49 @@
+name: GK Inspect Bridge Run
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/inspect-trigger.txt'
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Inspect latest bridge runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json, os, urllib.request
+          repo=os.environ['GITHUB_REPOSITORY']
+          req=urllib.request.Request(f'https://api.github.com/repos/{repo}/actions/runs?per_page=30',headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+          data=json.load(urllib.request.urlopen(req))
+          runs=[]
+          for r in data.get('workflow_runs',[]):
+              if r.get('name')=='GK Live Bridge':
+                  item={k:r.get(k) for k in ['id','name','head_sha','status','conclusion','created_at','updated_at','html_url']}
+                  req2=urllib.request.Request(r['jobs_url'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+                  jobs=json.load(urllib.request.urlopen(req2)).get('jobs',[])
+                  item['jobs']=[{'id':j.get('id'),'name':j.get('name'),'status':j.get('status'),'conclusion':j.get('conclusion'),'steps':j.get('steps',[])} for j in jobs]
+                  req3=urllib.request.Request(r['artifacts_url'],headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json'})
+                  arts=json.load(urllib.request.urlopen(req3)).get('artifacts',[])
+                  item['artifacts']=[{'id':a.get('id'),'name':a.get('name'),'size_in_bytes':a.get('size_in_bytes'),'expired':a.get('expired')} for a in arts]
+                  runs.append(item)
+                  if len(runs)>=8: break
+          open('bridge/inspect-result.json','w',encoding='utf-8').write(json.dumps({'runs':runs},ensure_ascii=False,indent=2))
+          PY
+      - name: Commit inspection
+        run: |
+          git config user.name gk-inspector
+          git config user.email gk-inspector@users.noreply.github.com
+          git pull --rebase origin main
+          git add bridge/inspect-result.json
+          git diff --cached --quiet || (git commit -m 'GK bridge inspection [skip ci]' && git push origin HEAD:main)
