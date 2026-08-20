@@ -1,5 +1,5 @@
 {
-  "request_id": "gk10-frontpage-rebuild-20260820-2",
+  "request_id": "gk10-frontpage-utf8-repair-20260820-1",
   "action": "post",
   "path": "/wp/v2/pages/21003",
   "body": {
