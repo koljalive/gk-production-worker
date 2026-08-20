@@ -8,6 +8,7 @@ $ErrorActionPreference = 'Stop'
 $repoUrl = 'https://github.com/koljalive/gk-production-worker'
 $installDir = 'C:\GKBridgeRunner'
 $taskName = 'GK Bridge Runner'
+$currentUser = [Security.Principal.WindowsIdentity]::GetCurrent().Name
 
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     throw 'Bitte PowerShell als Administrator starten und dieses Skript erneut ausführen.'
@@ -16,7 +17,6 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 New-Item -ItemType Directory -Force -Path $installDir | Out-Null
 Set-Location $installDir
 
-# Only download/configure if the runner is not already registered.
 if (-not (Test-Path (Join-Path $installDir '.runner'))) {
     if ([string]::IsNullOrWhiteSpace($RegistrationToken)) {
         $RegistrationToken = Read-Host 'GitHub Runner Registration Token'
@@ -30,7 +30,6 @@ if (-not (Test-Path (Join-Path $installDir '.runner'))) {
     $zip = Join-Path $installDir $asset.name
     Write-Host "Downloading $($asset.name)..."
     Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip -UseBasicParsing -TimeoutSec 300
-
     Write-Host 'Extracting runner...'
     Expand-Archive -Path $zip -DestinationPath $installDir -Force
     Remove-Item $zip -Force
@@ -44,22 +43,19 @@ if (-not (Test-Path (Join-Path $installDir '.runner'))) {
 $runCmd = Join-Path $installDir 'run.cmd'
 if (-not (Test-Path $runCmd)) { throw "Runner-Startdatei fehlt: $runCmd" }
 
-# GitHub's Windows runner package does not provide svc.cmd. Instead, keep the
-# already-registered runner persistent with a startup scheduled task under SYSTEM.
-Write-Host 'Installing persistent Windows startup task...'
+Write-Host 'Installing persistent Windows logon task for current user...'
 $action = New-ScheduledTaskAction -Execute 'cmd.exe' -Argument ('/c "{0}"' -f $runCmd) -WorkingDirectory $installDir
-$trigger = New-ScheduledTaskTrigger -AtStartup
-$principal = New-ScheduledTaskPrincipal -UserId 'SYSTEM' -LogonType ServiceAccount -RunLevel Highest
+$trigger = New-ScheduledTaskTrigger -AtLogOn -User $currentUser
+$principal = New-ScheduledTaskPrincipal -UserId $currentUser -LogonType Interactive -RunLevel Highest
 $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable -ExecutionTimeLimit ([TimeSpan]::Zero) -RestartCount 20 -RestartInterval (New-TimeSpan -Minutes 1)
 Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force | Out-Null
 
-# Stop any stale interactive runner process for this install, then launch task.
 Get-CimInstance Win32_Process -ErrorAction SilentlyContinue |
     Where-Object { $_.ExecutablePath -like "$installDir*" -and $_.Name -match 'Runner\.(Listener|Worker)\.exe' } |
     ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
 
 Start-ScheduledTask -TaskName $taskName
-Start-Sleep -Seconds 4
+Start-Sleep -Seconds 5
 
 $task = Get-ScheduledTask -TaskName $taskName
 $info = Get-ScheduledTaskInfo -TaskName $taskName
@@ -70,5 +66,6 @@ Write-Host "Repository: $repoUrl"
 Write-Host 'Label: gk-bridge'
 Write-Host "Runner directory: $installDir"
 Write-Host "Scheduled task: $taskName"
+Write-Host "Task user: $currentUser"
 Write-Host "Task state: $($task.State)"
 Write-Host "Last task result: $($info.LastTaskResult)"
