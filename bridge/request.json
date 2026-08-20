@@ -1,5 +1,8 @@
 {
-  "request_id": "gk10-rankmath-router-21020-20260820-1",
-  "action": "get",
-  "path": "/wp-abilities/v1/abilities/rank-math/get-post-seo-meta/run?input%5Bpost_id%5D=21020"
+  "request_id": "gk10-router-21020-excerpt-20260820-1",
+  "action": "post",
+  "path": "/wp/v2/pages/21020",
+  "body": {
+    "excerpt": "Router Kaufberatung 2026: DSL, FTTH mit ONT und direkte Glasfaser richtig unterscheiden, passende Router-Klasse wählen und Fehlkäufe vermeiden."
+  }
 }
