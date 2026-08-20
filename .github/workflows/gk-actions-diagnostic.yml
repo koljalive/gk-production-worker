@@ -1,0 +1,35 @@
+name: GK Actions Diagnostic
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/request.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Write diagnostic marker
+        shell: bash
+        run: |
+          mkdir -p bridge
+          printf '{"actions_control_plane":"ok","commit":"%s","timestamp":"%s"}\n' "$GITHUB_SHA" "$(date -u +%FT%TZ)" > bridge/actions-diagnostic.json
+      - name: Commit marker
+        shell: bash
+        run: |
+          git config user.name "gk-actions-diagnostic"
+          git config user.email "gk-actions-diagnostic@users.noreply.github.com"
+          git add bridge/actions-diagnostic.json
+          if ! git diff --cached --quiet; then
+            git commit -m "GK actions diagnostic [skip ci]"
+            git push origin HEAD:main
+          fi
