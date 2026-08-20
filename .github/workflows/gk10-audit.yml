@@ -8,7 +8,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: gk10-live-audit
+  cancel-in-progress: false
 
 jobs:
   audit:
@@ -17,6 +21,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run comprehensive audit
         shell: powershell
@@ -32,3 +38,20 @@ jobs:
           path: bridge/gk10-audit.json
           if-no-files-found: error
           retention-days: 7
+
+      - name: Persist audit in repository
+        if: success()
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          Set-Location $env:GITHUB_WORKSPACE
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk10-audit"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk10-audit@users.noreply.github.com"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" fetch origin main
+          git -c safe.directory="$env:GITHUB_WORKSPACE" reset --soft origin/main
+          git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/gk10-audit.json
+          git -c safe.directory="$env:GITHUB_WORKSPACE" diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK10 image audit [skip ci]"
+            git -c safe.directory="$env:GITHUB_WORKSPACE" push origin HEAD:main
+          }
