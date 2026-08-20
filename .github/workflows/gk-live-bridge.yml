@@ -10,8 +10,6 @@ on:
 permissions:
   contents: read
 
-actions:
-
 concurrency:
   group: gk-live-bridge
   cancel-in-progress: false
