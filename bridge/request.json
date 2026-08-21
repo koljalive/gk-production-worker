@@ -1,5 +1,6 @@
 {
-  "request_id": "gk10-rankmath-audit-20260820-2039",
-  "action": "get",
-  "path": "/wp-abilities/v1/abilities/rank-math/audit-site-seo/run"
+  "request_id": "gk10-og-meta-diag-26271-20260821",
+  "action": "post",
+  "path": "/wp-abilities/v1/abilities/rank-math/get-post-seo-meta/run",
+  "body": {"input":{"post_id":26271}}
 }
