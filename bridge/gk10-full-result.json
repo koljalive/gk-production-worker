@@ -1,5 +1,5 @@
 {
-    "started_utc":  "2026-08-21T07:30:23.8753292Z",
+    "started_utc":  "2026-08-21T14:04:42.6350896Z",
     "inventory_count":  304,
     "published_count":  304,
     "completed_count":  304,
@@ -506,7 +506,7 @@
                         "title":  "Startseite",
                         "status":  "publish",
                         "url":  "https://glasfaser-kompass.de/",
-                        "modified":  "2026-08-20T17:05:47",
+                        "modified":  "2026-08-21T09:17:16",
                         "featured_media":  29401,
                         "content_length":  4730,
                         "http":  200,
@@ -7917,5 +7917,5 @@
                          "schematic_images_10":  1,
                          "schematic_images_3":  1
                      },
-    "finished_utc":  "2026-08-21T07:32:52.9445998Z"
+    "finished_utc":  "2026-08-21T14:06:11.4598773Z"
 }
