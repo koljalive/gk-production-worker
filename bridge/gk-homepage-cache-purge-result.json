@@ -1,0 +1,13 @@
+{
+    "checked_utc":  "2026-08-21T13:05:47.4457519Z",
+    "purge_url":  "https://glasfaser-kompass.de/?LSCWP_CTRL=PURGE",
+    "purge_status":  200,
+    "purge_error":  null,
+    "public_status":  200,
+    "cache_control":  "max-age=3600",
+    "first_image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto-683x1024.jpg",
+    "has_old_exec":  false,
+    "has_new_ftth":  true,
+    "has_new_content":  true,
+    "has_old_content":  false
+}
