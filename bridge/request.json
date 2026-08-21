@@ -1,5 +1,16 @@
 {
-  "request_id": "gk10-media-29401-before-og-20260821",
-  "action": "get",
-  "path": "/wp/v2/media/29401?context=edit&_fields=id,source_url,mime_type,alt_text,media_details"
+  "request_id": "gk10-set-global-og-29401-20260821",
+  "action": "post",
+  "path": "/rankmath/v1/updateSettings",
+  "body": {
+    "type": "titles",
+    "settings": {
+      "open_graph_image": "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg",
+      "open_graph_image_id": 29401
+    },
+    "fieldTypes": {
+      "open_graph_image": "text"
+    },
+    "updated": ["open_graph_image"]
+  }
 }
