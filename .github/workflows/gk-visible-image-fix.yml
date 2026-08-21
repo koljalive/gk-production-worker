@@ -13,41 +13,46 @@ permissions:
 jobs:
   fix:
     runs-on: self-hosted
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Replace actually rendered images
+      - name: Run acceptance-gated homepage visual pilot
         shell: powershell
         run: |
           $ErrorActionPreference='Stop'
           & "$env:GITHUB_WORKSPACE\bridge\Run-GKVisibleImageFix.ps1"
 
-      - name: Upload result
+      - name: Upload acceptance evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gk-visible-image-fix-${{ github.run_id }}
-          path: bridge/visible-image-fix-result.json
-          if-no-files-found: error
-          retention-days: 7
+          name: gk-visible-image-pilot-${{ github.run_id }}
+          path: |
+            bridge/visible-image-fix-result.json
+            bridge/visual-evidence/homepage-desktop.png
+            bridge/visual-evidence/homepage-mobile.png
+          if-no-files-found: warn
+          retention-days: 14
 
-      - name: Persist result
-        if: success()
+      - name: Persist acceptance result and screenshots
+        if: always()
         shell: powershell
         run: |
           $ErrorActionPreference='Stop'
           Set-Location $env:GITHUB_WORKSPACE
-          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk-visible-image-fix"
-          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk-visible-image-fix@users.noreply.github.com"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk-acceptance-gate"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk-acceptance-gate@users.noreply.github.com"
           git -c safe.directory="$env:GITHUB_WORKSPACE" fetch origin main
           git -c safe.directory="$env:GITHUB_WORKSPACE" reset --soft origin/main
-          git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/visible-image-fix-result.json
+          if (Test-Path 'bridge/visible-image-fix-result.json') { git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/visible-image-fix-result.json }
+          if (Test-Path 'bridge/visual-evidence/homepage-desktop.png') { git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/visual-evidence/homepage-desktop.png }
+          if (Test-Path 'bridge/visual-evidence/homepage-mobile.png') { git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/visual-evidence/homepage-mobile.png }
           git -c safe.directory="$env:GITHUB_WORKSPACE" diff --cached --quiet
           if ($LASTEXITCODE -ne 0) {
-            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK visible image fix result [skip ci]"
+            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK acceptance pilot evidence [skip ci]"
             git -c safe.directory="$env:GITHUB_WORKSPACE" push origin HEAD:main
           }
