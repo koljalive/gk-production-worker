@@ -2,9 +2,9 @@
     "started_utc":  "2026-08-21T06:13:50.4362702Z",
     "inventory_count":  304,
     "published_count":  304,
-    "completed_count":  304,
+    "completed_count":  300,
     "perfect_count":  21,
-    "needs_work_count":  283,
+    "needs_work_count":  279,
     "results":  [
                     {
                         "id":  26271,
@@ -7896,121 +7896,13 @@
                                        "og_image_missing",
                                        "schematic_images_1"
                                    ]
-                    },
-                    {
-                        "id":  94,
-                        "type":  "post",
-                        "title":  "Glasfaseranschluss im Einfamilienhaus erklärt",
-                        "status":  "publish",
-                        "url":  "https://glasfaser-kompass.de/glasfaseranschluss-im-einfamilienhaus-erklaert/",
-                        "modified":  "2026-08-11T00:19:39",
-                        "featured_media":  26195,
-                        "content_length":  6561,
-                        "http":  200,
-                        "h1_count":  1,
-                        "canonical":  "https://glasfaser-kompass.de/glasfaseranschluss-im-einfamilienhaus-erklaert/",
-                        "viewport":  true,
-                        "og_image":  false,
-                        "noindex":  false,
-                        "image_count":  1,
-                        "missing_alt":  0,
-                        "suspicious_images":  1,
-                        "amazon_links":  0,
-                        "affiliate_tagged":  0,
-                        "sponsored_links":  0,
-                        "score":  8,
-                        "issues":  [
-                                       "og_image_missing",
-                                       "schematic_images_1"
-                                   ]
-                    },
-                    {
-                        "id":  91,
-                        "type":  "post",
-                        "title":  "Was macht ein ONT bei einem Glasfaseranschluss?",
-                        "status":  "publish",
-                        "url":  "https://glasfaser-kompass.de/was-macht-ein-ont-bei-einem-glasfaseranschluss/",
-                        "modified":  "2026-08-11T00:19:37",
-                        "featured_media":  26197,
-                        "content_length":  6612,
-                        "http":  200,
-                        "h1_count":  1,
-                        "canonical":  "https://glasfaser-kompass.de/was-macht-ein-ont-bei-einem-glasfaseranschluss/",
-                        "viewport":  true,
-                        "og_image":  false,
-                        "noindex":  false,
-                        "image_count":  1,
-                        "missing_alt":  0,
-                        "suspicious_images":  1,
-                        "amazon_links":  0,
-                        "affiliate_tagged":  0,
-                        "sponsored_links":  0,
-                        "score":  8,
-                        "issues":  [
-                                       "og_image_missing",
-                                       "schematic_images_1"
-                                   ]
-                    },
-                    {
-                        "id":  88,
-                        "type":  "post",
-                        "title":  "Warum sitzt der APL meistens im Keller?",
-                        "status":  "publish",
-                        "url":  "https://glasfaser-kompass.de/warum-sitzt-der-apl-meistens-im-keller/",
-                        "modified":  "2026-08-19T10:01:16",
-                        "featured_media":  26199,
-                        "content_length":  6961,
-                        "http":  200,
-                        "h1_count":  1,
-                        "canonical":  "https://glasfaser-kompass.de/warum-sitzt-der-apl-meistens-im-keller/",
-                        "viewport":  true,
-                        "og_image":  false,
-                        "noindex":  false,
-                        "image_count":  1,
-                        "missing_alt":  0,
-                        "suspicious_images":  1,
-                        "amazon_links":  0,
-                        "affiliate_tagged":  0,
-                        "sponsored_links":  0,
-                        "score":  8,
-                        "issues":  [
-                                       "og_image_missing",
-                                       "schematic_images_1"
-                                   ]
-                    },
-                    {
-                        "id":  75,
-                        "type":  "post",
-                        "title":  "Was ist ein APL? Einfach erklärt",
-                        "status":  "publish",
-                        "url":  "https://glasfaser-kompass.de/was-ist-ein-apl/",
-                        "modified":  "2026-08-17T19:16:27",
-                        "featured_media":  26201,
-                        "content_length":  7852,
-                        "http":  200,
-                        "h1_count":  1,
-                        "canonical":  "https://glasfaser-kompass.de/was-ist-ein-apl/",
-                        "viewport":  true,
-                        "og_image":  true,
-                        "noindex":  false,
-                        "image_count":  3,
-                        "missing_alt":  0,
-                        "suspicious_images":  3,
-                        "amazon_links":  0,
-                        "affiliate_tagged":  0,
-                        "sponsored_links":  0,
-                        "score":  9,
-                        "issues":  [
-                                       "schematic_images_3"
-                                   ]
                     }
                 ],
     "issue_totals":  {
-                         "og_image_missing":  279,
-                         "schematic_images_1":  94,
+                         "og_image_missing":  276,
+                         "schematic_images_1":  91,
                          "h1_count_2":  2,
-                         "schematic_images_10":  1,
-                         "schematic_images_3":  1
+                         "schematic_images_10":  1
                      },
-    "finished_utc":  "2026-08-21T06:15:56.0586280Z"
+    "finished_utc":  null
 }
