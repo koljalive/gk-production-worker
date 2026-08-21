@@ -1,5 +1,5 @@
 {
-  "request_id": "gk-visual-homepage-inspect-20260821-1049",
+  "request_id": "gk-frontpage-setting-20260821-1054",
   "action": "get",
-  "path": "/wp/v2/pages/21003?context=edit&_fields=id,modified,featured_media,content"
+  "path": "/wp/v2/settings?context=edit&_fields=show_on_front,page_on_front"
 }
