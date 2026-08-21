@@ -1,8 +1,27 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 
-function Get-PlainSecret([string]$Path){$s=Get-Content $Path|ConvertTo-SecureString;$p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s);try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}}
-function Get-Wp([string]$Path,[hashtable]$Headers){$u='https://glasfaser-kompass.de/wp-json'+$Path;try{$r=Invoke-WebRequest -Uri $u -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180;[pscustomobject]@{ok=$true;status=[int]$r.StatusCode;body=[string]$r.Content}}catch{$b='';$s=$null;if($_.Exception.Response){try{$s=[int]$_.Exception.Response.StatusCode}catch{};try{$rd=New-Object IO.StreamReader($_.Exception.Response.GetResponseStream());$b=$rd.ReadToEnd();$rd.Close()}catch{}};[pscustomobject]@{ok=$false;status=$s;body=$b;error=$_.Exception.Message}}}
+function Get-PlainSecret([string]$Path){
+  $s=Get-Content $Path|ConvertTo-SecureString
+  $p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s)
+  try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}
+}
+function Get-Wp([string]$Path,[hashtable]$Headers){
+  $u='https://glasfaser-kompass.de/wp-json'+$Path
+  try{
+    $r=Invoke-WebRequest -Uri $u -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180
+    [pscustomobject]@{ok=$true;status=[int]$r.StatusCode;body=[string]$r.Content}
+  }catch{
+    $b='';$s=$null
+    if($_.Exception.Response){try{$s=[int]$_.Exception.Response.StatusCode}catch{};try{$rd=New-Object IO.StreamReader($_.Exception.Response.GetResponseStream());$b=$rd.ReadToEnd();$rd.Close()}catch{}}
+    [pscustomobject]@{ok=$false;status=$s;body=$b;error=$_.Exception.Message}
+  }
+}
+function Add-JsonItems([System.Collections.ArrayList]$List,[string]$Json){
+  $parsed=$Json|ConvertFrom-Json
+  if($parsed -is [System.Array]){foreach($item in $parsed){if($null-ne $item){[void]$List.Add($item)}}}
+  elseif($null-ne $parsed){[void]$List.Add($parsed)}
+}
 function Probe([object]$z){
   $u=[string]$z.link;$raw=[string]$z.content.raw;$issues=New-Object System.Collections.Generic.List[string]
   try{$r=Invoke-WebRequest -Uri $u -UseBasicParsing -TimeoutSec 45;$h=[string]$r.Content;$status=[int]$r.StatusCode}catch{$h='';$status=$null;$issues.Add('http_error')}
@@ -12,15 +31,40 @@ function Probe([object]$z){
   $imgs=@([regex]::Matches($h,'<img\b[^>]*>','IgnoreCase'));$missingAlt=0;$suspicious=0
   foreach($m in $imgs){$tag=$m.Value;$alt=([regex]::Match($tag,'\balt=["'']([^"'']*)["'']','IgnoreCase')).Groups[1].Value;$src=([regex]::Match($tag,'\bsrc=["'']([^"'']+)["'']','IgnoreCase')).Groups[1].Value;if([string]::IsNullOrWhiteSpace($alt)){$missingAlt++};if($src -match 'exec-|diagram|schema|signalweg|illustr|infograf|bauformen|collage|skizze|\.svg(?:\?|$)'){$suspicious++}}
   $amazon=([regex]::Matches($h,'https?://(?:www\.)?amazon\.[^"''\s<]+','IgnoreCase')).Count;$tagged=([regex]::Matches($h,'tag=glasfaserkomp-21','IgnoreCase')).Count;$sponsored=([regex]::Matches($h,'rel=["''][^"'']*sponsored[^"'']*["'']','IgnoreCase')).Count
-  if($status -ne 200){$issues.Add('http_not_200')};if($h1 -ne 1){$issues.Add('h1_count_'+$h1)};if([string]::IsNullOrWhiteSpace($canonical)){$issues.Add('canonical_missing')};if(-not $viewport){$issues.Add('viewport_missing')};if(-not $og){$issues.Add('og_image_missing')};if($noindex -and $z.status -eq 'publish'){$issues.Add('unexpected_noindex')};if($missingAlt -gt 0){$issues.Add('missing_alt_'+$missingAlt)};if($suspicious -gt 0){$issues.Add('schematic_images_'+$suspicious)};if($amazon -gt 0 -and ($tagged -lt $amazon -or $sponsored -lt $amazon)){$issues.Add('affiliate_hygiene')};if($raw.Length -lt 500){$issues.Add('thin_content')}
-  $score=10-$issues.Count;if($score -lt 0){$score=0}
+  if($status-ne 200){$issues.Add('http_not_200')};if($h1-ne 1){$issues.Add('h1_count_'+$h1)};if([string]::IsNullOrWhiteSpace($canonical)){$issues.Add('canonical_missing')};if(-not $viewport){$issues.Add('viewport_missing')};if(-not $og){$issues.Add('og_image_missing')};if($noindex -and [string]$z.status -eq 'publish'){$issues.Add('unexpected_noindex')};if($missingAlt-gt 0){$issues.Add('missing_alt_'+$missingAlt)};if($suspicious-gt 0){$issues.Add('schematic_images_'+$suspicious)};if($amazon-gt 0 -and ($tagged-lt $amazon -or $sponsored-lt $amazon)){$issues.Add('affiliate_hygiene')};if($raw.Length-lt 500){$issues.Add('thin_content')}
+  $score=10-$issues.Count;if($score-lt 0){$score=0}
   [ordered]@{id=[int]$z.id;type=[string]$z.type;title=[string]$z.title.raw;status=[string]$z.status;url=$u;modified=[string]$z.modified;featured_media=[int]$z.featured_media;content_length=$raw.Length;http=$status;h1_count=$h1;canonical=$canonical;viewport=$viewport;og_image=$og;noindex=$noindex;image_count=$imgs.Count;missing_alt=$missingAlt;suspicious_images=$suspicious;amazon_links=$amazon;affiliate_tagged=$tagged;sponsored_links=$sponsored;score=$score;issues=@($issues)}
 }
 
-$secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel';$user=(Get-Content (Join-Path $secretDir 'wp-user.txt') -Raw).Trim();$pass=Get-PlainSecret (Join-Path $secretDir 'wp-password.dat');try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pass"))}finally{Remove-Variable pass -ErrorAction SilentlyContinue};$headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
-$all=@();$p=Get-Wp '/wp/v2/pages?context=edit&per_page=100&_fields=id,type,slug,status,link,modified,title,featured_media,content' $headers;if(-not $p.ok){throw 'pages inventory failed'};$all+=@($p.body|ConvertFrom-Json)
-for($n=1;$n -le 4;$n++){$x=Get-Wp ("/wp/v2/posts?context=edit&per_page=100&page=$n&_fields=id,type,slug,status,link,modified,title,featured_media,content") $headers;if($x.ok){$all+=@($x.body|ConvertFrom-Json)}elseif($x.status -ne 400){throw "posts inventory failed page $n"}}
-$out=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');inventory_count=$all.Count;published_count=0;completed_count=0;perfect_count=0;needs_work_count=0;results=@();issue_totals=[ordered]@{};finished_utc=$null}
-$published=@($all|Where-Object { $_ -ne $null -and $_.PSObject.Properties.Name -contains 'status' -and [string]$_.status -eq 'publish' });$out.published_count=$published.Count;$i=0
-foreach($z in $published){$i++;Write-Host ("[{0}/{1}] {2}" -f $i,$published.Count,$z.link);$r=Probe $z;$out.results+=@($r);if($r.score -eq 10){$out.perfect_count++}else{$out.needs_work_count++};foreach($issue in $r.issues){if(-not $out.issue_totals.Contains($issue)){$out.issue_totals[$issue]=0};$out.issue_totals[$issue]++};$out.completed_count=$i;if(($i % 25)-eq 0){$out.finished_utc=$null;$json=$out|ConvertTo-Json -Depth 12;[IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/gk10-full-progress.json'),$json,(New-Object Text.UTF8Encoding($false)))}}
-$out.finished_utc=(Get-Date).ToUniversalTime().ToString('o');$json=$out|ConvertTo-Json -Depth 12;[IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/gk10-full-result.json'),$json,(New-Object Text.UTF8Encoding($false)));Write-Host "GK10 full pass complete: $($out.completed_count) published / inventory $($out.inventory_count)"
+$secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel'
+$user=(Get-Content (Join-Path $secretDir 'wp-user.txt') -Raw).Trim()
+$pass=Get-PlainSecret (Join-Path $secretDir 'wp-password.dat')
+try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pass"))}finally{Remove-Variable pass -ErrorAction SilentlyContinue}
+$headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
+
+$all=New-Object System.Collections.ArrayList
+$p=Get-Wp '/wp/v2/pages?context=edit&per_page=100&_fields=id,type,slug,status,link,modified,title,featured_media,content' $headers
+if(-not $p.ok){throw 'pages inventory failed'}
+Add-JsonItems $all $p.body
+for($n=1;$n-le 4;$n++){
+  $x=Get-Wp ("/wp/v2/posts?context=edit&per_page=100&page=$n&_fields=id,type,slug,status,link,modified,title,featured_media,content") $headers
+  if($x.ok){Add-JsonItems $all $x.body}elseif($x.status-ne 400){throw "posts inventory failed page $n"}
+}
+if($all.Count -lt 300){throw "inventory unexpectedly small: $($all.Count)"}
+$published=@($all | Where-Object { $null-ne $_ -and $_.PSObject.Properties['status'] -and [string]$_.status -eq 'publish' })
+if($published.Count -lt 300){throw "published inventory unexpectedly small: $($published.Count)"}
+
+$out=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');inventory_count=$all.Count;published_count=$published.Count;completed_count=0;perfect_count=0;needs_work_count=0;results=@();issue_totals=[ordered]@{};finished_utc=$null}
+$i=0
+foreach($z in $published){
+  $i++;Write-Host ("[{0}/{1}] {2}" -f $i,$published.Count,$z.link)
+  $r=Probe $z;$out.results+=@($r)
+  if($r.score-eq 10){$out.perfect_count++}else{$out.needs_work_count++}
+  foreach($issue in $r.issues){if(-not $out.issue_totals.Contains($issue)){$out.issue_totals[$issue]=0};$out.issue_totals[$issue]++}
+  $out.completed_count=$i
+  if(($i%25)-eq 0){$json=$out|ConvertTo-Json -Depth 12;[IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/gk10-full-progress.json'),$json,(New-Object Text.UTF8Encoding($false)))}
+}
+$out.finished_utc=(Get-Date).ToUniversalTime().ToString('o')
+$json=$out|ConvertTo-Json -Depth 12
+[IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/gk10-full-result.json'),$json,(New-Object Text.UTF8Encoding($false)))
+Write-Host "GK10 full pass complete: $($out.completed_count) published / inventory $($out.inventory_count)"
