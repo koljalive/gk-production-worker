@@ -1,0 +1,54 @@
+name: GK10 OpenGraph Repair
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/gk10-og-trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: gk10-og-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: self-hosted
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Repair OpenGraph and featured images
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          & "$env:GITHUB_WORKSPACE\bridge\Fix-GK10OpenGraph.ps1"
+      - name: Upload repair result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gk10-og-${{ github.run_id }}
+          path: |
+            bridge/gk10-og-backup.json
+            bridge/gk10-og-fix-result.json
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Persist repair result
+        if: success()
+        shell: powershell
+        run: |
+          Set-Location $env:GITHUB_WORKSPACE
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk10-og"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk10-og@users.noreply.github.com"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" fetch origin main
+          git -c safe.directory="$env:GITHUB_WORKSPACE" reset --soft origin/main
+          git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/gk10-og-backup.json bridge/gk10-og-fix-result.json
+          git -c safe.directory="$env:GITHUB_WORKSPACE" diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK10 OG repair result [skip ci]"
+            git -c safe.directory="$env:GITHUB_WORKSPACE" push origin HEAD:main
+          }
