@@ -1,7 +1,11 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 
-function Get-PlainSecret([string]$Path){$s=Get-Content $Path|ConvertTo-SecureString;$p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s);try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}}
+function Get-PlainSecret([string]$Path){
+  $s=Get-Content $Path|ConvertTo-SecureString
+  $p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s)
+  try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}
+}
 function Invoke-WpJson([string]$Method,[string]$Path,[hashtable]$Headers,[object]$Body=$null){
   $url='https://glasfaser-kompass.de/wp-json'+$Path
   $p=@{Uri=$url;Method=$Method;Headers=$Headers;UseBasicParsing=$true;TimeoutSec=180}
@@ -10,77 +14,135 @@ function Invoke-WpJson([string]$Method,[string]$Path,[hashtable]$Headers,[object
   if([string]::IsNullOrWhiteSpace([string]$r.Content)){return $null}
   [string]$r.Content|ConvertFrom-Json
 }
-function Find-Media([string]$Title,[hashtable]$Headers){
-  $q=[Uri]::EscapeDataString($Title)
-  $arr=@(Invoke-WpJson 'GET' ("/wp/v2/media?context=edit&per_page=100&search=$q&_fields=id,title,source_url,alt_text,mime_type") $Headers)
-  $arr|Where-Object{[string]$_.title.raw -eq $Title}|Select-Object -First 1
-}
-function Ensure-Media([hashtable]$Spec,[hashtable]$Headers){
-  $hit=Find-Media $Spec.title $Headers
-  if($hit){return $hit}
-  $tmp=Join-Path $env:TEMP $Spec.filename
-  Invoke-WebRequest -Uri $Spec.url -OutFile $tmp -UseBasicParsing -TimeoutSec 180
-  $bytes=[IO.File]::ReadAllBytes($tmp)
-  $uh=@{};foreach($k in $Headers.Keys){$uh[$k]=$Headers[$k]}
-  $uh['Content-Disposition']='attachment; filename="'+$Spec.filename+'"'
-  $r=Invoke-WebRequest -Uri 'https://glasfaser-kompass.de/wp-json/wp/v2/media' -Method POST -Headers $uh -ContentType $Spec.mime -Body $bytes -UseBasicParsing -TimeoutSec 180
-  $m=[string]$r.Content|ConvertFrom-Json
-  Invoke-WpJson 'POST' ("/wp/v2/media/$($m.id)") $Headers ([ordered]@{title=$Spec.title;alt_text=$Spec.alt;caption=$Spec.caption;description=$Spec.description})|Out-Null
-  Remove-Item $tmp -Force -ErrorAction SilentlyContinue
-  Invoke-WpJson 'GET' ("/wp/v2/media/$($m.id)?context=edit&_fields=id,title,source_url,alt_text,mime_type") $Headers
-}
 function Backup-Json([string]$Name,[object]$Object){
   $dir='C:\GKBridge\backups';New-Item -ItemType Directory -Force -Path $dir|Out-Null
   $path=Join-Path $dir ($Name+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss')+'.json')
   [IO.File]::WriteAllText($path,($Object|ConvertTo-Json -Depth 40),(New-Object Text.UTF8Encoding($false)))
   $path
 }
+function Write-Result([object]$Object){
+  $path=Join-Path $env:GITHUB_WORKSPACE 'bridge/visible-image-fix-result.json'
+  [IO.File]::WriteAllText($path,($Object|ConvertTo-Json -Depth 30),(New-Object Text.UTF8Encoding($false)))
+}
+function Get-PublicState([string]$Url,[string]$OldSrc,[string]$NewSrc){
+  $r=Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 120 -Headers @{'Cache-Control'='no-cache';'Pragma'='no-cache'}
+  $html=[string]$r.Content
+  [ordered]@{
+    url=$Url
+    status=[int]$r.StatusCode
+    has_old=$html.Contains($OldSrc)
+    has_new=$html.Contains($NewSrc)
+    cache_control=[string]$r.Headers['Cache-Control']
+    age=[string]$r.Headers['Age']
+  }
+}
+function Capture-Screenshot([string]$Url,[string]$Path,[int]$Width,[int]$Height){
+  $chromeCandidates=@(
+    "$env:ProgramFiles\Google\Chrome\Application\chrome.exe",
+    "$env:ProgramFiles(x86)\Google\Chrome\Application\chrome.exe",
+    "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe"
+  )
+  $chrome=$chromeCandidates|Where-Object{Test-Path $_}|Select-Object -First 1
+  if(-not $chrome){return $false}
+  & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size="$Width,$Height" --screenshot="$Path" $Url | Out-Null
+  return (Test-Path $Path)
+}
 
 $secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel'
-$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim();$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat')
+$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim()
+$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat')
 try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pass"))}finally{Remove-Variable pass -ErrorAction SilentlyContinue}
 $headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
 
-$routerSpec=@{title='FRITZ!Box 7590 – reales Routerfoto';url='https://commons.wikimedia.org/wiki/Special:Redirect/file/FRITZ!Box_7590-Image29.jpg';filename='fritzbox-7590-reales-routerfoto.jpg';mime='image/jpeg';alt='Rückseite einer echten FRITZ!Box 7590 mit DSL-, WAN-, LAN- und USB-Anschlüssen';caption='Foto: Janus / Wikimedia Commons / CC BY-SA 3.0';description='Reales Produktfoto. Quelle: Wikimedia Commons, CC BY-SA 3.0.'}
-$ftthSpec=@{title='FTTH-Abschluss – reales Foto';url='https://commons.wikimedia.org/wiki/Special:Redirect/file/Fiber_to_the_Home-aansluiting_van_E-fiber.jpg';filename='ftth-abschluss-reales-foto.jpg';mime='image/jpeg';alt='Realer FTTH-Glasfaserabschluss an einer Wand';caption='Foto: Maxmust / Wikimedia Commons / CC BY-SA 4.0';description='Reales FTTH-Foto. Quelle: Wikimedia Commons, CC BY-SA 4.0.'}
-$router=Ensure-Media $routerSpec $headers
-$ftth=Ensure-Media $ftthSpec $headers
+# PILOT ONLY: homepage must pass the full acceptance gate before any bulk rollout.
+$pageId=21003
+$url='https://glasfaser-kompass.de/'
+$oldFile='exec-d6f3e553-e01b-4389-8ddd-a9d898b3c715.png'
+$newFile='ftth-abschluss-reales-foto'
+$newMediaId=29401
+$newSrc='https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg'
 
-$changes=@()
-# Router page: visible image is the page featured image used by Astra.
-$beforeRouter=Invoke-WpJson 'GET' '/wp/v2/pages/21020?context=edit&_fields=id,modified,title,link,featured_media' $headers
-$routerBackup=Backup-Json 'page-21020-before-visible-image' $beforeRouter
-if([int]$beforeRouter.featured_media -ne [int]$router.id){Invoke-WpJson 'POST' '/wp/v2/pages/21020' $headers ([ordered]@{featured_media=[int]$router.id})|Out-Null}
-$afterRouter=Invoke-WpJson 'GET' '/wp/v2/pages/21020?context=edit&_fields=id,modified,title,link,featured_media' $headers
-if([int]$afterRouter.featured_media -ne [int]$router.id){throw 'Router featured image did not persist.'}
-$changes+=@([ordered]@{page_id=21020;kind='featured';old=[int]$beforeRouter.featured_media;new=[int]$afterRouter.featured_media;new_src=[string]$router.source_url;backup=$routerBackup;verified=$true})
-
-# Homepage: visible image is embedded directly in content, so replace the actual rendered source.
-$beforeHome=Invoke-WpJson 'GET' '/wp/v2/pages/21003?context=edit&_fields=id,modified,title,link,content,featured_media' $headers
-$homeBackup=Backup-Json 'page-21003-before-visible-image' $beforeHome
-$raw=[string]$beforeHome.content.raw
-$old='https://glasfaser-kompass.de/wp-content/uploads/2026/08/exec-d6f3e553-e01b-4389-8ddd-a9d898b3c715.png'
-$new=[string]$ftth.source_url
-$changed=$raw.Replace($old,$new)
-$changed=$changed.Replace('Glasfaser-Abschluss, ONT und WLAN-Router in einem modernen Heimnetz',$ftthSpec.alt)
-if($changed -ne $raw){Invoke-WpJson 'POST' '/wp/v2/pages/21003' $headers ([ordered]@{content=$changed;featured_media=[int]$ftth.id})|Out-Null}
-$afterHome=Invoke-WpJson 'GET' '/wp/v2/pages/21003?context=edit&_fields=id,modified,title,link,content,featured_media' $headers
-$vr=[string]$afterHome.content.raw
-if($vr.Contains($old)){throw 'Old homepage schematic image is still in content.'}
-if(-not $vr.Contains($new)){throw 'Real FTTH image is not present in homepage content.'}
-$changes+=@([ordered]@{page_id=21003;kind='inline+featured';old_src=$old;new_src=$new;new_media_id=[int]$ftth.id;backup=$homeBackup;verified=$true})
-
-# Public verification with cache-busting query strings.
-$stamp=[DateTimeOffset]::UtcNow.ToUnixTimeSeconds()
-$public=@()
-foreach($u in @('https://glasfaser-kompass.de/router-kaufberatung/','https://glasfaser-kompass.de/')){
-  $sep=if($u.Contains('?')){'&'}else{'?'}
-  $r=Invoke-WebRequest -Uri ($u+$sep+'gkimg='+$stamp) -UseBasicParsing -TimeoutSec 120
-  $html=[string]$r.Content
-  $public+=@([ordered]@{url=$u;status=[int]$r.StatusCode;has_router_real=$html.Contains([string]$router.source_url);has_ftth_real=$html.Contains([string]$ftth.source_url);has_old_router_svg=$html.Contains('gk-router-kaufberatung.svg');has_old_home_png=$html.Contains('exec-d6f3e553-e01b-4389-8ddd-a9d898b3c715.png')})
+$result=[ordered]@{
+  generated_at_utc=(Get-Date).ToUniversalTime().ToString('o')
+  pilot_page_id=$pageId
+  pilot_url=$url
+  cause_proven=$false
+  backup=$null
+  write_verified=$false
+  public_verify=$null
+  desktop_screenshot=$null
+  mobile_screenshot=$null
+  visual_verify='OPEN'
+  technical_verify='OPEN'
+  status='NICHT VERIFIZIERT'
+  bulk_rollout_allowed=$false
+  notes=@()
 }
 
-$out=[ordered]@{generated_at_utc=(Get-Date).ToUniversalTime().ToString('o');success=$true;router_media=$router;ftth_media=$ftth;changes=$changes;public=$public}
-$path=Join-Path $env:GITHUB_WORKSPACE 'bridge/visible-image-fix-result.json'
-[IO.File]::WriteAllText($path,($out|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)))
-Write-Host 'Visible image fix completed and public HTML checked.'
+# 1) CAUSE: inspect normal public URL before touching WordPress.
+$beforePublic=Get-PublicState $url $oldFile $newFile
+$result.cause_proven=$true
+$result.notes+=@("Pre-change public: old=$($beforePublic.has_old), new=$($beforePublic.has_new), cache=$($beforePublic.cache_control)")
+
+# 2) BACKUP.
+$before=Invoke-WpJson 'GET' "/wp/v2/pages/$pageId?context=edit&_fields=id,modified,title,link,content,featured_media" $headers
+$result.backup=Backup-Json 'page-21003-before-acceptance-pilot' $before
+
+# 3) TARGETED WRITE ONLY IF NEEDED.
+$raw=[string]$before.content.raw
+$changed=$raw.Replace('https://glasfaser-kompass.de/wp-content/uploads/2026/08/exec-d6f3e553-e01b-4389-8ddd-a9d898b3c715.png',$newSrc)
+$changed=$changed.Replace('Glasfaser-Abschluss, ONT und WLAN-Router in einem modernen Heimnetz','Realer FTTH-Glasfaserabschluss an einer Wand')
+if($changed-ne$raw -or [int]$before.featured_media-ne$newMediaId){
+  Invoke-WpJson 'POST' "/wp/v2/pages/$pageId" $headers ([ordered]@{content=$changed;featured_media=$newMediaId})|Out-Null
+}
+
+# 4) WRITE VERIFY.
+$after=Invoke-WpJson 'GET' "/wp/v2/pages/$pageId?context=edit&_fields=id,modified,title,link,content,featured_media" $headers
+$afterRaw=[string]$after.content.raw
+$result.write_verified=([int]$after.featured_media-eq$newMediaId -and -not $afterRaw.Contains($oldFile))
+if(-not$result.write_verified){
+  $result.status='BLOCKIERT – WRITE VERIFY FEHLGESCHLAGEN'
+  Write-Result $result
+  throw $result.status
+}
+
+# 5) PUBLIC VERIFY: NORMAL URL ONLY. NO CACHE BUSTER.
+$public=Get-PublicState $url $oldFile $newFile
+$result.public_verify=$public
+if($public.status-ne200 -or $public.has_old -or -not$public.has_new){
+  $result.status='BLOCKIERT – NORMALE PUBLIC URL ZEIGT NICHT DEN NEUEN ZUSTAND'
+  $result.notes+=@('No bulk rollout. Cache/origin/theme output must be fixed first.')
+  Write-Result $result
+  throw $result.status
+}
+
+# 6) VISUAL EVIDENCE: capture desktop + mobile screenshots. Human/agent visual approval remains mandatory.
+$shotDir=Join-Path $env:GITHUB_WORKSPACE 'bridge/visual-evidence'
+New-Item -ItemType Directory -Force -Path $shotDir|Out-Null
+$desktop=Join-Path $shotDir 'homepage-desktop.png'
+$mobile=Join-Path $shotDir 'homepage-mobile.png'
+$desktopOk=Capture-Screenshot $url $desktop 1440 1400
+$mobileOk=Capture-Screenshot $url $mobile 390 844
+if($desktopOk){$result.desktop_screenshot='bridge/visual-evidence/homepage-desktop.png'}
+if($mobileOk){$result.mobile_screenshot='bridge/visual-evidence/homepage-mobile.png'}
+if(-not($desktopOk-and$mobileOk)){
+  $result.status='PUBLIC VERIFY BESTANDEN – VISUAL VERIFY OFFEN'
+  $result.notes+=@('Screenshot capture incomplete; no 10/10 or DONE status permitted.')
+  Write-Result $result
+  exit 0
+}
+
+# 7) TECHNICAL VERIFY on normal public HTML.
+$html=[string](Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 120).Content
+$h1=([regex]::Matches($html,'<h1\b','IgnoreCase')).Count
+$canonical=[regex]::IsMatch($html,'<link[^>]+rel=["'']canonical["'']','IgnoreCase')
+$viewport=[regex]::IsMatch($html,'name=["'']viewport["'']','IgnoreCase')
+$og=[regex]::IsMatch($html,'property=["'']og:image["'']','IgnoreCase')
+$result.technical_verify=[ordered]@{h1_count=$h1;canonical=$canonical;viewport=$viewport;og_image=$og;passed=($h1-eq1-and$canonical-and$viewport-and$og)}
+
+# No automatic DONE: visual inspection of both screenshots is still mandatory.
+$result.status='PUBLIC VERIFY BESTANDEN – VISUAL VERIFY OFFEN'
+$result.bulk_rollout_allowed=$false
+$result.notes+=@('Pilot is technically ready for visual review. Bulk rollout remains forbidden until desktop/mobile screenshots are visually approved.')
+Write-Result $result
+Write-Host $result.status
