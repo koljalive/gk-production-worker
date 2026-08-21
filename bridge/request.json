@@ -1,6 +1,5 @@
 {
-  "request_id": "gk-homepage-force-refresh-20260821-1118",
-  "action": "post",
-  "path": "/wp/v2/pages/21003",
-  "body": {"featured_media": 29401}
+  "request_id": "gk-litespeed-rest-inspect-20260821-1127",
+  "action": "get",
+  "path": "/"
 }
