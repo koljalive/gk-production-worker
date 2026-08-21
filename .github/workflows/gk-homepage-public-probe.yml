@@ -1,0 +1,37 @@
+name: GK Homepage Public Probe
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/gk-homepage-public-probe-trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: self-hosted
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe live homepage bypassing cache
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          & "$env:GITHUB_WORKSPACE\bridge\Probe-GKHomepagePublic.ps1"
+      - name: Persist probe result
+        shell: powershell
+        run: |
+          Set-Location $env:GITHUB_WORKSPACE
+          git config user.name "gk-homepage-probe"
+          git config user.email "gk-homepage-probe@users.noreply.github.com"
+          git fetch origin main
+          git reset --soft origin/main
+          git add bridge/gk-homepage-public-probe.json
+          git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git commit -m "GK homepage public probe result [skip ci]"
+            git push origin HEAD:main
+          }
