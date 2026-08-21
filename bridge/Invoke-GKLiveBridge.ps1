@@ -26,12 +26,12 @@ function Get-Sha256([string]$Text) {
 function Invoke-Wp {
     param([string]$Method,[string]$Url,[hashtable]$Headers,[object]$Body=$null)
     $params=@{Uri=$Url;Method=$Method;Headers=$Headers;UseBasicParsing=$true;TimeoutSec=120}
-    if($null -ne $Body){$json=$Body|ConvertTo-Json -Depth 50 -Compress;$params.Body=[Text.Encoding]::UTF8.GetBytes($json);$params.ContentType='application/json; charset=utf-8'}
+    if($null-ne$Body){$json=$Body|ConvertTo-Json -Depth 50 -Compress;$params.Body=[Text.Encoding]::UTF8.GetBytes($json);$params.ContentType='application/json; charset=utf-8'}
     try{$r=Invoke-WebRequest @params;return [pscustomobject]@{ok=$true;status=[int]$r.StatusCode;content_type=[string]$r.Headers['Content-Type'];body=[string]$r.Content;error=$null}}
     catch{$status=$null;$bodyText='';if($_.Exception.Response){try{$status=[int]$_.Exception.Response.StatusCode}catch{};try{$reader=New-Object IO.StreamReader($_.Exception.Response.GetResponseStream());$bodyText=$reader.ReadToEnd();$reader.Close()}catch{}};return [pscustomobject]@{ok=$false;status=$status;content_type=$null;body=$bodyText;error=$_.Exception.Message}}
 }
 
-$result=[ordered]@{bridge_version='1.1.0';executed_at_utc=(Get-Date).ToUniversalTime().ToString('o');request=$null;success=$false;preflight=$null;response=$null;backup=$null;error=$null}
+$result=[ordered]@{bridge_version='1.1.1';executed_at_utc=(Get-Date).ToUniversalTime().ToString('o');request=$null;success=$false;preflight=$null;response=$null;backup=$null;error=$null}
 
 try{
     if(-not(Test-Path $RequestPath)){throw "Request file not found: $RequestPath"}
@@ -88,7 +88,7 @@ try{
         if([string]::IsNullOrWhiteSpace($path)){throw 'Request path is empty.'}
         if(-not $path.StartsWith('/')){$path='/'+$path}
         if($action -eq 'post'){
-            $allowedWrite=$path -match '^/wp/v2/(pages|posts)/\d+(\?.*)?$' -or $path -match '^/wp-abilities/v1/abilities/[A-Za-z0-9\-_/]+/run(\?.*)?$' -or $path -match '^/wp/v2/media/\d+(\?.*)?$'
+            $allowedWrite=$path -match '^/wp/v2/(pages|posts)/\d+(\?.*)?$' -or $path -match '^/wp-abilities/v1/abilities/[A-Za-z0-9\-_/]+/run(\?.*)?$' -or $path -match '^/wp/v2/media/\d+(\?.*)?$' -or $path -eq '/rankmath/v1/updateSettings'
             if(-not $allowedWrite){throw "Write path is not allow-listed: $path"}
         }
         $url=$base+$path
