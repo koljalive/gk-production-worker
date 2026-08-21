@@ -1,0 +1,40 @@
+name: GK Homepage Cache Purge
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/gk-homepage-cache-purge-trigger.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  purge:
+    runs-on: self-hosted
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Purge homepage cache and verify normal URL
+        shell: powershell
+        run: |
+          $ErrorActionPreference='Stop'
+          & "$env:GITHUB_WORKSPACE\bridge\Purge-GKHomepageCache.ps1"
+      - name: Persist purge result
+        if: always()
+        shell: powershell
+        run: |
+          Set-Location $env:GITHUB_WORKSPACE
+          git config user.name "gk-cache-purge"
+          git config user.email "gk-cache-purge@users.noreply.github.com"
+          git fetch origin main
+          git reset --soft origin/main
+          if (Test-Path 'bridge/gk-homepage-cache-purge-result.json') {
+            git add bridge/gk-homepage-cache-purge-result.json
+            git diff --cached --quiet
+            if ($LASTEXITCODE -ne 0) {
+              git commit -m "GK homepage cache purge result [skip ci]"
+              git push origin HEAD:main
+            }
+          }
