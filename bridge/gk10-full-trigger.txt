@@ -1,1 +1,1 @@
-gk10-full-recheck-after-global-og-20260821-0924
+acceptance-gated-production-20260821-1519
