@@ -1,0 +1,18 @@
+{
+    "checked_utc":  "2026-08-21T09:19:16.9732690Z",
+    "url":  "https://glasfaser-kompass.de/?gk_nocache=1787303956315",
+    "status":  200,
+    "cache_control":  "max-age=3600",
+    "age":  "",
+    "x_litespeed_cache":  "",
+    "first_images":  [
+                         {
+                             "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto-683x1024.jpg",
+                             "alt":  "Realer FTTH-Glasfaserabschluss an einer Wand"
+                         }
+                     ],
+    "has_old_exec":  false,
+    "has_new_ftth":  true,
+    "has_new_content":  true,
+    "has_old_content":  false
+}
