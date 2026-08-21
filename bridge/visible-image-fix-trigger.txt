@@ -1,1 +1,1 @@
-visible-image-fix-20260820-1
+acceptance-gated-homepage-pilot-20260821-1509
