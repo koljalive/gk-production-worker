@@ -1,6 +1,61 @@
 {
-  "checked_at": "2026-08-20T20:51:22Z",
+  "checked_at": "2026-08-21T15:50:13Z",
   "runs": [
+    {
+      "id": 32490162785,
+      "name": "GK10 Full 361 Pass",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "cd10bdf29a7cd2b7f272ef3aee515e00c1eb6ac0",
+      "display_title": "START: GK10 full production workflow",
+      "created_at": "2026-08-21T14:04:16Z",
+      "updated_at": "2026-08-21T14:06:24Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32490162785"
+    },
+    {
+      "id": 32458887068,
+      "name": "GK10 Full 361 Pass",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "64cab8040364c67a9df471f7d8c0fb51b338bb43",
+      "display_title": "RECHECK: run full 304-content audit after global OG fix",
+      "created_at": "2026-08-21T07:29:56Z",
+      "updated_at": "2026-08-21T07:33:06Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32458887068"
+    },
+    {
+      "id": 32458132699,
+      "name": "GK10 Full 361 Pass",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "dcdbc807f681801eaa012269b3783885ac214245",
+      "display_title": "RECHECK: full 304-content audit after global OG fallback fix",
+      "created_at": "2026-08-21T07:19:39Z",
+      "updated_at": "2026-08-21T07:22:48Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32458132699"
+    },
+    {
+      "id": 32453523611,
+      "name": "GK10 Full 361 Pass",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "dbe786b237e268f5ad04b45119ff0a345787bf8f",
+      "display_title": "RESTART: GK10 full pass with inventory expansion fix",
+      "created_at": "2026-08-21T06:13:25Z",
+      "updated_at": "2026-08-21T06:16:08Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32453523611"
+    },
+    {
+      "id": 32453357961,
+      "name": "GK10 Full 361 Pass",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "37c15a8e0b077025d1d48fff3138eb7fd5304b16",
+      "display_title": "RESTART: GK10 full pass after inventory filter fix",
+      "created_at": "2026-08-21T06:10:53Z",
+      "updated_at": "2026-08-21T06:11:39Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32453357961"
+    },
     {
       "id": 32415494005,
       "name": "GK10 Full 361 Pass",
