@@ -1,5 +1,5 @@
 {
-  "request_id": "gk10-og-rankmath-get-26271-20260821",
+  "request_id": "gk10-abilities-list-20260821",
   "action": "get",
-  "path": "/wp-abilities/v1/abilities/rank-math/get-post-seo-meta/run?input%5Bpost_id%5D=26271"
+  "path": "/wp-abilities/v1/abilities"
 }
