@@ -1,6 +1,5 @@
 {
-  "request_id": "gk10-og-meta-diag-26271-20260821",
-  "action": "post",
-  "path": "/wp-abilities/v1/abilities/rank-math/get-post-seo-meta/run",
-  "body": {"input":{"post_id":26271}}
+  "request_id": "gk10-og-restmeta-26271-20260821",
+  "action": "get",
+  "path": "/wp/v2/pages/26271?context=edit&_fields=id,featured_media,meta,modified,link"
 }
