@@ -1,5 +1,6 @@
 {
-  "request_id": "gk10-abilities-list-20260821",
-  "action": "get",
-  "path": "/wp-abilities/v1/abilities"
+  "request_id": "gk10-rankmath-opengraph-fix-20260821",
+  "action": "post",
+  "path": "/wp-abilities/v1/abilities/rank-math/fix-site-seo/run",
+  "body": {"input":{"test_id":"opengraph"}}
 }
