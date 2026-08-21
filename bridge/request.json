@@ -1,5 +1,5 @@
 {
-  "request_id": "gk10-rankmath-routes-20260821",
+  "request_id": "gk10-media-29401-before-og-20260821",
   "action": "get",
-  "path": "/"
+  "path": "/wp/v2/media/29401?context=edit&_fields=id,source_url,mime_type,alt_text,media_details"
 }
