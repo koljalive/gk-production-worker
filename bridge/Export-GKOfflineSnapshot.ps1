@@ -2,7 +2,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 function Get-PlainSecret([string]$Path){$s=Get-Content $Path|ConvertTo-SecureString;$p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s);try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}}
 function Wp([string]$Path,[hashtable]$Headers){$p=@{Uri=('https://glasfaser-kompass.de/wp-json'+$Path);Method='GET';Headers=$Headers;UseBasicParsing=$true;TimeoutSec=180};$r=Invoke-WebRequest @p;if([string]::IsNullOrWhiteSpace([string]$r.Content)){return $null};[string]$r.Content|ConvertFrom-Json}
-function All([string]$Base,[hashtable]$Headers){$out=@();$page=1;do{$items=@(Wp ($Base+($(if($Base.Contains('?')){'&'}else{'?'})+"per_page=100&page=$page")) $Headers);$out+=$items;$page++}while($items.Count-eq100);return @($out)}
+function All([string]$Base,[hashtable]$Headers){$out=@();$page=1;do{$items=@(Wp ($Base+($(if($Base.Contains('?')){'&'}else{'?'})+"per_page=100&page=$page")) $Headers);$out+=$items;$page++} while ($items.Count -eq 100); return @($out)}
 $secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel';$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim();$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat')
 try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($user+':'+$pass))}finally{Remove-Variable pass -ErrorAction SilentlyContinue}
 $headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
