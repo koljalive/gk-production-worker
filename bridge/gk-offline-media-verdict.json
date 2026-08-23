@@ -1,0 +1,74 @@
+{
+  "reviewed_utc": "2026-08-23T19:44:23.706Z",
+  "offline_only": true,
+  "production_writes": 0,
+  "items": [
+    {
+      "id": 29398,
+      "verdict": "approved_restricted",
+      "allowed_topics": [
+        "fiber_splicing",
+        "splice_closure",
+        "fiber_installation"
+      ],
+      "forbidden_topics": [
+        "dsl",
+        "copper",
+        "wifi",
+        "router",
+        "general_hub"
+      ],
+      "quality": "good_documentary"
+    },
+    {
+      "id": 29401,
+      "verdict": "approved_restricted",
+      "allowed_topics": [
+        "ftth_termination",
+        "fiber_wall_outlet"
+      ],
+      "forbidden_topics": [
+        "dsl",
+        "copper",
+        "wifi",
+        "router",
+        "general_hub"
+      ],
+      "quality": "moderate_foreign_label"
+    },
+    {
+      "id": 29402,
+      "verdict": "approved_restricted",
+      "allowed_topics": [
+        "fiber_rollout",
+        "ducts",
+        "civil_works"
+      ],
+      "forbidden_topics": [
+        "dsl",
+        "copper",
+        "wifi",
+        "router",
+        "indoor_installation"
+      ],
+      "quality": "good_documentary"
+    },
+    {
+      "id": 29403,
+      "verdict": "approved_restricted",
+      "allowed_topics": [
+        "wifi",
+        "access_point"
+      ],
+      "forbidden_topics": [
+        "dsl",
+        "copper",
+        "fiber",
+        "general_hub"
+      ],
+      "quality": "weak_composition"
+    }
+  ],
+  "dsl_safe_media_ids": [],
+  "status": "VISUAL_REVIEW_COMPLETE"
+}
