@@ -1,5 +1,5 @@
 {
-    "started_utc":  "2026-08-23T18:48:21.1589302Z",
+    "started_utc":  "2026-08-23T18:48:50.3042507Z",
     "status":  "FAILED",
     "changed":  [
 
@@ -8,11 +8,11 @@
 
                  ],
     "backups":  [
-                    "C:\\GKBridge\\backups\\direct-live-21005-20260823-204821.json",
-                    "C:\\GKBridge\\backups\\direct-live-21009-20260823-204821.json",
-                    "C:\\GKBridge\\backups\\direct-live-21008-20260823-204821.json",
-                    "C:\\GKBridge\\backups\\direct-live-1009-20260823-204822.json"
+                    "C:\\GKBridge\\backups\\direct-live-21005-20260823-204850.json",
+                    "C:\\GKBridge\\backups\\direct-live-21009-20260823-204850.json",
+                    "C:\\GKBridge\\backups\\direct-live-21008-20260823-204851.json",
+                    "C:\\GKBridge\\backups\\direct-live-1009-20260823-204851.json"
                 ],
     "error":  "Für \"Replace\" und die folgende Argumenteanzahl kann keine Überladung gefunden werden: \"4\".",
-    "finished_utc":  "2026-08-23T18:48:22.2879395Z"
+    "finished_utc":  "2026-08-23T18:48:51.5895414Z"
 }
