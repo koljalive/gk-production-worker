@@ -5,7 +5,7 @@ $report=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-quality-r
 function Plain([string]$Html){if([string]::IsNullOrWhiteSpace($Html)){return ''};$s=[regex]::Replace($Html,'(?is)<script\b.*?</script>|<style\b.*?</style>',' ');$s=[regex]::Replace($s,'<[^>]+>',' ');$s=[Net.WebUtility]::HtmlDecode($s);[regex]::Replace($s,'\s+',' ').Trim()}
 $items=@();foreach($x in $snapshot.pages){$items+=$x};foreach($x in $snapshot.posts){$items+=$x}
 $editorial=@()
-foreach($x in $items){$title=Plain([string]$x.title.rendered);$slug=[string]$x.slug;$plain=Plain([string]$x.content.raw;$null);$words=$(if([string]::IsNullOrWhiteSpace($plain)){0}else{($plain-split'\s+').Count});$topic=($title+' '+$slug)
+foreach($x in $items){$title=Plain([string]$x.title.rendered);$slug=[string]$x.slug;$plain=Plain([string]$x.content.raw);$words=$(if([string]::IsNullOrWhiteSpace($plain)){0}else{($plain-split'\s+').Count});$topic=($title+' '+$slug)
  $kind='guide';$minimum=650;$benefit=5
  if($topic-match'(?i)erklärt|erklaert|lexikon|was ist'){$kind='glossary';$minimum=300;$benefit=3}
  elseif($topic-match'(?i)kauf|vergleich|beste|router|tarif|kosten|lohnt'){$kind='commercial';$minimum=900;$benefit=8}
