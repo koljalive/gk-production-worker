@@ -1,6 +1,30 @@
 {
-  "checked_at": "2026-08-23T16:18:00Z",
+  "checked_at": "2026-08-23T16:53:16Z",
   "runs": [
+    {
+      "id": 32652773793,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "8b6b13a6053bb1a6e31113716f0aa8b661fd1086",
+      "display_title": "START strict editorial semantic acceptance gate",
+      "created_at": "2026-08-23T16:47:34Z",
+      "updated_at": "2026-08-23T16:48:05Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32652773793",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32652773793/jobs"
+    },
+    {
+      "id": 32651316359,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "42f286a528c5a591dafdf4837508bb37d9c18184",
+      "display_title": "START: acceptance pilot after interpolation fix",
+      "created_at": "2026-08-23T16:19:42Z",
+      "updated_at": "2026-08-23T16:20:28Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32651316359",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32651316359/jobs"
+    },
     {
       "id": 32650822279,
       "name": "GK10 Remaining Repair",
