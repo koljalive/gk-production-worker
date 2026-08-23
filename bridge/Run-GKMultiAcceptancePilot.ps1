@@ -91,7 +91,7 @@ foreach($mid in 29397,29398,29401,29403){$media[$mid]=Invoke-Wp 'GET' "/wp/v2/me
 $chrome=Find-Chrome
 if(-not $chrome){throw 'Chrome not found; visual acceptance evidence is mandatory.'}
 
-$result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');pilot_size=8;gate_version='multi-editorial-v1';selected=0;changed=0;verified=0;blocked=0;items=@();screenshots=@();finished_utc=$null}
+$result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');pilot_size=8;gate_version='multi-editorial-v2-live-state';selected=0;changed=0;verified=0;blocked=0;stale_skipped=0;items=@();screenshots=@();finished_utc=$null}
 $backupDir='C:\GKBridge\backups';New-Item -ItemType Directory -Force -Path $backupDir|Out-Null
 
 foreach($t in $candidates){
@@ -99,11 +99,19 @@ foreach($t in $candidates){
   $type=if([string]$t.type -eq 'page'){'pages'}else{'posts'}
   $id=[int]$t.id
   $o=Invoke-Wp 'GET' "/wp/v2/$type/$($id)?context=edit&_fields=id,modified,slug,link,title,featured_media,content" $headers
-  if($null -eq $o){continue}
+  if($null -eq $o){$result.blocked++;continue}
+
+  # Critical: stale audit findings are never treated as live truth. Re-probe the public URL first.
+  $pre=Probe ([string]$o.link)
+  if(-not $pre.ok -or $pre.http -ne 200){$result.blocked++;continue}
+  if($pre.h1 -eq 1 -and $pre.schematic -eq 0){$result.stale_skipped++;continue}
+  if($pre.h1 -lt 1 -or $pre.h1 -gt 2){$result.blocked++;continue}
+
   $raw=[string]$o.content.raw
   $title=[string]$o.title.raw
   $text="$title $([string]$o.slug) $raw"
-  $needsImage=([int]$t.suspicious_images -gt 0)
+  $needsH1=($pre.h1 -eq 2)
+  $needsImage=([int]$pre.schematic -gt 0)
   $cat=Get-Category $text
   if($needsImage -and [string]::IsNullOrWhiteSpace([string]$cat)){$result.blocked++;continue}
   $mid=if($needsImage){Get-MediaId $cat}else{0}
@@ -111,17 +119,17 @@ foreach($t in $candidates){
   $photo=if($needsImage){$media[$mid]}else{$null}
   if($needsImage -and ($null -eq $photo -or ([string]$photo.mime_type) -notmatch '^image/' -or [string]::IsNullOrWhiteSpace([string]$photo.source_url) -or (Is-Schematic ([string]$photo.source_url)))){$result.blocked++;continue}
 
-  $result.selected++
   $stamp=Get-Date -Format 'yyyyMMdd-HHmmss'
   $backupPath=Join-Path $backupDir "$type-$id-$stamp-multipilot-before.json"
   [IO.File]::WriteAllText($backupPath,($o|ConvertTo-Json -Depth 30),(New-Object Text.UTF8Encoding($false)))
 
   $new=$raw;$h1Changed=$false;$imgChanged=0;$expected=''
-  if($t.issues -contains 'h1_count_2'){
+  if($needsH1){
     $before=$new
     $new=[regex]::Replace($new,'<h1\b([^>]*)>','<h2$1>','IgnoreCase')
     $new=[regex]::Replace($new,'</h1\s*>','</h2>','IgnoreCase')
     $h1Changed=($new -ne $before)
+    if(-not $h1Changed){$result.blocked++;continue}
   }
   if($needsImage){
     $expected=[string]$photo.source_url
@@ -129,12 +137,17 @@ foreach($t in $candidates){
     $cnt=0
     $new=Replace-SchematicImages $new $expected $alt ([ref]$cnt)
     $imgChanged=$cnt
-    if($imgChanged -lt 1){throw "Pilot target $id reports suspicious images but none are replaceable; refusing blind write."}
+    if($imgChanged -lt 1){$result.blocked++;continue}
   }
+
+  # Only now count the target as selected: every selected target is actually actionable and backed up.
+  $result.selected++
   $body=[ordered]@{}
   if($new -ne $raw){$body.content=$new}
   if($needsImage -and [int]$o.featured_media -ne $mid){$body.featured_media=$mid}
-  if($body.Count -gt 0){Invoke-Wp 'POST' "/wp/v2/$type/$($id)" $headers $body|Out-Null;$result.changed++}
+  if($body.Count -lt 1){$result.blocked++;$result.selected--;continue}
+  Invoke-Wp 'POST' "/wp/v2/$type/$($id)" $headers $body|Out-Null
+  $result.changed++
 
   Purge ([string]$o.link)
   $probe=Wait-Probe ([string]$o.link) $expected
@@ -149,10 +162,11 @@ foreach($t in $candidates){
   & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=$mobile ([string]$o.link)|Out-Null
   if((-not (Test-Path $desktop)) -or (-not (Test-Path $mobile))){throw "Screenshot evidence missing for target $id."}
   $result.screenshots+=@([ordered]@{id=$id;viewport='desktop';path=(Split-Path $desktop -Leaf)},[ordered]@{id=$id;viewport='mobile';path=(Split-Path $mobile -Leaf)})
-  $result.items+=@([ordered]@{id=$id;type=$type;title=$title;url=[string]$o.link;category=$cat;backup=$backupPath;h1_changed=$h1Changed;images_replaced=$imgChanged;media_id=$mid;expected_image=$expected;probe=$probe;accepted=$true})
+  $result.items+=@([ordered]@{id=$id;type=$type;title=$title;url=[string]$o.link;category=$cat;backup=$backupPath;pre_probe=$pre;h1_changed=$h1Changed;images_replaced=$imgChanged;media_id=$mid;expected_image=$expected;probe=$probe;accepted=$true})
 }
-if($result.selected -lt 8){throw "Only $($result.selected) safe pilot targets found; required 8."}
+if($result.selected -lt 8){throw "Only $($result.selected) live-actionable safe pilot targets found; required 8. stale_skipped=$($result.stale_skipped) blocked=$($result.blocked)"}
 if($result.verified -ne 8){throw "Only $($result.verified) of 8 pilot targets verified."}
+if($result.screenshots.Count -ne 16){throw "Screenshot evidence incomplete: $($result.screenshots.Count) of 16."}
 $result.finished_utc=(Get-Date).ToUniversalTime().ToString('o')
 [IO.File]::WriteAllText((Join-Path $workspace 'bridge/multi-acceptance-pilot-result.json'),($result|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)))
-Write-Host "Multi acceptance pilot complete: selected=$($result.selected) changed=$($result.changed) verified=$($result.verified) blocked=$($result.blocked)"
+Write-Host "Multi acceptance pilot complete: selected=$($result.selected) changed=$($result.changed) verified=$($result.verified) stale_skipped=$($result.stale_skipped) blocked=$($result.blocked) screenshots=$($result.screenshots.Count)"
