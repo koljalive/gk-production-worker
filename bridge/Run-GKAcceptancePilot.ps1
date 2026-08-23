@@ -3,7 +3,7 @@ $ErrorActionPreference='Stop'
 
 function Get-PlainSecret([string]$Path){$s=Get-Content $Path|ConvertTo-SecureString;$p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s);try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}}
 function Invoke-Wp([string]$Method,[string]$Path,[hashtable]$Headers,[object]$Body=$null){$u='https://glasfaser-kompass.de/wp-json'+$Path;$p=@{Uri=$u;Method=$Method;Headers=$Headers;UseBasicParsing=$true;TimeoutSec=180};if($null-ne$Body){$j=$Body|ConvertTo-Json -Depth 40 -Compress;$p.Body=[Text.Encoding]::UTF8.GetBytes($j);$p.ContentType='application/json; charset=utf-8'};$r=Invoke-WebRequest @p;if([string]::IsNullOrWhiteSpace([string]$r.Content)){return $null};[string]$r.Content|ConvertFrom-Json}
-function Is-Suspicious([string]$Url){return $Url -match 'exec-|diagram|schema|signalweg|illustr|infograf|bauformen|collage|skizze|\.svg(?:\?|$)'}
+function Is-Suspicious([string]$Url){return $Url -match 'exec-|diagram|schema|signalweg|illustr|infograf|bauformen|collage|skizze|fritzbox|fritz-box|speedport|routerfoto|router-foto|\.svg(?:\?|$)'}
 function Backup([string]$Name,[object]$Obj){$dir='C:\GKBridge\backups';New-Item -ItemType Directory -Force -Path $dir|Out-Null;$p=Join-Path $dir ($Name+'-'+(Get-Date -Format 'yyyyMMdd-HHmmss')+'.json');[IO.File]::WriteAllText($p,($Obj|ConvertTo-Json -Depth 40),(New-Object Text.UTF8Encoding($false)));return $p}
 function Probe([string]$Url,[string]$ExpectedImage=''){try{$r=Invoke-WebRequest -Uri $Url -UseBasicParsing -TimeoutSec 120;$h=[string]$r.Content;$h1=([regex]::Matches($h,'<h1\b','IgnoreCase')).Count;$sus=0;foreach($m in [regex]::Matches($h,'<img\b[^>]*>','IgnoreCase')){$s=[regex]::Match($m.Value,'\bsrc=["'']([^"'']+)["'']','IgnoreCase');if($s.Success -and (Is-Suspicious $s.Groups[1].Value)){$sus++}};[pscustomobject]@{ok=$true;http=[int]$r.StatusCode;h1=$h1;suspicious=$sus;expected_image=([string]::IsNullOrWhiteSpace($ExpectedImage)-or$h.Contains($ExpectedImage))}}catch{[pscustomobject]@{ok=$false;http=$null;h1=$null;suspicious=$null;expected_image=$false;error=$_.Exception.Message}}}
 function Purge([string]$Url){try{Invoke-WebRequest -Uri $Url -Method PURGE -UseBasicParsing -TimeoutSec 60|Out-Null}catch{}}
@@ -35,7 +35,7 @@ function Select-PraxisMedia([hashtable]$Headers){
 }
 
 $workspace=$env:GITHUB_WORKSPACE;$secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel';$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim();$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat');try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pass"))}finally{Remove-Variable pass -ErrorAction SilentlyContinue};$headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
-$result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');gate_version='editorial-semantic-v2';status='RUNNING';items=@();screenshots=@();finished_utc=$null}
+$result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');gate_version='editorial-semantic-v3';status='RUNNING';items=@();screenshots=@();finished_utc=$null}
 
 $router=Invoke-Wp 'GET' '/wp/v2/pages/21020?context=edit&_fields=id,modified,link,title,content,featured_media' $headers;$routerBackup=Backup 'acceptance-pilot-21020-before' $router;$raw=[string]$router.content.raw;$new=$raw;if(([regex]::Matches($raw,'<h1\b','IgnoreCase')).Count-gt0){$new=[regex]::Replace($new,'<h1\b([^>]*)>','<h2$1>','IgnoreCase');$new=[regex]::Replace($new,'</h1\s*>','</h2>','IgnoreCase')};if($new-ne$raw){Invoke-Wp 'POST' '/wp/v2/pages/21020' $headers ([ordered]@{content=$new})|Out-Null};Purge([string]$router.link);$routerProbe=Wait-Probe([string]$router.link)''{param($p)$p.ok-and$p.http-eq200-and$p.h1-eq1};$result.items+=@([ordered]@{id=21020;url=[string]$router.link;change='content_h1_to_h2';backup=$routerBackup;public=$routerProbe;accepted=($routerProbe.ok-and$routerProbe.h1-eq1)});if(-not($routerProbe.ok-and$routerProbe.h1-eq1)){throw'Acceptance pilot failed on router H1 public verification.'}
 
@@ -56,14 +56,10 @@ $hubNew=$rx.Replace($hubRaw,{
   $x=[regex]::Replace($tag,'\bsrc=["''][^"'']+["'']',('src="'+$replacement+'"'),'IgnoreCase')
   $x=[regex]::Replace($x,'\s+srcset=["''][^"'']*["'']','','IgnoreCase')
   $x=[regex]::Replace($x,'\s+sizes=["''][^"'']*["'']','','IgnoreCase')
-  if([regex]::IsMatch($x,'\balt=["''][^"'']*["'']','IgnoreCase')){
-    $x=[regex]::Replace($x,'\balt=["''][^"'']*["'']',('alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'"'),'IgnoreCase')
-  } else {
-    $x=$x -replace '>$',(' alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'">')
-  }
+  if([regex]::IsMatch($x,'\balt=["''][^"'']*["'']','IgnoreCase')){$x=[regex]::Replace($x,'\balt=["''][^"'']*["'']',('alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'"'),'IgnoreCase')}else{$x=$x -replace '>$',(' alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'">')}
   return $x
 })
-if($script:replaced -lt 1){throw 'No suspicious visible image found on Praxiswissen pilot; refusing blind write.'}
+if($script:replaced -lt 1){throw 'EDITORIAL BLOCKER: no schematic or forbidden product image is currently replaceable on Praxiswissen.'}
 Invoke-Wp 'POST' '/wp/v2/pages/21009' $headers ([ordered]@{content=$hubNew;featured_media=[int]$media.id})|Out-Null
 $verifyHub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,link,content,featured_media' $headers
 if(-not([string]$verifyHub.content.raw).Contains($replacement)){throw 'Praxiswissen write did not persist expected image.'}
