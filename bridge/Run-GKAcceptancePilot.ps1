@@ -55,6 +55,24 @@ function Find-Chrome(){
   foreach($c in $candidates){if($c -and (Test-Path $c)){return $c}}
   return $null
 }
+function Select-PraxisMedia([hashtable]$Headers){
+  $candidates=@()
+  foreach($id in 29398,29401,29397,29403){
+    $m=Invoke-Wp 'GET' "/wp/v2/media/$id?context=edit&_fields=id,title,source_url,alt_text,mime_type,caption" $Headers
+    if($null-eq$m){continue}
+    $text=((([string]$m.title.raw)+' '+([string]$m.alt_text)+' '+([string]$m.caption.raw)+' '+([string]$m.source_url)).ToLowerInvariant())
+    if(([string]$m.mime_type) -notmatch '^image/'){continue}
+    if([string]::IsNullOrWhiteSpace([string]$m.source_url)){continue}
+    if(Is-Suspicious ([string]$m.source_url)){continue}
+    if($text -match 'schema|diagram|illustr|infograf|skizze|collage'){continue}
+    $score=0
+    foreach($kw in @('techniker','technik','installation','anschluss','leitung','telekom','dsl','kupfer','glasfaser','ftth','foto','real')){if($text -match [regex]::Escape($kw)){$score++}}
+    $candidates+=@([pscustomobject]@{media=$m;score=$score;text=$text})
+  }
+  $best=$candidates|Sort-Object score -Descending|Select-Object -First 1
+  if($null-eq$best -or [int]$best.score -lt 1){throw 'No semantically plausible real photo passed the Praxiswissen safety gate.'}
+  return $best.media
+}
 
 $workspace=$env:GITHUB_WORKSPACE
 $secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel'
@@ -81,17 +99,15 @@ $routerProbe=Wait-Probe ([string]$router.link) '' { param($p) $p.ok -and $p.http
 $result.items+=@([ordered]@{id=21020;url=[string]$router.link;change='content_h1_to_h2';backup=$routerBackup;public=$routerProbe;accepted=($routerProbe.ok -and $routerProbe.h1 -eq 1)})
 if(-not($routerProbe.ok -and $routerProbe.h1 -eq 1)){throw 'Acceptance pilot failed on router H1 public verification.'}
 
-# PILOT 2: Praxiswissen visible schematic image. Use only a real technician photo with matching metadata.
-$media=Invoke-Wp 'GET' '/wp/v2/media/29398?context=edit&_fields=id,title,source_url,alt_text,mime_type' $headers
-$mediaText=(([string]$media.title.raw)+' '+([string]$media.alt_text)).ToLowerInvariant()
-if(([string]$media.mime_type) -notmatch '^image/' -or $mediaText -notmatch 'techniker|telekom|technik|praxis'){throw 'Media 29398 failed semantic safety gate; refusing image write.'}
+# PILOT 2: Praxiswissen visible schematic image. Select the best semantically plausible real photo from approved media IDs.
+$media=Select-PraxisMedia $headers
 $hub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,modified,link,title,content,featured_media' $headers
 $hubBackup=Backup 'acceptance-pilot-21009-before' $hub
 $hubRaw=[string]$hub.content.raw
 $replacement=[string]$media.source_url
-$alt=if([string]::IsNullOrWhiteSpace([string]$media.alt_text)){'Telekommunikationstechniker bei der Arbeit'}else{[string]$media.alt_text}
+$alt=if([string]::IsNullOrWhiteSpace([string]$media.alt_text)){'Reales Technikfoto passend zum Praxiswissen'}else{[string]$media.alt_text}
 $rx=[regex]::new('<img\b[^>]*>','IgnoreCase')
-$replaced=0
+$script:replaced=0
 $hubNew=$rx.Replace($hubRaw,{param($m)
   $tag=$m.Value
   $srcM=[regex]::Match($tag,'\bsrc=["'']([^"'']+)["'']','IgnoreCase')
@@ -104,13 +120,13 @@ $hubNew=$rx.Replace($hubRaw,{param($m)
   else{$x=$x -replace '>$',(' alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'">')}
   return $x
 })
-if($replaced -lt 1){throw 'No suspicious visible image found on Praxiswissen pilot; refusing blind write.'}
+if($script:replaced -lt 1){throw 'No suspicious visible image found on Praxiswissen pilot; refusing blind write.'}
 Invoke-Wp 'POST' '/wp/v2/pages/21009' $headers ([ordered]@{content=$hubNew;featured_media=[int]$media.id})|Out-Null
 $verifyHub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,link,content,featured_media' $headers
 if(-not([string]$verifyHub.content.raw).Contains($replacement)){throw 'Praxiswissen write did not persist expected image.'}
 Purge ([string]$hub.link)
 $hubProbe=Wait-Probe ([string]$hub.link) $replacement { param($p) $p.ok -and $p.http -eq 200 -and $p.h1 -eq 1 -and $p.suspicious -eq 0 -and $p.expected_image }
-$result.items+=@([ordered]@{id=21009;url=[string]$hub.link;change='replace_visible_schematic_with_real_technician_photo';media_id=[int]$media.id;media_title=[string]$media.title.raw;media_src=$replacement;backup=$hubBackup;public=$hubProbe;accepted=($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)})
+$result.items+=@([ordered]@{id=21009;url=[string]$hub.link;change='replace_visible_schematic_with_selected_real_photo';media_id=[int]$media.id;media_title=[string]$media.title.raw;media_src=$replacement;backup=$hubBackup;public=$hubProbe;accepted=($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)})
 if(-not($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)){throw 'Acceptance pilot failed on Praxiswissen public verification.'}
 
 # Evidence screenshots, normal public URLs only.
