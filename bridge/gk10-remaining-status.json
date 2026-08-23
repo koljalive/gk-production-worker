@@ -1,6 +1,30 @@
 {
-  "checked_at": "2026-08-23T17:18:32Z",
+  "checked_at": "2026-08-23T17:39:26Z",
   "runs": [
+    {
+      "id": 32655202938,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "86554dcde6c9f386d4394fc2986f5f20cfb16208",
+      "display_title": "START strict 8-page multi acceptance pilot",
+      "created_at": "2026-08-23T17:33:10Z",
+      "updated_at": "2026-08-23T17:33:45Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32655202938",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32655202938/jobs"
+    },
+    {
+      "id": 32654645011,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "7d774a6f2f5d200aabb08f4d5096559d426810d9",
+      "display_title": "START idempotent strict editorial acceptance pilot v4",
+      "created_at": "2026-08-23T17:22:56Z",
+      "updated_at": "2026-08-23T17:23:42Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32654645011",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32654645011/jobs"
+    },
     {
       "id": 32654112865,
       "name": "GK10 Remaining Repair",
