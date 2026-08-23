@@ -1,0 +1,63 @@
+{
+    "started_utc":  "2026-08-23T20:26:16.6587408Z",
+    "status":  "VISUAL_POLISH_AND_EXACT_VIEWPORT_EVIDENCE_READY",
+    "targets":  [
+                    {
+                        "id":  298,
+                        "url":  "https://glasfaser-kompass.de/router-fuer-glasfaser/",
+                        "accepted":  true
+                    },
+                    {
+                        "id":  163,
+                        "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen-7-tipps-fuer-besseres-wlan/",
+                        "accepted":  true
+                    }
+                ],
+    "screenshots":  [
+                        {
+                            "id":  21005,
+                            "viewport":  "desktop",
+                            "width":  1440,
+                            "height":  1200,
+                            "path":  "final-21005-desktop.png"
+                        },
+                        {
+                            "id":  21005,
+                            "viewport":  "mobile",
+                            "width":  390,
+                            "height":  844,
+                            "path":  "final-21005-mobile.png"
+                        },
+                        {
+                            "id":  298,
+                            "viewport":  "desktop",
+                            "width":  1440,
+                            "height":  1200,
+                            "path":  "final-298-desktop.png"
+                        },
+                        {
+                            "id":  298,
+                            "viewport":  "mobile",
+                            "width":  390,
+                            "height":  844,
+                            "path":  "final-298-mobile.png"
+                        },
+                        {
+                            "id":  163,
+                            "viewport":  "desktop",
+                            "width":  1440,
+                            "height":  1200,
+                            "path":  "final-163-desktop.png"
+                        },
+                        {
+                            "id":  163,
+                            "viewport":  "mobile",
+                            "width":  390,
+                            "height":  844,
+                            "path":  "final-163-mobile.png"
+                        }
+                    ],
+    "rollback":  [
+
+                 ]
+}
