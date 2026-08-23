@@ -1,1 +1,1 @@
-acceptance-pilot-20260823-1914-screenshot-syntax-fixed
+acceptance-pilot-20260823-1920-idempotent-v4
