@@ -23,11 +23,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run strict 8-page multi acceptance pilot
+      - name: Static PowerShell parser gate
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKMultiAcceptancePilot.ps1"
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Run-GKMultiAcceptancePilotV4.ps1'),[ref]$tokens,[ref]$errors) | Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1};Write-Host 'PowerShell parser gate passed.'"
 
-      - name: Upload multi-pilot evidence
+      - name: Run hardened 8-page acceptance pilot v4
+        shell: cmd
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKMultiAcceptancePilotV4.ps1"
+
+      - name: Upload v4 pilot evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -39,14 +43,15 @@ jobs:
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Persist multi-pilot result
-        if: success()
+      - name: Persist v4 pilot result even on failure
+        if: always()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
+          if not exist bridge\multi-acceptance-pilot-result.json exit /b 0
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-multi-acceptance-pilot"
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-multi-acceptance-pilot@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
           git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/multi-acceptance-pilot-result.json
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "GK 8-page acceptance pilot result [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "GK v4 acceptance pilot result [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
