@@ -37,6 +37,7 @@ $needle=[IO.Path]::GetFileName(([uri][string]$media[0].source_url).AbsolutePath)
 $dslNew=[regex]::Replace($dslRaw,'(?is)<!--\s*wp:image\b.*?'+[regex]::Escape($needle)+'.*?<!--\s*\/wp:image\s*-->','')
 $dslNew=[regex]::Replace($dslNew,'(?is)<figure\b[^>]*>.*?'+[regex]::Escape($needle)+'.*?</figure>','')
 $dslFeatured=[int]$dsl.featured_media;if($dslFeatured-eq29398){$dslFeatured=0}
+if($dslNew-match '[\u00C2\u00C3\u00E2]'){throw 'DSL content failed UTF-8 integrity gate'}
 if($dslNew-eq$dslRaw -and [int]$dsl.featured_media-ne29398){throw 'Wrong DSL image not found in inline or featured media'}
 $targets+=[ordered]@{id=21005;action='remove_wrong_media_29398';source_modified=[string]$dsl.modified;content=$dslNew;featured_media=$dslFeatured;simulated_response=(Simulate-Update $dsl $dslNew $dslFeatured)}
 foreach($spec in @(@{id=298;html=$routerFiber;action='replace_layered_router_guide'},@{id=163;html=$routerPlace;action='replace_layered_router_placement'})){
