@@ -17,38 +17,42 @@ concurrency:
 jobs:
   repair:
     runs-on: self-hosted
-    timeout-minutes: 240
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Repair remaining H1 and schematic-image failures
+      - name: Run strict acceptance pilot before any bulk repair
         shell: powershell
         run: |
           $ErrorActionPreference='Stop'
-          & "$env:GITHUB_WORKSPACE\bridge\Fix-GK10Remaining.ps1"
-      - name: Upload repair result
+          & "$env:GITHUB_WORKSPACE\bridge\Run-GKAcceptancePilot.ps1"
+      - name: Upload acceptance evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gk10-remaining-${{ github.run_id }}
+          name: gk-acceptance-pilot-${{ github.run_id }}
           path: |
-            bridge/gk10-remaining-backup.json
-            bridge/gk10-remaining-fix-result.json
+            bridge/acceptance-pilot-result.json
+            bridge/acceptance-router-desktop.png
+            bridge/acceptance-router-mobile.png
+            bridge/acceptance-praxiswissen-desktop.png
+            bridge/acceptance-praxiswissen-mobile.png
           if-no-files-found: warn
           retention-days: 14
-      - name: Persist repair result
-        if: always()
+      - name: Persist acceptance result
+        if: success()
         shell: powershell
         run: |
+          $ErrorActionPreference='Stop'
           Set-Location $env:GITHUB_WORKSPACE
-          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk10-remaining"
-          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk10-remaining@users.noreply.github.com"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.name "gk-acceptance-pilot"
+          git -c safe.directory="$env:GITHUB_WORKSPACE" config user.email "gk-acceptance-pilot@users.noreply.github.com"
           git -c safe.directory="$env:GITHUB_WORKSPACE" fetch origin main
           git -c safe.directory="$env:GITHUB_WORKSPACE" reset --soft origin/main
-          git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/gk10-remaining-backup.json bridge/gk10-remaining-fix-result.json
+          git -c safe.directory="$env:GITHUB_WORKSPACE" add bridge/acceptance-pilot-result.json
           git -c safe.directory="$env:GITHUB_WORKSPACE" diff --cached --quiet
           if ($LASTEXITCODE -ne 0) {
-            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK10 remaining repair result [skip ci]"
+            git -c safe.directory="$env:GITHUB_WORKSPACE" commit -m "GK acceptance pilot result [skip ci]"
             git -c safe.directory="$env:GITHUB_WORKSPACE" push origin HEAD:main
           }
