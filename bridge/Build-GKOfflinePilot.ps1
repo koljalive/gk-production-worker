@@ -1,6 +1,6 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
-$snapshot=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json')-Raw|ConvertFrom-Json
+$snapshot=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json') -Encoding UTF8 -Raw|ConvertFrom-Json
 $all=@($snapshot.pages)+@($snapshot.posts)
 function Get-Item([int]$Id){$x=@($all|Where-Object{[int]$_.id-eq$Id});if($x.Count-ne1){throw "Target $Id missing or ambiguous"};$x[0]}
 function Plain-Words([string]$Html){$t=[Net.WebUtility]::HtmlDecode([regex]::Replace($Html,'<[^>]+>',' '));@([regex]::Matches($t,'\b[\p{L}\p{N}][\p{L}\p{N}\-]*\b')).Count}
