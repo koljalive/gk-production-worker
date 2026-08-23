@@ -1,15 +1,27 @@
 {
-  "checked_at": "2026-08-23T16:03:58Z",
+  "checked_at": "2026-08-23T16:15:39Z",
   "runs": [
+    {
+      "id": 32650822279,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "3bbd41c7a805d64194079a30e995257475440770",
+      "display_title": "Restart acceptance pilot after semantic media fix",
+      "created_at": "2026-08-23T16:09:57Z",
+      "updated_at": "2026-08-23T16:10:25Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32650822279",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32650822279/jobs"
+    },
     {
       "id": 32650486154,
       "name": "GK10 Remaining Repair",
-      "status": "in_progress",
-      "conclusion": null,
+      "status": "completed",
+      "conclusion": "failure",
       "head_sha": "4a0361f7c9dafd01ec1ae789761cd92078aeb67e",
       "display_title": "START: acceptance pilot after execution-policy fix",
       "created_at": "2026-08-23T16:03:30Z",
-      "updated_at": "2026-08-23T16:03:34Z",
+      "updated_at": "2026-08-23T16:04:07Z",
       "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32650486154",
       "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32650486154/jobs"
     },
