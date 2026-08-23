@@ -34,11 +34,31 @@ function Select-PraxisMedia([hashtable]$Headers){
   return $best.media
 }
 
-$workspace=$env:GITHUB_WORKSPACE;$secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel';$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim();$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat');try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pass"))}finally{Remove-Variable pass -ErrorAction SilentlyContinue};$headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
-$result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');gate_version='editorial-semantic-v3';status='RUNNING';items=@();screenshots=@();finished_utc=$null}
+$workspace=$env:GITHUB_WORKSPACE
+$secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel'
+$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim()
+$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat')
+try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes("$user`:$pass"))}finally{Remove-Variable pass -ErrorAction SilentlyContinue}
+$headers=@{Authorization="Basic $basic";Accept='application/json'}
+Remove-Variable basic -ErrorAction SilentlyContinue
+$result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');gate_version='editorial-semantic-v4-idempotent';status='RUNNING';items=@();screenshots=@();finished_utc=$null}
 
-$router=Invoke-Wp 'GET' '/wp/v2/pages/21020?context=edit&_fields=id,modified,link,title,content,featured_media' $headers;$routerBackup=Backup 'acceptance-pilot-21020-before' $router;$raw=[string]$router.content.raw;$new=$raw;if(([regex]::Matches($raw,'<h1\b','IgnoreCase')).Count-gt0){$new=[regex]::Replace($new,'<h1\b([^>]*)>','<h2$1>','IgnoreCase');$new=[regex]::Replace($new,'</h1\s*>','</h2>','IgnoreCase')};if($new-ne$raw){Invoke-Wp 'POST' '/wp/v2/pages/21020' $headers ([ordered]@{content=$new})|Out-Null};Purge([string]$router.link);$routerProbe=Wait-Probe([string]$router.link)''{param($p)$p.ok-and$p.http-eq200-and$p.h1-eq1};$result.items+=@([ordered]@{id=21020;url=[string]$router.link;change='content_h1_to_h2';backup=$routerBackup;public=$routerProbe;accepted=($routerProbe.ok-and$routerProbe.h1-eq1)});if(-not($routerProbe.ok-and$routerProbe.h1-eq1)){throw'Acceptance pilot failed on router H1 public verification.'}
+# Router: idempotently ensure exactly one public H1.
+$router=Invoke-Wp 'GET' '/wp/v2/pages/21020?context=edit&_fields=id,modified,link,title,content,featured_media' $headers
+$routerBackup=Backup 'acceptance-pilot-21020-before' $router
+$raw=[string]$router.content.raw
+$new=$raw
+if(([regex]::Matches($raw,'<h1\b','IgnoreCase')).Count -gt 0){
+  $new=[regex]::Replace($new,'<h1\b([^>]*)>','<h2$1>','IgnoreCase')
+  $new=[regex]::Replace($new,'</h1\s*>','</h2>','IgnoreCase')
+}
+if($new -ne $raw){Invoke-Wp 'POST' '/wp/v2/pages/21020' $headers ([ordered]@{content=$new})|Out-Null}
+Purge ([string]$router.link)
+$routerProbe=Wait-Probe ([string]$router.link) '' {param($p) $p.ok -and $p.http -eq 200 -and $p.h1 -eq 1}
+$result.items+=@([ordered]@{id=21020;url=[string]$router.link;change='content_h1_to_h2_or_already_compliant';backup=$routerBackup;public=$routerProbe;accepted=($routerProbe.ok -and $routerProbe.h1 -eq 1)})
+if(-not($routerProbe.ok -and $routerProbe.h1 -eq 1)){throw 'Acceptance pilot failed on router H1 public verification.'}
 
+# Praxiswissen: use only a semantically approved field-work/fibre image.
 $media=Select-PraxisMedia $headers
 $hub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,modified,link,title,content,featured_media' $headers
 $hubBackup=Backup 'acceptance-pilot-21009-before' $hub
@@ -56,27 +76,50 @@ $hubNew=$rx.Replace($hubRaw,{
   $x=[regex]::Replace($tag,'\bsrc=["''][^"'']+["'']',('src="'+$replacement+'"'),'IgnoreCase')
   $x=[regex]::Replace($x,'\s+srcset=["''][^"'']*["'']','','IgnoreCase')
   $x=[regex]::Replace($x,'\s+sizes=["''][^"'']*["'']','','IgnoreCase')
-  if([regex]::IsMatch($x,'\balt=["''][^"'']*["'']','IgnoreCase')){$x=[regex]::Replace($x,'\balt=["''][^"'']*["'']',('alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'"'),'IgnoreCase')}else{$x=$x -replace '>$',(' alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'">')}
+  if([regex]::IsMatch($x,'\balt=["''][^"'']*["'']','IgnoreCase')){
+    $x=[regex]::Replace($x,'\balt=["''][^"'']*["'']',('alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'"'),'IgnoreCase')
+  }else{
+    $x=$x -replace '>$',(' alt="'+[System.Net.WebUtility]::HtmlEncode($alt)+'">')
+  }
   return $x
 })
-if($script:replaced -lt 1){throw 'EDITORIAL BLOCKER: no schematic or forbidden product image is currently replaceable on Praxiswissen.'}
-Invoke-Wp 'POST' '/wp/v2/pages/21009' $headers ([ordered]@{content=$hubNew;featured_media=[int]$media.id})|Out-Null
-$verifyHub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,link,content,featured_media' $headers
-if(-not([string]$verifyHub.content.raw).Contains($replacement)){throw 'Praxiswissen write did not persist expected image.'}
-Purge([string]$hub.link)
-$hubProbe=Wait-Probe([string]$hub.link)$replacement{param($p)$p.ok-and$p.http-eq200-and$p.h1-eq1-and$p.suspicious-eq0-and$p.expected_image}
-$result.items+=@([ordered]@{id=21009;url=[string]$hub.link;change='strict_editorial_real_photo';media_id=[int]$media.id;media_title=[string]$media.title.raw;media_src=$replacement;backup=$hubBackup;public=$hubProbe;accepted=($hubProbe.ok-and$hubProbe.h1-eq1-and$hubProbe.suspicious-eq0-and$hubProbe.expected_image)})
-if(-not($hubProbe.ok-and$hubProbe.h1-eq1-and$hubProbe.suspicious-eq0-and$hubProbe.expected_image)){throw 'Acceptance pilot failed on Praxiswissen public verification.'}
 
-$chrome=Find-Chrome
-if($chrome){
-  foreach($pair in @(@{name='router';url=[string]$router.link},@{name='praxiswissen';url=[string]$hub.link})){
-    $desktop=Join-Path $workspace ("bridge/acceptance-$($pair.name)-desktop.png")
-    $mobile=Join-Path $workspace ("bridge/acceptance-$($pair.name)-mobile.png")
-    & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=1440,1200 --screenshot=$desktop $pair.url | Out-Null
-    & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=$mobile $pair.url | Out-Null
-    if(Test-Path $desktop){$result.screenshots+=@([ordered]@{url=$pair.url;viewport='desktop';path=(Split-Path $desktop -Leaf)})}
-    if(Test-Path $mobile){$result.screenshots+=@([ordered]@{url=$pair.url;viewport='mobile';path=(Split-Path $mobile -Leaf)})}
-  }
+$alreadyCompliant=$hubRaw.Contains($replacement)
+if($script:replaced -lt 1 -and -not $alreadyCompliant){
+  throw 'EDITORIAL BLOCKER: no forbidden image is replaceable and the approved image is not already present. Refusing blind write.'
 }
-$result.status='PUBLIC VERIFIED - STRICT EDITORIAL GATE PASSED';$result.finished_utc=(Get-Date).ToUniversalTime().ToString('o');[IO.File]::WriteAllText((Join-Path $workspace 'bridge/acceptance-pilot-result.json'),($result|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)));Write-Host'Acceptance pilot completed under strict editorial semantic gate.'
+
+if($script:replaced -gt 0){
+  Invoke-Wp 'POST' '/wp/v2/pages/21009' $headers ([ordered]@{content=$hubNew;featured_media=[int]$media.id})|Out-Null
+}elseif([int]$hub.featured_media -ne [int]$media.id){
+  # Content already has the approved image; only align featured_media.
+  Invoke-Wp 'POST' '/wp/v2/pages/21009' $headers ([ordered]@{featured_media=[int]$media.id})|Out-Null
+}
+
+$verifyHub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,link,content,featured_media' $headers
+if(-not([string]$verifyHub.content.raw).Contains($replacement)){throw 'Praxiswissen verification failed: approved image not present after write/skip.'}
+if([int]$verifyHub.featured_media -ne [int]$media.id){throw 'Praxiswissen verification failed: featured_media does not match approved image.'}
+Purge ([string]$hub.link)
+$hubProbe=Wait-Probe ([string]$hub.link) $replacement {param($p) $p.ok -and $p.http -eq 200 -and $p.h1 -eq 1 -and $p.suspicious -eq 0 -and $p.expected_image}
+$change=if($script:replaced -gt 0){'strict_editorial_real_photo_replaced'}else{'strict_editorial_real_photo_already_compliant'}
+$result.items+=@([ordered]@{id=21009;url=[string]$hub.link;change=$change;media_id=[int]$media.id;media_title=[string]$media.title.raw;media_src=$replacement;backup=$hubBackup;public=$hubProbe;accepted=($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)})
+if(-not($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)){throw 'Acceptance pilot failed on Praxiswissen public verification.'}
+
+# Capture both viewports and require all four evidence files.
+$chrome=Find-Chrome
+if($null -eq $chrome){throw 'VISUAL BLOCKER: Chrome not found; visual evidence is mandatory.'}
+foreach($pair in @(@{name='router';url=[string]$router.link},@{name='praxiswissen';url=[string]$hub.link})){
+  $desktop=Join-Path $workspace ("bridge/acceptance-$($pair.name)-desktop.png")
+  $mobile=Join-Path $workspace ("bridge/acceptance-$($pair.name)-mobile.png")
+  & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=1440,1200 --screenshot=$desktop $pair.url | Out-Null
+  & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=$mobile $pair.url | Out-Null
+  if(-not(Test-Path $desktop)){throw "VISUAL BLOCKER: missing desktop screenshot for $($pair.name)."}
+  if(-not(Test-Path $mobile)){throw "VISUAL BLOCKER: missing mobile screenshot for $($pair.name)."}
+  $result.screenshots+=@([ordered]@{url=$pair.url;viewport='desktop';path=(Split-Path $desktop -Leaf)})
+  $result.screenshots+=@([ordered]@{url=$pair.url;viewport='mobile';path=(Split-Path $mobile -Leaf)})
+}
+
+$result.status='PUBLIC VERIFIED - STRICT EDITORIAL GATE PASSED'
+$result.finished_utc=(Get-Date).ToUniversalTime().ToString('o')
+[IO.File]::WriteAllText((Join-Path $workspace 'bridge/acceptance-pilot-result.json'),($result|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)))
+Write-Host 'Acceptance pilot completed under strict editorial semantic gate v4.'
