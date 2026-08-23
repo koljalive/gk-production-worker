@@ -1,1 +1,1 @@
-acceptance-pilot-20260823-1904-product-image-detection-fixed
+acceptance-pilot-20260823-1914-screenshot-syntax-fixed
