@@ -1,12 +1,17 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 function Get-PlainSecret([string]$Path){$s=Get-Content $Path|ConvertTo-SecureString;$p=[Runtime.InteropServices.Marshal]::SecureStringToBSTR($s);try{[Runtime.InteropServices.Marshal]::PtrToStringBSTR($p)}finally{[Runtime.InteropServices.Marshal]::ZeroFreeBSTR($p)}}
+function ConvertFrom-Utf8Response($Response){
+  $bytes=$Response.RawContentStream.ToArray()
+  $text=[Text.Encoding]::UTF8.GetString($bytes)
+  ConvertFrom-Json -InputObject $text
+}
 function Get-Collection([string]$Base,[hashtable]$Headers){
   $sep=$(if($Base.Contains('?')){'&'}else{'?'})
   $first=Invoke-WebRequest -Uri ('https://glasfaser-kompass.de/wp-json'+$Base+$sep+'per_page=100&page=1') -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180
   $total=[int]$first.Headers['X-WP-Total'];$totalPages=[int]$first.Headers['X-WP-TotalPages']
-  $items=@();$parsed=ConvertFrom-Json -InputObject ([string]$first.Content);foreach($item in $parsed){$items+=$item}
-  if($totalPages -gt 1){for($page=2;$page -le $totalPages;$page++){$r=Invoke-WebRequest -Uri ('https://glasfaser-kompass.de/wp-json'+$Base+$sep+"per_page=100&page=$page") -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180;$parsed=ConvertFrom-Json -InputObject ([string]$r.Content);foreach($item in $parsed){$items+=$item}}}
+  $items=@();$parsed=ConvertFrom-Utf8Response $first;foreach($item in $parsed){$items+=$item}
+  if($totalPages -gt 1){for($page=2;$page -le $totalPages;$page++){$r=Invoke-WebRequest -Uri ('https://glasfaser-kompass.de/wp-json'+$Base+$sep+"per_page=100&page=$page") -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180;$parsed=ConvertFrom-Utf8Response $r;foreach($item in $parsed){$items+=$item}}}
   if($items.Count -ne $total){throw "Incomplete collection $Base expected=$total actual=$($items.Count)"}
   [ordered]@{items=@($items);reported_total=$total;reported_pages=$totalPages}
 }
