@@ -1,0 +1,10 @@
+{
+    "generated_utc":  "2026-08-23T19:47:44.2359791Z",
+    "offline_only":  true,
+    "production_writes":  0,
+    "content_total":  304,
+    "duplicate_group_count":  1,
+    "pair_count":  303,
+    "high_confidence_count":  250,
+    "status":  "OFFLINE_DEDUPLICATION_COMPLETE"
+}
