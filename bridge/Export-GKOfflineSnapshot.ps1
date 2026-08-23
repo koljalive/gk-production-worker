@@ -5,8 +5,8 @@ function Get-Collection([string]$Base,[hashtable]$Headers){
   $sep=$(if($Base.Contains('?')){'&'}else{'?'})
   $first=Invoke-WebRequest -Uri ('https://glasfaser-kompass.de/wp-json'+$Base+$sep+'per_page=100&page=1') -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180
   $total=[int]$first.Headers['X-WP-Total'];$totalPages=[int]$first.Headers['X-WP-TotalPages']
-  $items=@([string]$first.Content|ConvertFrom-Json)
-  if($totalPages -gt 1){for($page=2;$page -le $totalPages;$page++){$r=Invoke-WebRequest -Uri ('https://glasfaser-kompass.de/wp-json'+$Base+$sep+"per_page=100&page=$page") -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180;$items+=@([string]$r.Content|ConvertFrom-Json)}}
+  $items=@();$parsed=ConvertFrom-Json -InputObject ([string]$first.Content);foreach($item in $parsed){$items+=$item}
+  if($totalPages -gt 1){for($page=2;$page -le $totalPages;$page++){$r=Invoke-WebRequest -Uri ('https://glasfaser-kompass.de/wp-json'+$Base+$sep+"per_page=100&page=$page") -Method GET -Headers $Headers -UseBasicParsing -TimeoutSec 180;$parsed=ConvertFrom-Json -InputObject ([string]$r.Content);foreach($item in $parsed){$items+=$item}}}
   if($items.Count -ne $total){throw "Incomplete collection $Base expected=$total actual=$($items.Count)"}
   [ordered]@{items=@($items);reported_total=$total;reported_pages=$totalPages}
 }
