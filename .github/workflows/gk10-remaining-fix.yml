@@ -1,19 +1,15 @@
 name: GK10 Remaining Repair
-
 on:
   push:
     branches: [ main ]
     paths:
       - 'bridge/gk10-remaining-trigger.txt'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 concurrency:
   group: gk10-remaining-repair
   cancel-in-progress: false
-
 jobs:
   repair:
     runs-on: self-hosted
@@ -22,36 +18,32 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
-      - name: Static PowerShell parser gate
+      - name: Parser gate for direct live work
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Run-GKMultiAcceptancePilotV4.ps1'),[ref]$tokens,[ref]$errors) | Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1};Write-Host 'PowerShell parser gate passed.'"
-
-      - name: Run hardened 8-page acceptance pilot v4
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Run-GKDirectLiveImprovements.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
+      - name: Publish visible content layout and image improvements
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKMultiAcceptancePilotV4.ps1"
-
-      - name: Upload v4 pilot evidence
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKDirectLiveImprovements.ps1"
+      - name: Upload live desktop and mobile evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gk-multi-acceptance-pilot-${{ github.run_id }}
+          name: gk-direct-live-${{ github.run_id }}
           path: |
-            bridge/multi-acceptance-pilot-result.json
-            bridge/pilot-*-desktop.png
-            bridge/pilot-*-mobile.png
+            bridge/direct-live-improvements-result.json
+            bridge/direct-live-evidence/*.png
           if-no-files-found: warn
           retention-days: 14
-
-      - name: Persist v4 pilot result even on failure
+      - name: Persist live verification even on failure
         if: always()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
-          if not exist bridge\multi-acceptance-pilot-result.json exit /b 0
-          git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-multi-acceptance-pilot"
-          git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-multi-acceptance-pilot@users.noreply.github.com"
+          if not exist bridge\direct-live-improvements-result.json exit /b 0
+          git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-live-improvements"
+          git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-live-improvements@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/multi-acceptance-pilot-result.json
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "GK v4 acceptance pilot result [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/direct-live-improvements-result.json
+          if exist bridge\direct-live-evidence git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/direct-live-evidence/*.png
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist direct live verification [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
