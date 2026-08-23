@@ -2,7 +2,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 $snapshotPath=Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json'
 if(-not(Test-Path $snapshotPath)){throw 'Offline snapshot missing'}
-$snapshot=Get-Content $snapshotPath -Raw|ConvertFrom-Json
+$snapshot=Get-Content $snapshotPath -Encoding UTF8 -Raw|ConvertFrom-Json
 $items=@();foreach($x in $snapshot.pages){$items+=$x};foreach($x in $snapshot.posts){$items+=$x}
 if($items.Count-ne([int]$snapshot.page_count+[int]$snapshot.post_count)){throw "Snapshot count mismatch expected=$([int]$snapshot.page_count+[int]$snapshot.post_count) actual=$($items.Count)"}
 function Plain([string]$Html){if([string]::IsNullOrWhiteSpace($Html)){return ''};$s=[regex]::Replace($Html,'(?is)<script\b.*?</script>|<style\b.*?</style>',' ');$s=[regex]::Replace($s,'<[^>]+>',' ');$s=[Net.WebUtility]::HtmlDecode($s);[regex]::Replace($s,'\s+',' ').Trim()}
