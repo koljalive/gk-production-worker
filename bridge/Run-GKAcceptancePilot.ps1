@@ -58,7 +58,8 @@ function Find-Chrome(){
 function Select-PraxisMedia([hashtable]$Headers){
   $candidates=@()
   foreach($id in 29398,29401,29397,29403){
-    $m=Invoke-Wp 'GET' "/wp/v2/media/$id?context=edit&_fields=id,title,source_url,alt_text,mime_type,caption" $Headers
+    $path="/wp/v2/media/$($id)?context=edit&_fields=id,title,source_url,alt_text,mime_type,caption"
+    $m=Invoke-Wp 'GET' $path $Headers
     if($null-eq$m){continue}
     $text=((([string]$m.title.raw)+' '+([string]$m.alt_text)+' '+([string]$m.caption.raw)+' '+([string]$m.source_url)).ToLowerInvariant())
     if(([string]$m.mime_type) -notmatch '^image/'){continue}
@@ -83,7 +84,6 @@ $headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variab
 
 $result=[ordered]@{started_utc=(Get-Date).ToUniversalTime().ToString('o');status='RUNNING';items=@();screenshots=@();finished_utc=$null}
 
-# PILOT 1: Router Kaufberatung H1 only. No image changes here because the router image is already accepted.
 $router=Invoke-Wp 'GET' '/wp/v2/pages/21020?context=edit&_fields=id,modified,link,title,content,featured_media' $headers
 $routerBackup=Backup 'acceptance-pilot-21020-before' $router
 $raw=[string]$router.content.raw
@@ -99,7 +99,6 @@ $routerProbe=Wait-Probe ([string]$router.link) '' { param($p) $p.ok -and $p.http
 $result.items+=@([ordered]@{id=21020;url=[string]$router.link;change='content_h1_to_h2';backup=$routerBackup;public=$routerProbe;accepted=($routerProbe.ok -and $routerProbe.h1 -eq 1)})
 if(-not($routerProbe.ok -and $routerProbe.h1 -eq 1)){throw 'Acceptance pilot failed on router H1 public verification.'}
 
-# PILOT 2: Praxiswissen visible schematic image. Select the best semantically plausible real photo from approved media IDs.
 $media=Select-PraxisMedia $headers
 $hub=Invoke-Wp 'GET' '/wp/v2/pages/21009?context=edit&_fields=id,modified,link,title,content,featured_media' $headers
 $hubBackup=Backup 'acceptance-pilot-21009-before' $hub
@@ -129,7 +128,6 @@ $hubProbe=Wait-Probe ([string]$hub.link) $replacement { param($p) $p.ok -and $p.
 $result.items+=@([ordered]@{id=21009;url=[string]$hub.link;change='replace_visible_schematic_with_selected_real_photo';media_id=[int]$media.id;media_title=[string]$media.title.raw;media_src=$replacement;backup=$hubBackup;public=$hubProbe;accepted=($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)})
 if(-not($hubProbe.ok -and $hubProbe.h1 -eq 1 -and $hubProbe.suspicious -eq 0 -and $hubProbe.expected_image)){throw 'Acceptance pilot failed on Praxiswissen public verification.'}
 
-# Evidence screenshots, normal public URLs only.
 $chrome=Find-Chrome
 if($chrome){
   foreach($pair in @(@{name='router';url=[string]$router.link},@{name='praxiswissen';url=[string]$hub.link})){
