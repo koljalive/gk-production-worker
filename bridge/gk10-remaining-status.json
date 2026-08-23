@@ -1,6 +1,18 @@
 {
-  "checked_at": "2026-08-23T17:11:02Z",
+  "checked_at": "2026-08-23T17:18:32Z",
   "runs": [
+    {
+      "id": 32654112865,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "100b7406ed56b1d7a4af54d61b2c8b226ebd4ad1",
+      "display_title": "Restart strict editorial acceptance pilot after screenshot syntax fix",
+      "created_at": "2026-08-23T17:12:56Z",
+      "updated_at": "2026-08-23T17:13:25Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32654112865",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32654112865/jobs"
+    },
     {
       "id": 32653713060,
       "name": "GK10 Remaining Repair",
