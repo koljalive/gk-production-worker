@@ -1,0 +1,547 @@
+{
+    "started_utc":  "2026-08-23T18:18:32.8670494Z",
+    "pilot_size":  8,
+    "gate_version":  "multi-editorial-v4-preflight-map-rollback",
+    "failure_classes_guarded":  [
+                                    "execution_policy",
+                                    "unsafe_media_semantics",
+                                    "powershell_interpolation",
+                                    "powershell_token_spacing",
+                                    "stale_audit_state",
+                                    "non_idempotent_repair",
+                                    "responsive_image_variants",
+                                    "unmapped_public_schematic",
+                                    "partial_write_without_rollback",
+                                    "missing_failure_evidence"
+                                ],
+    "status":  "PASSED",
+    "preflight_checked":  13,
+    "stale_skipped":  4,
+    "blocked":  1,
+    "selected":  8,
+    "changed":  8,
+    "verified":  8,
+    "rollback_attempted":  false,
+    "rollback_ok":  null,
+    "blockers":  [
+                     {
+                         "id":  1009,
+                         "reason":  "image_category_ambiguous",
+                         "public_schematic":  [
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-router-26265.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-router-26263.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-router-26261.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-router-26259.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-techniker-26257.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-techniker-26255.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-techniker-26253.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-techniker-26251.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-techniker-26249.svg",
+                                                  "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-wlan-26247.svg"
+                                              ]
+                     }
+                 ],
+    "plans":  [
+                  {
+                      "id":  21003,
+                      "type":  "pages",
+                      "title":  "Startseite",
+                      "url":  "https://glasfaser-kompass.de/",
+                      "needs_h1":  true,
+                      "needs_image":  false,
+                      "category":  null,
+                      "replacement_media_id":  0,
+                      "replace_inline":  false,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  2,
+                                        "schematic":  0,
+                                        "schematic_srcs":  [
+
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto-683x1024.jpg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  26229,
+                      "type":  "posts",
+                      "title":  "APL und TAE Signalweg einfach erklärt",
+                      "url":  "https://glasfaser-kompass.de/apl-tae-signalweg/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "field",
+                      "replacement_media_id":  29398,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-dsl-26229.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads//2026/07/gk-dsl-26229.svg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  20313,
+                      "type":  "posts",
+                      "title":  "Was macht ein Telekom-Techniker eigentlich?",
+                      "url":  "https://glasfaser-kompass.de/was-macht-ein-telekom-techniker-eigentlich/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "field",
+                      "replacement_media_id":  29398,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-techniker-20313.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-techniker-20313.svg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  6006,
+                      "type":  "posts",
+                      "title":  "WLAN-Störquellen erklärt",
+                      "url":  "https://glasfaser-kompass.de/wlan-stoerquellen-erklaert/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "wifi",
+                      "replacement_media_id":  29403,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6006.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6006.svg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  6005,
+                      "type":  "posts",
+                      "title":  "Repeater erklärt",
+                      "url":  "https://glasfaser-kompass.de/repeater-erklaert-voll/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "wifi",
+                      "replacement_media_id":  29403,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6005.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6005.svg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  6004,
+                      "type":  "posts",
+                      "title":  "Access Point erklärt",
+                      "url":  "https://glasfaser-kompass.de/access-point-erklaert-voll/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "wifi",
+                      "replacement_media_id":  29403,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6004.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6004.svg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  6003,
+                      "type":  "posts",
+                      "title":  "Mesh WLAN erklärt",
+                      "url":  "https://glasfaser-kompass.de/mesh-wlan-erklaert-voll/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "wifi",
+                      "replacement_media_id":  29403,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6003.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-wlan-6003.svg"
+                                                       ]
+                                    }
+                  },
+                  {
+                      "id":  6002,
+                      "type":  "posts",
+                      "title":  "Wi‑Fi 7 erklärt",
+                      "url":  "https://glasfaser-kompass.de/wifi-7-erklaert-voll/",
+                      "needs_h1":  false,
+                      "needs_image":  true,
+                      "category":  "wifi",
+                      "replacement_media_id":  29403,
+                      "replace_inline":  true,
+                      "replace_featured":  false,
+                      "pre_probe":  {
+                                        "ok":  true,
+                                        "http":  200,
+                                        "h1":  1,
+                                        "schematic":  1,
+                                        "schematic_srcs":  [
+                                                               "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-router-6002.svg"
+                                                           ],
+                                        "expected_image":  true,
+                                        "image_count":  1,
+                                        "image_srcs":  [
+                                                           "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-router-6002.svg"
+                                                       ]
+                                    }
+                  }
+              ],
+    "items":  [
+                  {
+                      "id":  21003,
+                      "type":  "pages",
+                      "title":  "Startseite",
+                      "url":  "https://glasfaser-kompass.de/",
+                      "backup":  "C:\\GKBridge\\backups\\pages-21003-20260823-201842-v4-before.json",
+                      "h1_changed":  true,
+                      "inline_images_replaced":  0,
+                      "featured_changed":  false,
+                      "media_id":  0,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto-683x1024.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  26229,
+                      "type":  "posts",
+                      "title":  "APL und TAE Signalweg einfach erklärt",
+                      "url":  "https://glasfaser-kompass.de/apl-tae-signalweg/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-26229-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29398,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  20313,
+                      "type":  "posts",
+                      "title":  "Was macht ein Telekom-Techniker eigentlich?",
+                      "url":  "https://glasfaser-kompass.de/was-macht-ein-telekom-techniker-eigentlich/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-20313-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29398,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  6006,
+                      "type":  "posts",
+                      "title":  "WLAN-Störquellen erklärt",
+                      "url":  "https://glasfaser-kompass.de/wlan-stoerquellen-erklaert/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-6006-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29403,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  6005,
+                      "type":  "posts",
+                      "title":  "Repeater erklärt",
+                      "url":  "https://glasfaser-kompass.de/repeater-erklaert-voll/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-6005-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29403,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  6004,
+                      "type":  "posts",
+                      "title":  "Access Point erklärt",
+                      "url":  "https://glasfaser-kompass.de/access-point-erklaert-voll/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-6004-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29403,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  6003,
+                      "type":  "posts",
+                      "title":  "Mesh WLAN erklärt",
+                      "url":  "https://glasfaser-kompass.de/mesh-wlan-erklaert-voll/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-6003-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29403,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  6002,
+                      "type":  "posts",
+                      "title":  "Wi‑Fi 7 erklärt",
+                      "url":  "https://glasfaser-kompass.de/wifi-7-erklaert-voll/",
+                      "backup":  "C:\\GKBridge\\backups\\posts-6002-20260823-201842-v4-before.json",
+                      "h1_changed":  false,
+                      "inline_images_replaced":  1,
+                      "featured_changed":  false,
+                      "media_id":  29403,
+                      "probe":  {
+                                    "ok":  true,
+                                    "http":  200,
+                                    "h1":  1,
+                                    "schematic":  0,
+                                    "schematic_srcs":  [
+
+                                                       ],
+                                    "expected_image":  true,
+                                    "image_count":  1,
+                                    "image_srcs":  [
+                                                       "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg"
+                                                   ]
+                                },
+                      "accepted":  true
+                  }
+              ],
+    "screenshots":  [
+                        {
+                            "id":  21003,
+                            "viewport":  "desktop",
+                            "path":  "pilot-21003-desktop.png"
+                        },
+                        {
+                            "id":  21003,
+                            "viewport":  "mobile",
+                            "path":  "pilot-21003-mobile.png"
+                        },
+                        {
+                            "id":  26229,
+                            "viewport":  "desktop",
+                            "path":  "pilot-26229-desktop.png"
+                        },
+                        {
+                            "id":  26229,
+                            "viewport":  "mobile",
+                            "path":  "pilot-26229-mobile.png"
+                        },
+                        {
+                            "id":  20313,
+                            "viewport":  "desktop",
+                            "path":  "pilot-20313-desktop.png"
+                        },
+                        {
+                            "id":  20313,
+                            "viewport":  "mobile",
+                            "path":  "pilot-20313-mobile.png"
+                        },
+                        {
+                            "id":  6006,
+                            "viewport":  "desktop",
+                            "path":  "pilot-6006-desktop.png"
+                        },
+                        {
+                            "id":  6006,
+                            "viewport":  "mobile",
+                            "path":  "pilot-6006-mobile.png"
+                        },
+                        {
+                            "id":  6005,
+                            "viewport":  "desktop",
+                            "path":  "pilot-6005-desktop.png"
+                        },
+                        {
+                            "id":  6005,
+                            "viewport":  "mobile",
+                            "path":  "pilot-6005-mobile.png"
+                        },
+                        {
+                            "id":  6004,
+                            "viewport":  "desktop",
+                            "path":  "pilot-6004-desktop.png"
+                        },
+                        {
+                            "id":  6004,
+                            "viewport":  "mobile",
+                            "path":  "pilot-6004-mobile.png"
+                        },
+                        {
+                            "id":  6003,
+                            "viewport":  "desktop",
+                            "path":  "pilot-6003-desktop.png"
+                        },
+                        {
+                            "id":  6003,
+                            "viewport":  "mobile",
+                            "path":  "pilot-6003-mobile.png"
+                        },
+                        {
+                            "id":  6002,
+                            "viewport":  "desktop",
+                            "path":  "pilot-6002-desktop.png"
+                        },
+                        {
+                            "id":  6002,
+                            "viewport":  "mobile",
+                            "path":  "pilot-6002-mobile.png"
+                        }
+                    ],
+    "finished_utc":  "2026-08-23T18:19:33.5727474Z"
+}
