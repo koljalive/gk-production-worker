@@ -1,45 +1,38 @@
 {
-    "started_utc":  "2026-08-23T18:55:02.8551177Z",
+    "started_utc":  "2026-08-23T19:01:03.2100717Z",
     "status":  "FAILED",
-    "changed":  [
-                    {
-                        "id":  21005,
-                        "url":  "https://glasfaser-kompass.de/dsl-kupfer/",
-                        "media_id":  29398,
-                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg",
-                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
-                    },
-                    {
-                        "id":  21009,
-                        "url":  "https://glasfaser-kompass.de/praxiswissen/",
-                        "media_id":  29398,
-                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg",
-                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
-                    },
-                    {
-                        "id":  21008,
-                        "url":  "https://glasfaser-kompass.de/stoerungen/",
-                        "media_id":  29403,
-                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
-                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
-                    },
-                    {
-                        "id":  1009,
-                        "url":  "https://glasfaser-kompass.de/technik-lexikon-2/",
-                        "media_id":  29401,
-                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg",
-                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
-                    }
-                ],
+    "dsl_image_action":  "removed_wrong_image_no_safe_dsl_media",
+    "dsl_image":  null,
     "verified":  [
-
+                     {
+                         "id":  21005,
+                         "url":  "https://glasfaser-kompass.de/dsl-kupfer/",
+                         "http":  200,
+                         "h1_count":  1,
+                         "marker":  true,
+                         "desktop":  "bridge/direct-live-evidence/dsl-kupfer-desktop.png",
+                         "mobile":  "bridge/direct-live-evidence/dsl-kupfer-mobile.png"
+                     },
+                     {
+                         "id":  21009,
+                         "url":  "https://glasfaser-kompass.de/praxiswissen/",
+                         "http":  200,
+                         "h1_count":  1,
+                         "marker":  true,
+                         "desktop":  "bridge/direct-live-evidence/praxiswissen-desktop.png",
+                         "mobile":  "bridge/direct-live-evidence/praxiswissen-mobile.png"
+                     },
+                     {
+                         "id":  21008,
+                         "url":  "https://glasfaser-kompass.de/stoerungen/",
+                         "http":  200,
+                         "h1_count":  1,
+                         "marker":  true,
+                         "desktop":  "bridge/direct-live-evidence/stoerungen-desktop.png",
+                         "mobile":  "bridge/direct-live-evidence/stoerungen-mobile.png"
+                     }
                  ],
-    "backups":  [
-                    "C:\\GKBridge\\backups\\direct-live-21005-20260823-205503.json",
-                    "C:\\GKBridge\\backups\\direct-live-21009-20260823-205503.json",
-                    "C:\\GKBridge\\backups\\direct-live-21008-20260823-205504.json",
-                    "C:\\GKBridge\\backups\\direct-live-1009-20260823-205504.json"
-                ],
-    "error":  "Public acceptance failed 21005: marker=True h1=1 image=True bad=1",
-    "finished_utc":  "2026-08-23T18:55:09.5611622Z"
+    "rollback":  true,
+    "error":  "Public acceptance 1009 failed: http=200 h1=1 marker=False",
+    "finished_utc":  "2026-08-23T19:01:20.6166790Z"
 }
