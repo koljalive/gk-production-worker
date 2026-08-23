@@ -68,5 +68,15 @@ $hubProbe=Wait-Probe([string]$hub.link)$replacement{param($p)$p.ok-and$p.http-eq
 $result.items+=@([ordered]@{id=21009;url=[string]$hub.link;change='strict_editorial_real_photo';media_id=[int]$media.id;media_title=[string]$media.title.raw;media_src=$replacement;backup=$hubBackup;public=$hubProbe;accepted=($hubProbe.ok-and$hubProbe.h1-eq1-and$hubProbe.suspicious-eq0-and$hubProbe.expected_image)})
 if(-not($hubProbe.ok-and$hubProbe.h1-eq1-and$hubProbe.suspicious-eq0-and$hubProbe.expected_image)){throw 'Acceptance pilot failed on Praxiswissen public verification.'}
 
-$chrome=Find-Chrome;if($chrome){foreach($pair in @(@{name='router';url=[string]$router.link},@{name='praxiswissen';url=[string]$hub.link})){$desktop=Join-Path $workspace("bridge/acceptance-$($pair.name)-desktop.png");$mobile=Join-Path $workspace("bridge/acceptance-$($pair.name)-mobile.png");&$chrome --headless=new --disable-gpu --hide-scrollbars --window-size=1440,1200 --screenshot=$desktop $pair.url|Out-Null;&$chrome --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=$mobile $pair.url|Out-Null;if(Test-Path$desktop){$result.screenshots+=@([ordered]@{url=$pair.url;viewport='desktop';path=(Split-Path$desktop-Leaf)})};if(Test-Path$mobile){$result.screenshots+=@([ordered]@{url=$pair.url;viewport='mobile';path=(Split-Path$mobile-Leaf)})}}}
+$chrome=Find-Chrome
+if($chrome){
+  foreach($pair in @(@{name='router';url=[string]$router.link},@{name='praxiswissen';url=[string]$hub.link})){
+    $desktop=Join-Path $workspace ("bridge/acceptance-$($pair.name)-desktop.png")
+    $mobile=Join-Path $workspace ("bridge/acceptance-$($pair.name)-mobile.png")
+    & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=1440,1200 --screenshot=$desktop $pair.url | Out-Null
+    & $chrome --headless=new --disable-gpu --hide-scrollbars --window-size=390,844 --screenshot=$mobile $pair.url | Out-Null
+    if(Test-Path $desktop){$result.screenshots+=@([ordered]@{url=$pair.url;viewport='desktop';path=(Split-Path $desktop -Leaf)})}
+    if(Test-Path $mobile){$result.screenshots+=@([ordered]@{url=$pair.url;viewport='mobile';path=(Split-Path $mobile -Leaf)})}
+  }
+}
 $result.status='PUBLIC VERIFIED - STRICT EDITORIAL GATE PASSED';$result.finished_utc=(Get-Date).ToUniversalTime().ToString('o');[IO.File]::WriteAllText((Join-Path $workspace 'bridge/acceptance-pilot-result.json'),($result|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)));Write-Host'Acceptance pilot completed under strict editorial semantic gate.'
