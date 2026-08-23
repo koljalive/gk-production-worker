@@ -1,1 +1,1 @@
-acceptance-pilot-20260823-1815-interpolation-fixed
+acceptance-pilot-20260823-1843-strict-editorial-gate
