@@ -1,0 +1,34 @@
+name: GK Direct Live Improvements
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'bridge/direct-live-improvements-trigger.txt'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  improve:
+    runs-on: self-hosted
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply visible live improvements
+        shell: cmd
+        run: powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKDirectLiveImprovements.ps1"
+      - name: Upload desktop and mobile evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gk-direct-live-${{ github.run_id }}
+          path: |
+            bridge/direct-live-improvements-result.json
+            bridge/direct-live-evidence/*.png
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Persist public verification and screenshots
+        if: always()
+        shell: cmd
+        run: powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$ErrorActionPreference='Stop'; Set-Location $env:GITHUB_WORKSPACE; git -c safe.directory=$env:GITHUB_WORKSPACE config user.name 'gk-live-improvements'; git -c safe.directory=$env:GITHUB_WORKSPACE config user.email 'gk-live-improvements@users.noreply.github.com'; git -c safe.directory=$env:GITHUB_WORKSPACE fetch origin main; git -c safe.directory=$env:GITHUB_WORKSPACE reset --soft origin/main; if(Test-Path 'bridge/direct-live-improvements-result.json'){git -c safe.directory=$env:GITHUB_WORKSPACE add bridge/direct-live-improvements-result.json}; if(Test-Path 'bridge/direct-live-evidence'){git -c safe.directory=$env:GITHUB_WORKSPACE add bridge/direct-live-evidence/*.png}; git -c safe.directory=$env:GITHUB_WORKSPACE diff --cached --quiet; if($LASTEXITCODE -ne 0){git -c safe.directory=$env:GITHUB_WORKSPACE commit -m 'Persist direct live verification [skip ci]'; git -c safe.directory=$env:GITHUB_WORKSPACE push origin HEAD:main}"
