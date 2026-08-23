@@ -1,0 +1,78 @@
+{
+    "started_utc":  "2026-08-23T20:21:41.4386183Z",
+    "status":  "LIVE_PILOT_PUBLIC_AND_VISUAL_EVIDENCE_READY",
+    "targets":  [
+                    {
+                        "id":  21005,
+                        "url":  "https://glasfaser-kompass.de/dsl-kupfer/",
+                        "action":  "remove_wrong_media_29398",
+                        "public":  {
+                                       "http":  200,
+                                       "h1":  1,
+                                       "marker":  true,
+                                       "bad_encoding":  false
+                                   },
+                        "accepted":  true
+                    },
+                    {
+                        "id":  298,
+                        "url":  "https://glasfaser-kompass.de/router-fuer-glasfaser/",
+                        "action":  "replace_layered_router_guide",
+                        "public":  {
+                                       "http":  200,
+                                       "h1":  1,
+                                       "marker":  true,
+                                       "bad_encoding":  false
+                                   },
+                        "accepted":  true
+                    },
+                    {
+                        "id":  163,
+                        "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen-7-tipps-fuer-besseres-wlan/",
+                        "action":  "replace_layered_router_placement",
+                        "public":  {
+                                       "http":  200,
+                                       "h1":  1,
+                                       "marker":  true,
+                                       "bad_encoding":  false
+                                   },
+                        "accepted":  true
+                    }
+                ],
+    "screenshots":  [
+                        {
+                            "id":  21005,
+                            "viewport":  "desktop",
+                            "path":  "live-pilot-21005-desktop.png"
+                        },
+                        {
+                            "id":  21005,
+                            "viewport":  "mobile",
+                            "path":  "live-pilot-21005-mobile.png"
+                        },
+                        {
+                            "id":  298,
+                            "viewport":  "desktop",
+                            "path":  "live-pilot-298-desktop.png"
+                        },
+                        {
+                            "id":  298,
+                            "viewport":  "mobile",
+                            "path":  "live-pilot-298-mobile.png"
+                        },
+                        {
+                            "id":  163,
+                            "viewport":  "desktop",
+                            "path":  "live-pilot-163-desktop.png"
+                        },
+                        {
+                            "id":  163,
+                            "viewport":  "mobile",
+                            "path":  "live-pilot-163-mobile.png"
+                        }
+                    ],
+    "rollback":  [
+
+                 ],
+    "finished_utc":  "2026-08-23T20:21:56.3663727Z"
+}
