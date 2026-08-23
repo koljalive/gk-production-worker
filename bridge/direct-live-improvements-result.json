@@ -1,18 +1,45 @@
 {
-    "started_utc":  "2026-08-23T18:52:19.9725707Z",
+    "started_utc":  "2026-08-23T18:55:02.8551177Z",
     "status":  "FAILED",
     "changed":  [
-
+                    {
+                        "id":  21005,
+                        "url":  "https://glasfaser-kompass.de/dsl-kupfer/",
+                        "media_id":  29398,
+                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg",
+                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
+                    },
+                    {
+                        "id":  21009,
+                        "url":  "https://glasfaser-kompass.de/praxiswissen/",
+                        "media_id":  29398,
+                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg",
+                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
+                    },
+                    {
+                        "id":  21008,
+                        "url":  "https://glasfaser-kompass.de/stoerungen/",
+                        "media_id":  29403,
+                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
+                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
+                    },
+                    {
+                        "id":  1009,
+                        "url":  "https://glasfaser-kompass.de/technik-lexikon-2/",
+                        "media_id":  29401,
+                        "image":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg",
+                        "improvement":  "visual guide, direct links, contextual image, schematic cleanup"
+                    }
                 ],
     "verified":  [
 
                  ],
     "backups":  [
-                    "C:\\GKBridge\\backups\\direct-live-21005-20260823-205220.json",
-                    "C:\\GKBridge\\backups\\direct-live-21009-20260823-205220.json",
-                    "C:\\GKBridge\\backups\\direct-live-21008-20260823-205220.json",
-                    "C:\\GKBridge\\backups\\direct-live-1009-20260823-205220.json"
+                    "C:\\GKBridge\\backups\\direct-live-21005-20260823-205503.json",
+                    "C:\\GKBridge\\backups\\direct-live-21009-20260823-205503.json",
+                    "C:\\GKBridge\\backups\\direct-live-21008-20260823-205504.json",
+                    "C:\\GKBridge\\backups\\direct-live-1009-20260823-205504.json"
                 ],
-    "error":  "Für \"Replace\" und die folgende Argumenteanzahl kann keine Überladung gefunden werden: \"4\".",
-    "finished_utc":  "2026-08-23T18:52:21.2029009Z"
+    "error":  "Public acceptance failed 21005: marker=True h1=1 image=True bad=1",
+    "finished_utc":  "2026-08-23T18:55:09.5611622Z"
 }
