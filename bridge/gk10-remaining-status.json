@@ -1,6 +1,18 @@
 {
-  "checked_at": "2026-08-23T17:39:26Z",
+  "checked_at": "2026-08-23T17:49:34Z",
   "runs": [
+    {
+      "id": 32655781426,
+      "name": "GK10 Remaining Repair",
+      "status": "completed",
+      "conclusion": "failure",
+      "head_sha": "779c3af0f3fc3678f8f3c2127804048a1b17eb25",
+      "display_title": "Restart 8-page pilot with live-state filtering",
+      "created_at": "2026-08-23T17:44:04Z",
+      "updated_at": "2026-08-23T17:47:21Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32655781426",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32655781426/jobs"
+    },
     {
       "id": 32655202938,
       "name": "GK10 Remaining Repair",
