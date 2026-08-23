@@ -37,7 +37,14 @@ $needle=[IO.Path]::GetFileName(([uri][string]$media[0].source_url).AbsolutePath)
 $dslNew=[regex]::Replace($dslRaw,'(?is)<!--\s*wp:image\b.*?'+[regex]::Escape($needle)+'.*?<!--\s*\/wp:image\s*-->','')
 $dslNew=[regex]::Replace($dslNew,'(?is)<figure\b[^>]*>.*?'+[regex]::Escape($needle)+'.*?</figure>','')
 $dslFeatured=[int]$dsl.featured_media;if($dslFeatured-eq29398){$dslFeatured=0}
-if($dslNew-match '[\u00C2\u00C3\u00E2]'){throw 'DSL content failed UTF-8 integrity gate'}
+$encodingMatches=@([regex]::Matches($dslNew,'[\u00C2\u00C3\u00E2]'))
+if($encodingMatches.Count-gt0){
+  $contexts=@();foreach($m in $encodingMatches){$start=[Math]::Max(0,$m.Index-45);$length=[Math]::Min(100,$dslNew.Length-$start);$contexts+=[ordered]@{index=$m.Index;code_unit=[int][char]$m.Value;context=$dslNew.Substring($start,$length)}}
+  $blocked=[ordered]@{generated_utc=(Get-Date).ToUniversalTime().ToString('o');source_snapshot_utc=[string]$snapshot.captured_utc;offline_only=$true;production_writes=0;target_count=0;blocked_target_id=21005;encoding_match_count=$encodingMatches.Count;encoding_contexts=$contexts;status='OFFLINE_PILOT_BLOCKED_EXISTING_ENCODING'}
+  [IO.File]::WriteAllText((Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-pilot.json'),($blocked|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)))
+  Write-Host "Offline pilot blocked by existing DSL encoding: matches=$($encodingMatches.Count), writes=0"
+  exit 0
+}
 if($dslNew-eq$dslRaw -and [int]$dsl.featured_media-ne29398){throw 'Wrong DSL image not found in inline or featured media'}
 $targets+=[ordered]@{id=21005;action='remove_wrong_media_29398';source_modified=[string]$dsl.modified;content=$dslNew;featured_media=$dslFeatured;simulated_response=(Simulate-Update $dsl $dslNew $dslFeatured)}
 foreach($spec in @(@{id=298;html=$routerFiber;action='replace_layered_router_guide'},@{id=163;html=$routerPlace;action='replace_layered_router_placement'})){
