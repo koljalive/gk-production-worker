@@ -1,0 +1,2161 @@
+{
+    "generated_utc":  "2026-08-23T19:58:19.7203296Z",
+    "offline_only":  true,
+    "production_writes":  0,
+    "batch_count":  20,
+    "items":  [
+                  {
+                      "id":  298,
+                      "type":  "post",
+                      "title":  "Welcher Router eignet sich fÃƒÆ’Ã‚Â¼r Glasfaser? Der groÃƒÆ’Ã…Â¸e Ratgeber 2026",
+                      "slug":  "router-fuer-glasfaser",
+                      "url":  "https://glasfaser-kompass.de/router-fuer-glasfaser/",
+                      "words":  896,
+                      "html_chars":  11948,
+                      "heading_count":  24,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "PrÃƒÂ¼freihenfolge"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vergleich: typische WLAN-LÃƒÂ¶sungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router-Kaufberatung: Worauf kommt es wirklich an?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "1. Anschlussart prÃƒÂ¼fen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "2. Geschwindigkeit realistisch bewerten"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "3. WLAN nicht ÃƒÂ¼berschÃƒÂ¤tzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Speedport oder FRITZ!Box?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Empfehlung nach Haushalt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel im Themencluster"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Ist eine FRITZ!Box immer besser?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Brauche ich einen Glasfaserrouter?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Einordnung aus der Praxis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router: technische Auswahlkriterien"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser mit ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser ohne externen ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "DSL"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Budget-Empfehlung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "PrÃƒÂ¤zise offizielle Quellen"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-router-298.svg",
+                                         "alt":  "Schematischer Glasfaseranschluss mit wahlweise separatem ONT oder Router mit integriertem Glasfasermodem"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "generic_filler",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  195,
+                      "text_start":  "Redaktionelle Einordnung Dieser Ratgeber erklÃƒÂ¤rt, welche Routereigenschaften bei FTTH zÃƒÂ¤hlen: passende Netzschnittstelle, AnbieterkompatibilitÃƒÂ¤t, ausreichender WAN-Durchsatz, WLAN-Ausstattung und Telefoniefunktionen. Praxiswissen Dieser Ratgeber erklÃƒÂ¤rt, welche Routereigenschaften bei FTTH zÃƒÂ¤hlen: passende Netzschnittstelle, AnbieterkompatibilitÃƒÂ¤t, ausreichender WAN-Durchsatz, WLAN-Ausstattung und Telefoniefunktionen. Illustration: Ein FTTH-Router arbeitet entweder hinter einem"
+                  },
+                  {
+                      "id":  163,
+                      "type":  "post",
+                      "title":  "Router richtig aufstellen ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ 7 Tipps fÃƒÆ’Ã‚Â¼r besseres WLAN",
+                      "slug":  "router-richtig-aufstellen-7-tipps-fuer-besseres-wlan",
+                      "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen-7-tipps-fuer-besseres-wlan/",
+                      "words":  880,
+                      "html_chars":  11555,
+                      "heading_count":  33,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Warum der Standort des Routers so wichtig ist"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN, Frequenzen und Routerstandort"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router-Kaufberatung: Worauf kommt es wirklich an?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "1. Anschlussart prÃƒÂ¼fen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "2. Geschwindigkeit realistisch bewerten"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "3. WLAN nicht ÃƒÂ¼berschÃƒÂ¤tzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Speedport oder FRITZ!Box?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Empfehlung nach Haushalt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Checkliste vor einem Termin"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel im Themencluster"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen aus der Praxis"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Ist eine FRITZ!Box immer besser?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Brauche ich einen Glasfaserrouter?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Deep-Dive: ausfÃƒÂ¼hrliche Einordnung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router: technische Auswahlkriterien"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser mit ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser ohne externen ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "DSL"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Budget-Empfehlung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-router-163.svg",
+                                         "alt":  "Schematische Darstellung eines zentral aufgestellten WLAN-Routers"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "generic_filler",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  155,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich hilft, WLAN-Probleme im Heimnetz systematisch einzugrenzen. Praxiswissen Dieser Beitrag zeigt, wie WLAN-Probleme entstehen und wie sie besser eingegrenzt werden. Illustration: Ein freier und zentraler Routerstandort verbessert die Funkabdeckung. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt WLAN hängt stark von Standort, Frequenzband, Wänden, Störquellen und der richtigen Netzstruktur ab. Kurz eingeordnet: Router richtig aufstellen Ã¢â‚¬â€œ 7 Tipps für besseres "
+                  },
+                  {
+                      "id":  16011,
+                      "type":  "post",
+                      "title":  "Routerstandort richtig planen",
+                      "slug":  "routerstandort-richtig-planen",
+                      "url":  "https://glasfaser-kompass.de/routerstandort-richtig-planen/",
+                      "words":  861,
+                      "html_chars":  12507,
+                      "heading_count":  16,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist dieses Thema wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Kann man das Problem selbst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann sollte ein Techniker beauftragt werden?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel aus diesem Themenbereich"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN, Frequenzen und Routerstandort"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vergleich: typische WLAN-LÃƒÂ¶sungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Fazit"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "WLAN nicht ÃƒÂ¼berschÃƒÂ¤tzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Einordnung aus der Praxis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "generic_filler",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  226,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich unterstützt bei der Einordnung von Routerwahl, Anschlussart und Heimnetz. Praxiswissen Dieser Beitrag hilft bei der Einordnung von Router, Anschlussart und Heimnetz. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt Der Router muss zur Anschlussart passen und sinnvoll platziert werden. Alter, WLAN-Standard und Schnittstellen sind entscheidend. Kurz eingeordnet: Routerstandort richtig planen erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag or"
+                  },
+                  {
+                      "id":  302,
+                      "type":  "post",
+                      "title":  "WiÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬ËœFi 7 Router ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ lohnt sich der Umstieg?",
+                      "slug":  "wifi-7-router-lohnt-sich-premium",
+                      "url":  "https://glasfaser-kompass.de/wifi-7-router-lohnt-sich-premium/",
+                      "words":  800,
+                      "html_chars":  10658,
+                      "heading_count":  23,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vergleich: typische WLAN-LÃƒÂ¶sungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router-Kaufberatung: Worauf kommt es wirklich an?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "1. Anschlussart prÃƒÂ¼fen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "2. Geschwindigkeit realistisch bewerten"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "3. WLAN nicht ÃƒÂ¼berschÃƒÂ¤tzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Speedport oder FRITZ!Box?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Empfehlung nach Haushalt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel im Themencluster"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Ist eine FRITZ!Box immer besser?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Brauche ich einen Glasfaserrouter?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Einordnung aus der Praxis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router: technische Auswahlkriterien"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser mit ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser ohne externen ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "DSL"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Budget-Empfehlung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "PrÃƒÂ¤zise offizielle Quellen"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-router-302.svg",
+                                         "alt":  "Schematischer WiÃ¢â‚¬â€˜FiÃ¢â‚¬â€˜7-Router mit modernen EndgerÃƒÂ¤ten auf mehreren FrequenzbÃƒÂ¤ndern"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "generic_filler",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  214,
+                      "text_start":  "Redaktionelle Einordnung Dieser Beitrag ordnet WiÃ¢â‚¬â€˜Fi 7 nÃƒÂ¼chtern ein: neue Funkfunktionen kÃƒÂ¶nnen KapazitÃƒÂ¤t und Latenz verbessern, doch ein Routerwechsel lohnt sich nur bei passenden EndgerÃƒÂ¤ten, AnschlÃƒÂ¼ssen und konkreten EngpÃƒÂ¤ssen. Praxiswissen Dieser Beitrag ordnet WiÃ¢â‚¬â€˜Fi 7 nÃƒÂ¼chtern ein: neue Funkfunktionen kÃƒÂ¶nnen KapazitÃƒÂ¤t und Latenz verbessern, doch ein Routerwechsel lohnt sich nur bei passenden EndgerÃƒÂ¤ten, AnschlÃƒÂ¼ssen und konkreten EngpÃƒÂ¤ssen. Il"
+                  },
+                  {
+                      "id":  267,
+                      "type":  "post",
+                      "title":  "Glasfaser vs. DSL ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Die wichtigsten Unterschiede im direkten Vergleich",
+                      "slug":  "glasfaser-vs-dsl-die-wichtigsten-unterschiede-im-direkten-vergleich",
+                      "url":  "https://glasfaser-kompass.de/glasfaser-vs-dsl-die-wichtigsten-unterschiede-im-direkten-vergleich/",
+                      "words":  795,
+                      "html_chars":  11636,
+                      "heading_count":  29,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Einleitung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Checkliste"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vergleich: Glasfaser und DSL"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL-StÃƒÂ¶rungen technisch einordnen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Wichtige DSL-Messwerte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Was der Techniker braucht"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel im Themencluster"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum synchronisiert DSL nicht?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Sind FEC-Fehler schlimm?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Einordnung aus der Praxis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL: Messwerte verstehen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Praxisdiagnose"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "APL und TAE"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "PrÃƒÂ¤zise offizielle Quellen"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-glasfaser-267.svg",
+                                         "alt":  "Schematischer Vergleich von FTTH-Glasfaser und kupferbasiertem DSL"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "generic_filler",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  190,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich ordnet DSL, Kupferleitung, APL, TAE und Hausverkabelung verständlich ein. Praxiswissen Dieser Beitrag ordnet DSL-Technik, Kupferleitung und Hausverkabelung verständlich ein. Illustration: FTTH und DSL nutzen unterschiedliche ÃƒÅ“bertragungswege bis zum GebÃƒÂ¤ude. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt Bei DSL zählen Leitungslänge, APL, TAE, Endleitung und Routerwerte. Schon kleine Fehler können Stabilität und Geschwindigkeit beeinflussen. Kurz eingeordne"
+                  },
+                  {
+                      "id":  14005,
+                      "type":  "post",
+                      "title":  "Wo sollte der Router stehen?",
+                      "slug":  "wo-sollte-der-router-stehen",
+                      "url":  "https://glasfaser-kompass.de/wo-sollte-der-router-stehen/",
+                      "words":  742,
+                      "html_chars":  8023,
+                      "heading_count":  14,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Die wichtigsten Standortregeln"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Warum ein zentraler Standort hilft"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router bei DSL"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router bei FTTH"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Keller, Hauswirtschaftsraum oder Medienverteiler"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "2,4 GHz, 5 GHz und 6 GHz"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Standort systematisch testen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Sollte der Router im Keller stehen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Darf der Router in einen Schrank?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wo steht ein Repeater richtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Gilt die Standortempfehlung auch fÃƒÂ¼r Kabel und DSL?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "GeprÃƒÂ¼fte PrimÃƒÂ¤rquellen"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/routerstandort.png",
+                                         "alt":  "Grundrissvergleich: Router zentral und frei aufstellen statt im Keller oder Schrank"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_editorial_wrapper",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  163,
+                      "text_start":  "Illustration: Ein zentraler, freier und erhÃƒÂ¶hter Routerstandort verbessert die WLAN-Abdeckung. Der beste Routerstandort ist dort, wo das WLAN tatsÃƒÂ¤chlich gebraucht wird: mÃƒÂ¶glichst zentral, frei und erhÃƒÂ¶ht. Der Hausanschlusspunkt bestimmt nicht automatisch den Routerstandort. Besonders bei Glasfaser kann ein externes ONT per Ethernet mit einem weiter entfernt aufgestellten Router verbunden werden. Die wichtigsten Standortregeln Router nicht auf den Boden stellen, sondern auf ein Regal"
+                  },
+                  {
+                      "id":  21020,
+                      "type":  "page",
+                      "title":  "Router Kaufberatung 2026",
+                      "slug":  "router-kaufberatung",
+                      "url":  "https://glasfaser-kompass.de/router-kaufberatung/",
+                      "words":  729,
+                      "html_chars":  9525,
+                      "heading_count":  19,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Router Kaufberatung 2026: welcher Router passt zu Ihrem Anschluss?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "In 30 Sekunden zur richtigen Router-Klasse"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "DSL / VDSL"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "FTTH mit ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "FTTH direkt am Router"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "GroÃƒÅ¸es Haus / schwieriges WLAN"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL, FTTC und FTTH sauber unterscheiden"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Darauf kommt es beim Kauf wirklich an"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Routerstandort: oft wichtiger als das teurere Modell"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Router-Modelle nach Einsatz"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Kauf-Checkliste"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Entscheidungshilfen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Brauche ich bei Glasfaser einen speziellen Router?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Muss der Router neben dem ONT stehen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Lohnt Wi-Fi 7 automatisch?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Welche Bandbreite braucht ein Haushalt?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Informationen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Noch keinen passenden Anschluss gebucht?"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  173,
+                      "text_start":  "Kaufberatung 2026 Router Kaufberatung 2026: welcher Router passt zu Ihrem Anschluss? Der richtige Router hÃƒÂ¤ngt zuerst von der Anschlussart ab. Bei DSL brauchen Sie ein kompatibles DSL-Modem. Bei FTTH mit ONT reicht ein leistungsfÃƒÂ¤higer Ethernet-WAN-Port. Wer die Glasfaser direkt in den Router fÃƒÂ¼hren mÃƒÂ¶chte, braucht ein zum Netzbetreiber passendes Glasfasermodem. Kurzempfehlung: Erst Anschlussart und Anbieteranforderungen klÃƒÂ¤ren, dann Ports, WLAN, Telefonie und Erweiterbarkeit verg"
+                  },
+                  {
+                      "id":  20811,
+                      "type":  "post",
+                      "title":  "LAN oder WLAN ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ wann lohnt sich ein Netzwerkkabel?",
+                      "slug":  "lan-oder-wlan",
+                      "url":  "https://glasfaser-kompass.de/lan-oder-wlan/",
+                      "words":  691,
+                      "html_chars":  10097,
+                      "heading_count":  21,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "LAN oder WLAN Ã¢â‚¬â€œ wann lohnt sich ein Netzwerkkabel?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technik und Praxis: StÃƒÂ¶rungen erkennen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN optimieren: Routerstandort und Frequenzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker und Anschlusszugang"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen und Checkliste"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vergleich WLAN-LÃƒÂ¶sungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Quellen und weiterfÃƒÂ¼hrende Informationen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Empfehlungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende offizielle Informationen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  159,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich hilft, WLAN-Probleme im Heimnetz systematisch einzugrenzen. Praxiswissen Dieser Beitrag zeigt, wie WLAN-Probleme entstehen und wie sie besser eingegrenzt werden. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt WLAN hängt stark von Standort, Frequenzband, Wänden, Störquellen und der richtigen Netzstruktur ab. Kurz eingeordnet: LAN oder WLAN Ã¢â‚¬â€œ wann lohnt sich ein Netzwerkkabel? erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag ordnet Ã"
+                  },
+                  {
+                      "id":  20804,
+                      "type":  "post",
+                      "title":  "Routerstandort optimieren ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ so wird das WLAN besser",
+                      "slug":  "routerstandort-optimieren",
+                      "url":  "https://glasfaser-kompass.de/routerstandort-optimieren/",
+                      "words":  671,
+                      "html_chars":  9793,
+                      "heading_count":  21,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Routerstandort optimieren Ã¢â‚¬â€œ so wird das WLAN besser"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technische Grundlagen und Praxis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Checkliste fÃƒÂ¼r Routerstandort und Heimnetz"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Probleme und Fehlerquellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router-Kauf und Auswahl"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Empfehlungen fÃƒÂ¼r Haushaltstypen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Wann hilft ein Techniker?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Quellen und weiterfÃƒÂ¼hrende Informationen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Empfehlungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende offizielle Informationen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  131,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich hilft, WLAN-Probleme im Heimnetz systematisch einzugrenzen. Praxiswissen Dieser Beitrag zeigt, wie WLAN-Probleme entstehen und wie sie besser eingegrenzt werden. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt WLAN hängt stark von Standort, Frequenzband, Wänden, Störquellen und der richtigen Netzstruktur ab. Kurz eingeordnet: Routerstandort optimieren Ã¢â‚¬â€œ so wird das WLAN besser erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag ordnet "
+                  },
+                  {
+                      "id":  21100,
+                      "type":  "post",
+                      "title":  "Router im Keller ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ der hÃƒÆ’Ã‚Â¤ufigste WLAN-Fehler",
+                      "slug":  "router-im-keller-der-haeufigste-wlan-fehler",
+                      "url":  "https://glasfaser-kompass.de/router-im-keller-der-haeufigste-wlan-fehler/",
+                      "words":  630,
+                      "html_chars":  9364,
+                      "heading_count":  21,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Warum ist der Keller kein geeigneter Standort fÃƒÂ¼r WLAN?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Was hilft wirklich bei WLAN-Problemen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router und Anschlussarten"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN, Frequenzen und Reichweite"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vergleich typischer WLAN-LÃƒÂ¶sungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praxis-Tipps zur Router-Auswahl"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL und Hausverkabelung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Quellen und weiterfÃƒÂ¼hrende Informationen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Empfehlungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende offizielle Informationen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  124,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich hilft, WLAN-Probleme im Heimnetz systematisch einzugrenzen. Praxiswissen Dieser Beitrag zeigt, wie WLAN-Probleme entstehen und wie sie besser eingegrenzt werden. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt WLAN hängt stark von Standort, Frequenzband, Wänden, Störquellen und der richtigen Netzstruktur ab. Kurz eingeordnet: Router im Keller Ã¢â‚¬â€œ der häufigste WLAN-Fehler erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag ordnet Ã¢â‚¬Å¾"
+                  },
+                  {
+                      "id":  175,
+                      "type":  "post",
+                      "title":  "Die besten Router fÃƒÆ’Ã‚Â¼r GlasfaseranschlÃƒÆ’Ã‚Â¼sse ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ worauf sollte man achten?",
+                      "slug":  "die-besten-router-fuer-glasfaseranschluesse-worauf-sollte-man-achten",
+                      "url":  "https://glasfaser-kompass.de/die-besten-router-fuer-glasfaseranschluesse-worauf-sollte-man-achten/",
+                      "words":  622,
+                      "html_chars":  9279,
+                      "heading_count":  21,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router-Kaufberatung: Worauf kommt es wirklich an?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "1. Anschlussart prÃƒÂ¼fen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "2. Geschwindigkeit realistisch bewerten"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "3. WLAN nicht ÃƒÂ¼berschÃƒÂ¤tzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Speedport oder FRITZ!Box?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Empfehlung nach Haushalt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel im Themencluster"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Ist eine FRITZ!Box immer besser?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Brauche ich einen Glasfaserrouter?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Router: technische Auswahlkriterien"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser mit ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Glasfaser ohne externen ONT"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "DSL"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Budget-Empfehlung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Empfohlene Router und Alternativen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/07/gk-og-router-175.svg",
+                                         "alt":  "Schematischer Router mit WAN-, LAN- und WLAN-Schnittstellen"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  110,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich unterstützt bei der Einordnung von Routerwahl, Anschlussart und Heimnetz. Praxiswissen Dieser Beitrag hilft bei der Einordnung von Router, Anschlussart und Heimnetz. Illustration: Die Routerauswahl richtet sich zuerst nach Anschlussart und benÃƒÂ¶tigten Schnittstellen. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt Der Router muss zur Anschlussart passen und sinnvoll platziert werden. Alter, WLAN-Standard und Schnittstellen sind entscheidend. Kurz eingeordnet: Di"
+                  },
+                  {
+                      "id":  12004,
+                      "type":  "post",
+                      "title":  "DSL-Endleitung prÃƒÆ’Ã‚Â¼fen: Fehler zwischen APL und erster TAE eingrenzen",
+                      "slug":  "endleitung-pruefen",
+                      "url":  "https://glasfaser-kompass.de/endleitung-pruefen/",
+                      "words":  702,
+                      "html_chars":  8443,
+                      "heading_count":  13,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Was ist die Endleitung bei DSL?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Welche Beobachtungen kÃƒÂ¶nnen auf die Endleitung hindeuten?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Sichere PrÃƒÂ¼fungen ohne Eingriff in die feste Verkabelung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Wie wird die Endleitung fachlich geprÃƒÂ¼ft?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische InstallationsmÃƒÂ¤ngel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technikertermin vorbereiten"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Anleitungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen zur DSL-Endleitung"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Kann eine alte Leitung trotzdem gut funktionieren?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Darf ich die Endleitung selbst umklemmen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Ist jede zusÃƒÂ¤tzliche TAE problematisch?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum reicht ein WLAN-Speedtest nicht?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "GeprÃƒÂ¼fte PrimÃƒÂ¤rquellen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_editorial_wrapper",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  167,
+                      "text_start":  "Die DSL-Endleitung verbindet den APL mit der ersten TAE beziehungsweise dem wohnungsbezogenen Netzabschluss. Ob sie die Ursache einer StÃƒÂ¶rung ist, lÃƒÂ¤sst sich nicht durch einen Speedtest beweisen. Entscheidend ist der Vergleich der DSL-Verbindung vor und nach diesem Leitungsabschnitt. Signalweg Hinweise Sichere Tests Vergleichsmessung FAQ Was ist die Endleitung bei DSL? Der APL bildet den Abschluss des kupferbasierten Zugangsnetzes und die Schnittstelle zum GebÃƒÂ¤ude- oder Endleitungsnetz."
+                  },
+                  {
+                      "id":  9005,
+                      "type":  "post",
+                      "title":  "Erste TAE prÃƒÆ’Ã‚Â¼fen",
+                      "slug":  "erste-tae-pruefen",
+                      "url":  "https://glasfaser-kompass.de/erste-tae-pruefen/",
+                      "words":  672,
+                      "html_chars":  10181,
+                      "heading_count":  25,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL-Hausverkabelung, APL und TAE"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL-StÃƒÂ¶rungen technisch einordnen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Wichtige DSL-Messwerte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Was der Techniker braucht"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Artikel im Themencluster"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum synchronisiert DSL nicht?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Sind FEC-Fehler schlimm?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  ": ausfÃƒÂ¼hrliche Einordnung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL: Messwerte verstehen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Praxisdiagnose"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "APL und TAE"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "generic_filler",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  159,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich ordnet DSL, Kupferleitung, APL, TAE und Hausverkabelung verständlich ein. Praxiswissen Dieser Beitrag ordnet DSL-Technik, Kupferleitung und Hausverkabelung verständlich ein. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt Bei DSL zählen Leitungslänge, APL, TAE, Endleitung und Routerwerte. Schon kleine Fehler können Stabilität und Geschwindigkeit beeinflussen. Kurz eingeordnet: Erste TAE prüfen erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitr"
+                  },
+                  {
+                      "id":  20348,
+                      "type":  "post",
+                      "title":  "Die 20 hÃƒÆ’Ã‚Â¤ufigsten Fehler beim Glasfaseranschluss",
+                      "slug":  "fehler-beim-glasfaseranschluss",
+                      "url":  "https://glasfaser-kompass.de/fehler-beim-glasfaseranschluss/",
+                      "words":  636,
+                      "html_chars":  10549,
+                      "heading_count":  19,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Inhaltsverzeichnis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Viele Glasfaserprobleme entstehen nicht durch die Glasfaser selbst"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSL, FTTH und Koax nicht verwechseln"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "APL, Gf-AP und HÃƒÅ“P nicht verwechseln"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "DSLAM und MFG richtig einordnen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       }
+                                   ],
+                      "image_count":  1,
+                      "images":  [
+                                     {
+                                         "src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/06/cropped-ChatGPT-Image-11.-Juni-2026-02_25_44.png",
+                                         "alt":  "Symbolbild eines koaxialen HausÃƒÂ¼bergabepunkts"
+                                     }
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  132,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich erklärt Glasfaseranschlüsse, Bauteile und typische Abläufe im Haus. Praxiswissen Dieser Beitrag erklärt Glasfasertechnik, Bauteile und typische Fragen im Hausanschluss. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt Bei FTTH sind Gf-AP, Gf-TA, ONT und Router die zentralen Bauteile im Haus. Kurz eingeordnet: Die 20 häufigsten Fehler beim Glasfaseranschluss erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag ordnet Ã¢â‚¬Å¾Die 20 häufigsten Feh"
+                  },
+                  {
+                      "id":  20809,
+                      "type":  "post",
+                      "title":  "WLAN hinter Aquarium ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ warum Wasser das Signal stÃƒÆ’Ã‚Â¶rt",
+                      "slug":  "wlan-aquarium-stoerung",
+                      "url":  "https://glasfaser-kompass.de/wlan-aquarium-stoerung/",
+                      "words":  623,
+                      "html_chars":  9243,
+                      "heading_count":  19,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN hinter Aquarium Ã¢â‚¬â€œ warum Wasser das Signal stÃƒÂ¶rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technischer Hintergrund und Praxis"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen und Checkliste"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN-Frequenzen und optimale Routerstandorte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Praktische Entscheidungsmatrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Zusammenfassung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Offizielle Quellen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Empfehlungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  121,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich hilft, WLAN-Probleme im Heimnetz systematisch einzugrenzen. Praxiswissen Dieser Beitrag zeigt, wie WLAN-Probleme entstehen und wie sie besser eingegrenzt werden. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt WLAN hängt stark von Standort, Frequenzband, Wänden, Störquellen und der richtigen Netzstruktur ab. Kurz eingeordnet: WLAN hinter Aquarium Ã¢â‚¬â€œ warum Wasser das Signal stört erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag ordnet"
+                  },
+                  {
+                      "id":  21098,
+                      "type":  "post",
+                      "title":  "Die 10 hÃƒÆ’Ã‚Â¤ufigsten Fehler vor dem Technikertermin",
+                      "slug":  "die-10-haeufigsten-fehler-vor-dem-technikertermin",
+                      "url":  "https://glasfaser-kompass.de/die-10-haeufigsten-fehler-vor-dem-technikertermin/",
+                      "words":  600,
+                      "html_chars":  8514,
+                      "heading_count":  21,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Kurz erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "1. TAE-Dose und TechnikrÃƒÂ¤ume zugÃƒÂ¤nglich machen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "2. Router und ZubehÃƒÂ¶r bereitlegen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "3. Wohnung und Leitungsweg freihalten"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "4. Falsche Erwartungen vermeiden"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "5. Typische Fehler vor dem Technikertermin"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "6. Anschluss- oder Heimnetzproblem?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "7. Systematische Fehlersuche und praktische Matrix"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "9. Wichtige Begriffe: APL, Gf-AP und Koax-HÃƒÅ“P"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Quellen und weiterfÃƒÂ¼hrende Informationen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chste sinnvolle Schritte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FAQ"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann brauche ich Hilfe?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "NÃƒÂ¤chster Schritt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende Artikel"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende offizielle Informationen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_premium_wrapper",
+                                    "nested_editorial_wrapper",
+                                    "schematic_visual",
+                                    "excessive_headings",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  129,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich erklärt typische Abläufe rund um Technikertermine und Entstörung. Praxiswissen Dieser Beitrag erklärt typische Abläufe und Vorbereitungen rund um den Technikertermin. ÃƒÅ“berblick Praxis FAQ Kurz erklÃƒÂ¤rt Für einen erfolgreichen Termin müssen Hausanschluss, Anschlussdose und Router erreichbar sein. Kurz eingeordnet: Die 10 häufigsten Fehler vor dem Technikertermin erklärt die wichtigsten Punkte verständlich und praxisnah. Dieser Beitrag ordnet Ã¢â‚¬Å¾Die"
+                  },
+                  {
+                      "id":  1012,
+                      "type":  "page",
+                      "title":  "Datenschutz",
+                      "slug":  "datenschutz-2",
+                      "url":  "https://glasfaser-kompass.de/datenschutz-2/",
+                      "words":  437,
+                      "html_chars":  4013,
+                      "heading_count":  9,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "1. Verantwortlicher"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "2. Hosting und Server-Protokolle"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "3. Kontaktaufnahme"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "4. Technisch notwendige Cookies"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "5. Partnerlinks und externe Angebote"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "6. Externe Links"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "7. Ihre Rechte"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "8. Beschwerderecht"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "9. Stand und Ãƒâ€žnderungen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+                                              {
+                                                  "href":  "mailto:post@glasfaser-kompass.de",
+                                                  "count":  2
+                                              }
+                                          ],
+                      "flags":  [
+                                    "duplicate_links",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  77,
+                      "text_start":  "1. Verantwortlicher Kolja Seebauer IT-Solutions Beisterweg 25 44227 Dortmund Deutschland Telefon: 0231 13700755 E-Mail: post@glasfaser-kompass.de 2. Hosting und Server-Protokolle Beim Aufruf dieser Website verarbeitet der Webserver technisch notwendige Verbindungsdaten. Dazu kÃƒÂ¶nnen IP-Adresse, Datum und Uhrzeit des Abrufs, aufgerufene Seite oder Datei, ÃƒÂ¼bertragene Datenmenge, Browser, Betriebssystem, Referrer-URL und Zugriffsstatus gehÃƒÂ¶ren. Die Verarbeitung ist erforderlich, um die Webs"
+                  },
+                  {
+                      "id":  1008,
+                      "type":  "page",
+                      "title":  "WLAN optimieren",
+                      "slug":  "wlan-optimieren",
+                      "url":  "https://glasfaser-kompass.de/wlan-optimieren/",
+                      "words":  399,
+                      "html_chars":  4698,
+                      "heading_count":  14,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "WLAN Grundlagen und Frequenzen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Routerstandort, Repeater und Mesh-Systeme"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technikertermin und Hausverkabelung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Typische Fehlerquellen im Heimnetz"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Checkliste bei WLAN-Problemen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vorteile gÃƒÂ¤ngiger WLAN-LÃƒÂ¶sungen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Vertiefende WLAN-Themen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Liegt das Problem immer beim Anbieter?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist ein LAN-Test wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Wann sollte ein Techniker helfen?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist WLAN trotz schnellem Anschluss langsam?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Quellen und weiterfÃƒÂ¼hrende Informationen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Passende Empfehlungen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+
+                                          ],
+                      "flags":  [
+                                    "nested_editorial_wrapper",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  117,
+                      "text_start":  "Kurz erklÃƒÂ¤rt: Wichtige Grundlagen, Praxis-Tipps und hÃƒÂ¤ufige Fehler im WLAN zu Hause. WLAN Grundlagen und Frequenzen WLAN arbeitet auf den Frequenzen 2,4 GHz, 5 GHz und 6 GHz. 2,4 GHz bietet groÃƒÅ¸e Reichweite, ist aber stÃƒÂ¶ranfÃƒÂ¤lliger. 5 GHz liefert hÃƒÂ¶here Geschwindigkeiten bei geringerer Reichweite. 6 GHz ist sehr schnell, erfordert moderne GerÃƒÂ¤te und funktioniert nur auf kurze Distanzen. SignalstÃƒÂ¤rke wird durch Stahlbeton, Metall, Wasser, Aquarien und FuÃƒÅ¸bodenheizungen "
+                  },
+                  {
+                      "id":  21966,
+                      "type":  "page",
+                      "title":  "Themencluster",
+                      "slug":  "themencluster",
+                      "url":  "https://glasfaser-kompass.de/themencluster/",
+                      "words":  338,
+                      "html_chars":  6581,
+                      "heading_count":  15,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Router fÃƒÂ¼r Glasfaser: wichtige Kriterien"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technikertermin fÃƒÂ¼r Glasfaser vorbereiten"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Glasfaser-Hausanschluss Checkliste"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "ONT Standort: worauf achten?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Gf-TA in der Wohnung richtig einordnen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Gf-AP Montageort richtig planen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FTTH Anschlussarten einfach erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "APL und Gf-AP: Unterschied einfach erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Glasfaser-Pegelmessung verstehen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Schnelle Einordnung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende offizielle Informationen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+                                              {
+                                                  "href":  "https://glasfaser-kompass.de/glasfaseranschluss-erklaert/",
+                                                  "count":  2
+                                              },
+                                              {
+                                                  "href":  "https://glasfaser-kompass.de/router-kaufberatung/",
+                                                  "count":  2
+                                              }
+                                          ],
+                      "flags":  [
+                                    "visible_upgrade_label",
+                                    "duplicate_links",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  93,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich erklÃƒÂ¤rt GlasfaseranschlÃƒÂ¼sse, Bauteile und typische AblÃƒÂ¤ufe im Haus. Premium-Ratgeber Verstehen Sie Glasfaser-Bauteile, Anschlusswege und typische Praxisfragen. Top-Artikel Vergleich Praxis Ã¢â€”â€ Router fÃƒÂ¼r Glasfaser: wichtige Kriterien Einordnung von Gf-AP, Gf-TA, ONT und Router. Ã¢â€”â€ Technikertermin fÃƒÂ¼r Glasfaser vorbereiten Einordnung von Gf-AP, Gf-TA, ONT und Router. Ã¢â€”â€ Glasfaser-Hausanschluss Checkliste Einordnung von Gf-AP, Gf"
+                  },
+                  {
+                      "id":  1001,
+                      "type":  "page",
+                      "title":  "Startseite",
+                      "slug":  "startseite-2",
+                      "url":  "https://glasfaser-kompass.de/startseite-2/",
+                      "words":  338,
+                      "html_chars":  6581,
+                      "heading_count":  15,
+                      "headings":  [
+                                       {
+                                           "level":  2,
+                                           "text":  "Router fÃƒÂ¼r Glasfaser: wichtige Kriterien"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Technikertermin fÃƒÂ¼r Glasfaser vorbereiten"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Glasfaser-Hausanschluss Checkliste"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "ONT Standort: worauf achten?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Gf-TA in der Wohnung richtig einordnen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Gf-AP Montageort richtig planen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "FTTH Anschlussarten einfach erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "APL und Gf-AP: Unterschied einfach erklÃƒÂ¤rt"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Glasfaser-Pegelmessung verstehen"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Schnelle Einordnung"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "Techniker-Tipp"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "HÃƒÂ¤ufige Fragen"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Warum ist die richtige Einordnung wichtig?"
+                                       },
+                                       {
+                                           "level":  3,
+                                           "text":  "Was sollte ich zuerst prÃƒÂ¼fen?"
+                                       },
+                                       {
+                                           "level":  2,
+                                           "text":  "WeiterfÃƒÂ¼hrende offizielle Informationen"
+                                       }
+                                   ],
+                      "image_count":  0,
+                      "images":  [
+
+                                 ],
+                      "duplicate_links":  [
+                                              {
+                                                  "href":  "https://glasfaser-kompass.de/glasfaseranschluss-erklaert/",
+                                                  "count":  2
+                                              },
+                                              {
+                                                  "href":  "https://glasfaser-kompass.de/router-kaufberatung/",
+                                                  "count":  2
+                                              }
+                                          ],
+                      "flags":  [
+                                    "visible_upgrade_label",
+                                    "duplicate_links",
+                                    "possible_mojibake"
+                                ],
+                      "mojibake_hits":  93,
+                      "text_start":  "Redaktionelle Einordnung Dieser Bereich erklÃƒÂ¤rt GlasfaseranschlÃƒÂ¼sse, Bauteile und typische AblÃƒÂ¤ufe im Haus. Premium-Ratgeber Verstehen Sie Glasfaser-Bauteile, Anschlusswege und typische Praxisfragen. Top-Artikel Vergleich Praxis Ã¢â€”â€ Router fÃƒÂ¼r Glasfaser: wichtige Kriterien Einordnung von Gf-AP, Gf-TA, ONT und Router. Ã¢â€”â€ Technikertermin fÃƒÂ¼r Glasfaser vorbereiten Einordnung von Gf-AP, Gf-TA, ONT und Router. Ã¢â€”â€ Glasfaser-Hausanschluss Checkliste Einordnung von Gf-AP, Gf"
+                  }
+              ],
+    "status":  "OFFLINE_EDITORIAL_STRUCTURE_AUDITED"
+}
