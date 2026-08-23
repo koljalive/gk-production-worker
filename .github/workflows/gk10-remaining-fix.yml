@@ -4,7 +4,7 @@ on:
 permissions:
   contents: write
 jobs:
-  offline-editorial-batch:
+  offline-editorial-structure:
     runs-on: self-hosted
     timeout-minutes: 20
     steps:
@@ -13,19 +13,19 @@ jobs:
           fetch-depth: 0
       - name: Parser gate
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Prepare-GKOfflineEditorialBatch.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
-      - name: Prepare highest-value editorial batch offline
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Analyze-GKOfflineEditorialBatch.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
+      - name: Audit editorial structures offline
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Prepare-GKOfflineEditorialBatch.ps1"
-      - name: Persist offline editorial batch
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Analyze-GKOfflineEditorialBatch.ps1"
+      - name: Persist offline structure audit
         if: always()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
-          if not exist bridge\gk-offline-editorial-batch.json exit /b 1
+          if not exist bridge\gk-offline-editorial-structure.json exit /b 1
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-offline-audit"
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-offline-audit@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-editorial-batch.json
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist offline editorial work batch [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-editorial-structure.json
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist offline editorial structure audit [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
