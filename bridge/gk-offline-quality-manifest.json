@@ -1,0 +1,11 @@
+{
+    "generated_utc":  "2026-08-23T19:32:39.8971718Z",
+    "source_snapshot_utc":  "2026-08-23T19:26:20.6795064Z",
+    "offline_only":  true,
+    "production_writes":  0,
+    "content_count":  304,
+    "media_count":  422,
+    "needs_work":  194,
+    "report":  "bridge/gk-offline-quality-report.json",
+    "status":  "OFFLINE_AUDIT_COMPLETE"
+}
