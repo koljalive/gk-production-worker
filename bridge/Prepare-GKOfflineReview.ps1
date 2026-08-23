@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
-$snapshot=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json')-Raw|ConvertFrom-Json
-$report=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-quality-report.json')-Raw|ConvertFrom-Json
+$snapshot=Get-Content (Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json') -Encoding UTF8 -Raw|ConvertFrom-Json
+$report=Get-Content (Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-quality-report.json') -Encoding UTF8 -Raw|ConvertFrom-Json
 function Plain([string]$Html){if([string]::IsNullOrWhiteSpace($Html)){return ''};$s=[regex]::Replace($Html,'(?is)<script\b.*?</script>|<style\b.*?</style>',' ');$s=[regex]::Replace($s,'<[^>]+>',' ');$s=[Net.WebUtility]::HtmlDecode($s);[regex]::Replace($s,'\s+',' ').Trim()}
 $items=@();foreach($x in $snapshot.pages){$items+=$x};foreach($x in $snapshot.posts){$items+=$x}
 $editorial=@()
