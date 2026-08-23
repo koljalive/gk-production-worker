@@ -16,19 +16,19 @@ jobs:
           fetch-depth: 0
       - name: Parser gate
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Simulate-GKOfflineImprovements.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
-      - name: Simulate all safe improvements offline with zero WordPress writes
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Prepare-GKOfflineReview.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
+      - name: Prepare contextual editorial and visual review offline
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Simulate-GKOfflineImprovements.ps1"
-      - name: Persist offline simulation
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Prepare-GKOfflineReview.ps1"
+      - name: Persist offline contextual review
         if: always()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
-          if not exist bridge\gk-offline-simulation.json exit /b 1
+          if not exist bridge\gk-offline-review.json exit /b 1
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-offline-audit"
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-offline-audit@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-simulation.json bridge/gk-offline-simulation-manifest.json
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist full offline simulation [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-review.json bridge/gk-offline-review-manifest.json
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist offline contextual review [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
