@@ -1,0 +1,58 @@
+{
+    "generated_utc":  "2026-08-23T19:42:21.5894736Z",
+    "offline_only":  true,
+    "production_writes":  0,
+    "candidate_count":  4,
+    "items":  [
+                  {
+                      "id":  29403,
+                      "title":  "WLAN Access Point an der Wand ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ reales Foto",
+                      "alt":  "Realer WLAN Access Point an einer Wand",
+                      "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/wlan-access-point-reales-foto.jpg",
+                      "local_path":  "bridge/offline-media-review/29403.jpg",
+                      "bytes":  231452,
+                      "sha256":  "01AE4407D06421398EF61E86A0997550E2A30ADDF21B88A00B7BD3F77F34117A",
+                      "topics":  [
+                                     "fiber",
+                                     "wifi"
+                                 ]
+                  },
+                  {
+                      "id":  29402,
+                      "title":  "Glasfaser-BÃƒÆ’Ã‚Â¼ndelrohre vor dem Einbau ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ reales Foto",
+                      "alt":  "Reale Glasfaser-BÃƒÆ’Ã‚Â¼ndelrohre vor dem Einbau",
+                      "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-buendelrohre-reales-foto-scaled.jpg",
+                      "local_path":  "bridge/offline-media-review/29402.jpg",
+                      "bytes":  687407,
+                      "sha256":  "AEEBF7CA148953BAC5FDA896980A072CEFB96B18F5A293C87F61F117AD0E078B",
+                      "topics":  [
+                                     "fiber"
+                                 ]
+                  },
+                  {
+                      "id":  29401,
+                      "title":  "FTTH-Abschluss ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ reales Foto",
+                      "alt":  "Realer FTTH-Glasfaserabschluss an einer Wand",
+                      "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/ftth-abschluss-reales-foto.jpg",
+                      "local_path":  "bridge/offline-media-review/29401.jpg",
+                      "bytes":  549508,
+                      "sha256":  "6BF03E8BF06ECC7AB0998541589AE3992C16E8B047E3D5848DB553C4FE17BA69",
+                      "topics":  [
+                                     "fiber"
+                                 ]
+                  },
+                  {
+                      "id":  29398,
+                      "title":  "GeÃƒÂ¶ffnete Glasfaser-SpleiÃƒÅ¸muffe Ã¢â‚¬â€œ reales Foto",
+                      "alt":  "GeÃƒÂ¶ffnete reale Glasfaser-SpleiÃƒÅ¸muffe mit sichtbaren Glasfasern",
+                      "source_url":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/glasfaser-spleissmuffe-reales-foto-scaled.jpg",
+                      "local_path":  "bridge/offline-media-review/29398.jpg",
+                      "bytes":  697818,
+                      "sha256":  "9B48CE889F739025BDB344D1601A2A1844D602FB1AE58E7173624B225CEC5C80",
+                      "topics":  [
+                                     "fiber"
+                                 ]
+                  }
+              ],
+    "status":  "OFFLINE_MEDIA_READY_FOR_VISUAL_REVIEW"
+}
