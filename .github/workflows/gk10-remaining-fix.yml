@@ -4,7 +4,7 @@ on:
 permissions:
   contents: write
 jobs:
-  offline-media:
+  offline-deduplication:
     runs-on: self-hosted
     timeout-minutes: 20
     steps:
@@ -13,19 +13,19 @@ jobs:
           fetch-depth: 0
       - name: Parser gate
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Prepare-GKOfflineMedia.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
-      - name: Prepare four real photos for offline visual review
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Analyze-GKOfflineDuplicates.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
+      - name: Analyze duplicate consolidation opportunities offline
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Prepare-GKOfflineMedia.ps1"
-      - name: Persist offline media review
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Analyze-GKOfflineDuplicates.ps1"
+      - name: Persist offline duplicate analysis
         if: always()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
-          if not exist bridge\offline-media-review\manifest.json exit /b 1
+          if not exist bridge\gk-offline-deduplication.json exit /b 1
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-offline-audit"
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-offline-audit@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/offline-media-review
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist offline media visual review set [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-deduplication.json bridge/gk-offline-deduplication-manifest.json
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist offline duplicate consolidation audit [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
