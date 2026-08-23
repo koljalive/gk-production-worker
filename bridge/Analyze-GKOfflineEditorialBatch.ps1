@@ -1,7 +1,7 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
 $inputPath=Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-editorial-batch.json'
-$batch=Get-Content $inputPath -Raw|ConvertFrom-Json
+$batch=Get-Content $inputPath -Encoding UTF8 -Raw|ConvertFrom-Json
 $items=@()
 foreach($x in $batch.items){
   $html=[string]$x.content_raw
