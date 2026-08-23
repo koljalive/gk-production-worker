@@ -1,1 +1,1 @@
-acceptance-pilot-20260823-1727-execpolicy-fixed
+acceptance-pilot-20260823-1810-semantic-media-fix
