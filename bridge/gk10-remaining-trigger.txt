@@ -1,1 +1,1 @@
-acceptance-pilot-20260823-1855-callback-syntax-fixed
+acceptance-pilot-20260823-1904-product-image-detection-fixed
