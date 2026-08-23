@@ -1,8 +1,8 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
-$s=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json')-Raw|ConvertFrom-Json
-$r=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-review.json')-Raw|ConvertFrom-Json
-$d=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-deduplication.json')-Raw|ConvertFrom-Json
+$s=Get-Content (Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json') -Encoding UTF8 -Raw|ConvertFrom-Json
+$r=Get-Content (Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-review.json') -Encoding UTF8 -Raw|ConvertFrom-Json
+$d=Get-Content (Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-deduplication.json') -Encoding UTF8 -Raw|ConvertFrom-Json
 $excluded=@{};foreach($p in $d.pairs){if([string]$p.confidence-eq'high'){$excluded[[string]$p.duplicate.id]=$true}}
 $map=@{};foreach($x in $s.pages){$map[[string]$x.id]=$x};foreach($x in $s.posts){$map[[string]$x.id]=$x}
 $selected=@($r.editorial_queue|Where-Object{-not$excluded.ContainsKey([string]$_.id)}|Sort-Object @{Expression='roi';Descending=$true},@{Expression='benefit';Descending=$true},@{Expression='word_gap';Descending=$false}|Select-Object -First 20)
