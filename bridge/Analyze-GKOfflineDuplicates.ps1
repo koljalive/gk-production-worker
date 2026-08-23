@@ -1,6 +1,6 @@
 Set-StrictMode -Version Latest
 $ErrorActionPreference='Stop'
-$s=Get-Content(Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json')-Raw|ConvertFrom-Json
+$s=Get-Content (Join-Path $env:GITHUB_WORKSPACE 'bridge/gk-offline-snapshot.json') -Encoding UTF8 -Raw|ConvertFrom-Json
 function Plain([string]$Html){if([string]::IsNullOrWhiteSpace($Html)){return ''};$x=[regex]::Replace($Html,'<[^>]+>',' ');[regex]::Replace([Net.WebUtility]::HtmlDecode($x),'\s+',' ').Trim()}
 function Key([string]$Slug){$k=$Slug.ToLowerInvariant();$k=[regex]::Replace($k,'-(voll|2|neu|aktuell)$','');$k=[regex]::Replace($k,'-(erklaert|erklärt)$','');$k=[regex]::Replace($k,'[^a-z0-9äöüß]+','-');$k.Trim('-')}
 $items=@();foreach($x in $s.pages){$items+=$x};foreach($x in $s.posts){$items+=$x}
