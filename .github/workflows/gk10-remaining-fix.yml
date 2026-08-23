@@ -23,32 +23,30 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run strict acceptance pilot before any bulk repair
+      - name: Run strict 8-page multi acceptance pilot
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKAcceptancePilot.ps1"
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKMultiAcceptancePilot.ps1"
 
-      - name: Upload acceptance evidence
+      - name: Upload multi-pilot evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: gk-acceptance-pilot-${{ github.run_id }}
+          name: gk-multi-acceptance-pilot-${{ github.run_id }}
           path: |
-            bridge/acceptance-pilot-result.json
-            bridge/acceptance-router-desktop.png
-            bridge/acceptance-router-mobile.png
-            bridge/acceptance-praxiswissen-desktop.png
-            bridge/acceptance-praxiswissen-mobile.png
+            bridge/multi-acceptance-pilot-result.json
+            bridge/pilot-*-desktop.png
+            bridge/pilot-*-mobile.png
           if-no-files-found: warn
           retention-days: 14
 
-      - name: Persist acceptance result
+      - name: Persist multi-pilot result
         if: success()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
-          git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-acceptance-pilot"
-          git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-acceptance-pilot@users.noreply.github.com"
+          git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-multi-acceptance-pilot"
+          git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-multi-acceptance-pilot@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/acceptance-pilot-result.json
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "GK acceptance pilot result [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/multi-acceptance-pilot-result.json
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "GK 8-page acceptance pilot result [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
