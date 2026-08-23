@@ -1,0 +1,18 @@
+{
+    "started_utc":  "2026-08-23T18:48:21.1589302Z",
+    "status":  "FAILED",
+    "changed":  [
+
+                ],
+    "verified":  [
+
+                 ],
+    "backups":  [
+                    "C:\\GKBridge\\backups\\direct-live-21005-20260823-204821.json",
+                    "C:\\GKBridge\\backups\\direct-live-21009-20260823-204821.json",
+                    "C:\\GKBridge\\backups\\direct-live-21008-20260823-204821.json",
+                    "C:\\GKBridge\\backups\\direct-live-1009-20260823-204822.json"
+                ],
+    "error":  "Für \"Replace\" und die folgende Argumenteanzahl kann keine Überladung gefunden werden: \"4\".",
+    "finished_utc":  "2026-08-23T18:48:22.2879395Z"
+}
