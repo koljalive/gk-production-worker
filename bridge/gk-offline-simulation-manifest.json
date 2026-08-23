@@ -1,10 +1,10 @@
 {
-    "generated_utc":  "2026-08-23T19:37:15.7710369Z",
-    "source_snapshot_utc":  "2026-08-23T19:26:20.6795064Z",
+    "generated_utc":  "2026-08-23T20:09:00.6631714Z",
+    "source_snapshot_utc":  "2026-08-23T20:08:55.5567436Z",
     "offline_only":  true,
     "production_writes":  0,
     "content_total":  304,
     "automatic_proposal_count":  101,
-    "manual_editorial_count":  150,
+    "manual_editorial_count":  153,
     "status":  "OFFLINE_SIMULATION_COMPLETE"
 }

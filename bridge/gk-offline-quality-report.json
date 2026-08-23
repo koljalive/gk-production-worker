@@ -1,14 +1,14 @@
 {
-    "generated_utc":  "2026-08-23T19:32:39.8971718Z",
-    "source_snapshot_utc":  "2026-08-23T19:26:20.6795064Z",
+    "generated_utc":  "2026-08-23T20:08:58.4385058Z",
+    "source_snapshot_utc":  "2026-08-23T20:08:55.5567436Z",
     "offline_only":  true,
     "production_writes":  0,
     "content_count":  304,
     "media_count":  422,
-    "needs_work":  194,
+    "needs_work":  195,
     "issue_totals":  {
                          "thin_content":  150,
-                         "missing_cta":  1,
+                         "missing_cta":  7,
                          "wrong_dsl_image":  1,
                          "weak_internal_links":  3,
                          "content_h1":  1,
@@ -18,7 +18,7 @@
                      {
                          "id":  4005,
                          "type":  "post",
-                         "title":  "PoP erklÃ¤rt",
+                         "title":  "PoP erklärt",
                          "slug":  "pop-erklaert",
                          "url":  "https://glasfaser-kompass.de/pop-erklaert/",
                          "modified":  "2026-08-21T06:47:11",
@@ -41,7 +41,7 @@
                      {
                          "id":  4006,
                          "type":  "post",
-                         "title":  "Speedpipe erklÃ¤rt",
+                         "title":  "Speedpipe erklärt",
                          "slug":  "speedpipe-erklaert",
                          "url":  "https://glasfaser-kompass.de/speedpipe-erklaert/",
                          "modified":  "2026-08-21T06:47:09",
@@ -64,7 +64,7 @@
                      {
                          "id":  4007,
                          "type":  "post",
-                         "title":  "Glasfasermuffe erklÃ¤rt",
+                         "title":  "Glasfasermuffe erklärt",
                          "slug":  "glasfasermuffe-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfasermuffe-erklaert/",
                          "modified":  "2026-08-21T06:47:07",
@@ -87,7 +87,7 @@
                      {
                          "id":  4002,
                          "type":  "post",
-                         "title":  "GPON erklÃ¤rt",
+                         "title":  "GPON erklärt",
                          "slug":  "gpon-erklaert",
                          "url":  "https://glasfaser-kompass.de/gpon-erklaert/",
                          "modified":  "2026-08-21T06:47:16",
@@ -110,7 +110,7 @@
                      {
                          "id":  4003,
                          "type":  "post",
-                         "title":  "XGS-PON erklÃ¤rt",
+                         "title":  "XGS-PON erklärt",
                          "slug":  "xgs-pon-erklaert",
                          "url":  "https://glasfaser-kompass.de/xgs-pon-erklaert/",
                          "modified":  "2026-08-21T06:47:14",
@@ -133,7 +133,7 @@
                      {
                          "id":  4004,
                          "type":  "post",
-                         "title":  "NVT erklÃ¤rt",
+                         "title":  "NVT erklärt",
                          "slug":  "nvt-erklaert",
                          "url":  "https://glasfaser-kompass.de/nvt-erklaert/",
                          "modified":  "2026-08-21T06:47:12",
@@ -156,7 +156,7 @@
                      {
                          "id":  5001,
                          "type":  "post",
-                         "title":  "APL erklÃ¤rt",
+                         "title":  "APL erklärt",
                          "slug":  "apl-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/apl-erklaert-voll/",
                          "modified":  "2026-08-21T06:47:01",
@@ -178,7 +178,7 @@
                      {
                          "id":  5002,
                          "type":  "post",
-                         "title":  "TAE erklÃ¤rt",
+                         "title":  "TAE erklärt",
                          "slug":  "tae-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/tae-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:59",
@@ -200,7 +200,7 @@
                      {
                          "id":  5003,
                          "type":  "post",
-                         "title":  "TAL erklÃ¤rt",
+                         "title":  "TAL erklärt",
                          "slug":  "tal-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/tal-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:58",
@@ -222,7 +222,7 @@
                      {
                          "id":  4008,
                          "type":  "post",
-                         "title":  "SpleiÃŸen erklÃ¤rt",
+                         "title":  "Spleißen erklärt",
                          "slug":  "spleissen-erklaert",
                          "url":  "https://glasfaser-kompass.de/spleissen-erklaert/",
                          "modified":  "2026-08-21T06:47:06",
@@ -244,7 +244,7 @@
                      {
                          "id":  4009,
                          "type":  "post",
-                         "title":  "HauseinfÃ¼hrung erklÃ¤rt",
+                         "title":  "Hauseinführung erklärt",
                          "slug":  "hauseinfuehrung-erklaert",
                          "url":  "https://glasfaser-kompass.de/hauseinfuehrung-erklaert/",
                          "modified":  "2026-08-21T06:47:04",
@@ -266,7 +266,7 @@
                      {
                          "id":  4010,
                          "type":  "post",
-                         "title":  "Hausstich erklÃ¤rt",
+                         "title":  "Hausstich erklärt",
                          "slug":  "hausstich-erklaert",
                          "url":  "https://glasfaser-kompass.de/hausstich-erklaert/",
                          "modified":  "2026-08-21T06:47:03",
@@ -288,7 +288,7 @@
                      {
                          "id":  3017,
                          "type":  "post",
-                         "title":  "Supervectoring erklÃ¤rt",
+                         "title":  "Supervectoring erklärt",
                          "slug":  "supervectoring-erklaert",
                          "url":  "https://glasfaser-kompass.de/supervectoring-erklaert/",
                          "modified":  "2026-08-21T06:47:33",
@@ -311,7 +311,7 @@
                      {
                          "id":  3018,
                          "type":  "post",
-                         "title":  "Wiâ€‘Fi 6 erklÃ¤rt",
+                         "title":  "Wi‑Fi 6 erklärt",
                          "slug":  "wifi-6-erklaert",
                          "url":  "https://glasfaser-kompass.de/wifi-6-erklaert/",
                          "modified":  "2026-08-21T06:47:31",
@@ -334,7 +334,7 @@
                      {
                          "id":  3019,
                          "type":  "post",
-                         "title":  "Wiâ€‘Fi 7 erklÃ¤rt",
+                         "title":  "Wi‑Fi 7 erklärt",
                          "slug":  "wifi-7-erklaert",
                          "url":  "https://glasfaser-kompass.de/wifi-7-erklaert/",
                          "modified":  "2026-08-21T06:47:30",
@@ -357,7 +357,7 @@
                      {
                          "id":  3014,
                          "type":  "post",
-                         "title":  "HVt erklÃ¤rt",
+                         "title":  "HVt erklärt",
                          "slug":  "hvt-erklaert",
                          "url":  "https://glasfaser-kompass.de/hvt-erklaert/",
                          "modified":  "2026-08-21T06:47:37",
@@ -380,7 +380,7 @@
                      {
                          "id":  3015,
                          "type":  "post",
-                         "title":  "DSLAM erklÃ¤rt",
+                         "title":  "DSLAM erklärt",
                          "slug":  "dslam-erklaert",
                          "url":  "https://glasfaser-kompass.de/dslam-erklaert/",
                          "modified":  "2026-08-21T06:47:36",
@@ -403,7 +403,7 @@
                      {
                          "id":  3016,
                          "type":  "post",
-                         "title":  "Vectoring erklÃ¤rt",
+                         "title":  "Vectoring erklärt",
                          "slug":  "vectoring-erklaert",
                          "url":  "https://glasfaser-kompass.de/vectoring-erklaert/",
                          "modified":  "2026-08-21T06:47:34",
@@ -426,7 +426,7 @@
                      {
                          "id":  3023,
                          "type":  "post",
-                         "title":  "Hausbegehung erklÃ¤rt",
+                         "title":  "Hausbegehung erklärt",
                          "slug":  "hausbegehung-erklaert",
                          "url":  "https://glasfaser-kompass.de/hausbegehung-erklaert/",
                          "modified":  "2026-08-21T06:47:23",
@@ -449,7 +449,7 @@
                      {
                          "id":  3024,
                          "type":  "post",
-                         "title":  "GrundstÃ¼ckszustimmung erklÃ¤rt",
+                         "title":  "Grundstückszustimmung erklärt",
                          "slug":  "grundstueckszustimmung-erklaert",
                          "url":  "https://glasfaser-kompass.de/grundstueckszustimmung-erklaert/",
                          "modified":  "2026-08-21T06:47:21",
@@ -472,7 +472,7 @@
                      {
                          "id":  3025,
                          "type":  "post",
-                         "title":  "EigentÃ¼mererklÃ¤rung erklÃ¤rt",
+                         "title":  "Eigentümererklärung erklärt",
                          "slug":  "eigentuemererklaerung-erklaert",
                          "url":  "https://glasfaser-kompass.de/eigentuemererklaerung-erklaert/",
                          "modified":  "2026-08-21T06:47:19",
@@ -495,7 +495,7 @@
                      {
                          "id":  3020,
                          "type":  "post",
-                         "title":  "Mesh WLAN erklÃ¤rt â€“ wann lohnt sich Mesh?",
+                         "title":  "Mesh WLAN erklärt – wann lohnt sich Mesh?",
                          "slug":  "mesh-wlan-erklaert",
                          "url":  "https://glasfaser-kompass.de/mesh-wlan-erklaert/",
                          "modified":  "2026-08-21T06:47:28",
@@ -518,7 +518,7 @@
                      {
                          "id":  3021,
                          "type":  "post",
-                         "title":  "Access Point erklÃ¤rt",
+                         "title":  "Access Point erklärt",
                          "slug":  "access-point-erklaert",
                          "url":  "https://glasfaser-kompass.de/access-point-erklaert/",
                          "modified":  "2026-08-21T06:47:26",
@@ -541,7 +541,7 @@
                      {
                          "id":  3022,
                          "type":  "post",
-                         "title":  "Repeater erklÃ¤rt",
+                         "title":  "Repeater erklärt",
                          "slug":  "repeater-erklaert",
                          "url":  "https://glasfaser-kompass.de/repeater-erklaert/",
                          "modified":  "2026-08-21T06:47:24",
@@ -562,9 +562,31 @@
                          "roi":  10
                      },
                      {
+                         "id":  16002,
+                         "type":  "post",
+                         "title":  "Was kostet ein Glasfaseranschluss?",
+                         "slug":  "was-kostet-ein-glasfaseranschluss",
+                         "url":  "https://glasfaser-kompass.de/was-kostet-ein-glasfaseranschluss/",
+                         "modified":  "2026-08-21T06:44:50",
+                         "featured_media":  25893,
+                         "words":  399,
+                         "content_h1":  0,
+                         "h2":  9,
+                         "image_count":  0,
+                         "suspicious_images":  0,
+                         "internal_links":  3,
+                         "issue_count":  1,
+                         "issues":  [
+                                        "thin_content"
+                                    ],
+                         "benefit":  4,
+                         "cost":  1,
+                         "roi":  4
+                     },
+                     {
                          "id":  16003,
                          "type":  "post",
-                         "title":  "Wem gehÃ¶rt die Glasfaser im Haus?",
+                         "title":  "Wem gehört die Glasfaser im Haus?",
                          "slug":  "wem-gehoert-die-glasfaser-im-haus",
                          "url":  "https://glasfaser-kompass.de/wem-gehoert-die-glasfaser-im-haus/",
                          "modified":  "2026-08-21T06:44:49",
@@ -586,7 +608,7 @@
                      {
                          "id":  16004,
                          "type":  "post",
-                         "title":  "Glasfaseranschluss ablehnen â€“ sinnvoll?",
+                         "title":  "Glasfaseranschluss ablehnen – sinnvoll?",
                          "slug":  "glasfaseranschluss-ablehnen-sinnvoll",
                          "url":  "https://glasfaser-kompass.de/glasfaseranschluss-ablehnen-sinnvoll/",
                          "modified":  "2026-08-21T06:44:47",
@@ -606,14 +628,14 @@
                          "roi":  4
                      },
                      {
-                         "id":  16005,
+                         "id":  15011,
                          "type":  "post",
-                         "title":  "Glasfaser fÃ¼r MehrfamilienhÃ¤user",
-                         "slug":  "glasfaser-fuer-mehrfamilienhaeuser",
-                         "url":  "https://glasfaser-kompass.de/glasfaser-fuer-mehrfamilienhaeuser/",
-                         "modified":  "2026-08-21T06:44:45",
-                         "featured_media":  25887,
-                         "words":  397,
+                         "title":  "Router richtig platzieren",
+                         "slug":  "router-richtig-platzieren",
+                         "url":  "https://glasfaser-kompass.de/router-richtig-platzieren/",
+                         "modified":  "2026-08-21T06:45:05",
+                         "featured_media":  25915,
+                         "words":  405,
                          "content_h1":  0,
                          "h2":  9,
                          "image_count":  0,
@@ -672,16 +694,16 @@
                          "roi":  4
                      },
                      {
-                         "id":  16002,
+                         "id":  16008,
                          "type":  "post",
-                         "title":  "Was kostet ein Glasfaseranschluss?",
-                         "slug":  "was-kostet-ein-glasfaseranschluss",
-                         "url":  "https://glasfaser-kompass.de/was-kostet-ein-glasfaseranschluss/",
-                         "modified":  "2026-08-21T06:44:50",
-                         "featured_media":  25893,
-                         "words":  399,
+                         "title":  "Was passiert bei der Hausbegehung?",
+                         "slug":  "was-passiert-bei-der-hausbegehung",
+                         "url":  "https://glasfaser-kompass.de/was-passiert-bei-der-hausbegehung/",
+                         "modified":  "2026-08-21T06:44:41",
+                         "featured_media":  28068,
+                         "words":  322,
                          "content_h1":  0,
-                         "h2":  9,
+                         "h2":  7,
                          "image_count":  0,
                          "suspicious_images":  0,
                          "internal_links":  3,
@@ -738,14 +760,14 @@
                          "roi":  4
                      },
                      {
-                         "id":  16012,
+                         "id":  16005,
                          "type":  "post",
-                         "title":  "HÃ¤ufige Fehler bei Glasfaserprojekten",
-                         "slug":  "haeufige-fehler-bei-glasfaserprojekten",
-                         "url":  "https://glasfaser-kompass.de/haeufige-fehler-bei-glasfaserprojekten/",
-                         "modified":  "2026-08-21T06:44:33",
-                         "featured_media":  25873,
-                         "words":  399,
+                         "title":  "Glasfaser für Mehrfamilienhäuser",
+                         "slug":  "glasfaser-fuer-mehrfamilienhaeuser",
+                         "url":  "https://glasfaser-kompass.de/glasfaser-fuer-mehrfamilienhaeuser/",
+                         "modified":  "2026-08-21T06:44:45",
+                         "featured_media":  25887,
+                         "words":  397,
                          "content_h1":  0,
                          "h2":  9,
                          "image_count":  0,
@@ -762,7 +784,7 @@
                      {
                          "id":  16006,
                          "type":  "post",
-                         "title":  "Glasfaser fÃ¼r Vermieter erklÃ¤rt",
+                         "title":  "Glasfaser für Vermieter erklärt",
                          "slug":  "glasfaser-fuer-vermieter-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfaser-fuer-vermieter-erklaert/",
                          "modified":  "2026-08-21T06:44:44",
@@ -784,7 +806,7 @@
                      {
                          "id":  16007,
                          "type":  "post",
-                         "title":  "Glasfaser fÃ¼r EigentÃ¼mer erklÃ¤rt",
+                         "title":  "Glasfaser für Eigentümer erklärt",
                          "slug":  "glasfaser-fuer-eigentuemer-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfaser-fuer-eigentuemer-erklaert/",
                          "modified":  "2026-08-21T06:44:42",
@@ -804,31 +826,9 @@
                          "roi":  4
                      },
                      {
-                         "id":  16008,
-                         "type":  "post",
-                         "title":  "Was passiert bei der Hausbegehung?",
-                         "slug":  "was-passiert-bei-der-hausbegehung",
-                         "url":  "https://glasfaser-kompass.de/was-passiert-bei-der-hausbegehung/",
-                         "modified":  "2026-08-21T06:44:41",
-                         "featured_media":  28068,
-                         "words":  322,
-                         "content_h1":  0,
-                         "h2":  7,
-                         "image_count":  0,
-                         "suspicious_images":  0,
-                         "internal_links":  3,
-                         "issue_count":  1,
-                         "issues":  [
-                                        "thin_content"
-                                    ],
-                         "benefit":  4,
-                         "cost":  1,
-                         "roi":  4
-                     },
-                     {
                          "id":  5007,
                          "type":  "post",
-                         "title":  "Vectoring erklÃ¤rt",
+                         "title":  "Vectoring erklärt",
                          "slug":  "vectoring-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/vectoring-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:51",
@@ -850,7 +850,7 @@
                      {
                          "id":  5008,
                          "type":  "post",
-                         "title":  "Supervectoring erklÃ¤rt",
+                         "title":  "Supervectoring erklärt",
                          "slug":  "supervectoring-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/supervectoring-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:49",
@@ -872,7 +872,7 @@
                      {
                          "id":  6001,
                          "type":  "post",
-                         "title":  "Wiâ€‘Fi 6 erklÃ¤rt",
+                         "title":  "Wi‑Fi 6 erklärt",
                          "slug":  "wifi-6-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/wifi-6-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:48",
@@ -894,7 +894,7 @@
                      {
                          "id":  5004,
                          "type":  "post",
-                         "title":  "KVz erklÃ¤rt",
+                         "title":  "KVz erklärt",
                          "slug":  "kvz-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/kvz-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:56",
@@ -916,7 +916,7 @@
                      {
                          "id":  5005,
                          "type":  "post",
-                         "title":  "HVt erklÃ¤rt",
+                         "title":  "HVt erklärt",
                          "slug":  "hvt-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/hvt-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:54",
@@ -938,7 +938,7 @@
                      {
                          "id":  5006,
                          "type":  "post",
-                         "title":  "DSLAM erklÃ¤rt",
+                         "title":  "DSLAM erklärt",
                          "slug":  "dslam-erklaert-voll",
                          "url":  "https://glasfaser-kompass.de/dslam-erklaert-voll/",
                          "modified":  "2026-08-21T06:46:53",
@@ -958,9 +958,31 @@
                          "roi":  6
                      },
                      {
+                         "id":  15002,
+                         "type":  "post",
+                         "title":  "FRITZ!Box 7590 erklärt",
+                         "slug":  "fritzbox-7590-erklaert",
+                         "url":  "https://glasfaser-kompass.de/fritzbox-7590-erklaert/",
+                         "modified":  "2026-08-21T06:45:15",
+                         "featured_media":  25933,
+                         "words":  372,
+                         "content_h1":  0,
+                         "h2":  9,
+                         "image_count":  0,
+                         "suspicious_images":  0,
+                         "internal_links":  3,
+                         "issue_count":  1,
+                         "issues":  [
+                                        "thin_content"
+                                    ],
+                         "benefit":  4,
+                         "cost":  1,
+                         "roi":  4
+                     },
+                     {
                          "id":  15003,
                          "type":  "post",
-                         "title":  "FRITZ!Box 7590 AX erklÃ¤rt",
+                         "title":  "FRITZ!Box 7590 AX erklärt",
                          "slug":  "fritzbox-7590-ax-erklaert",
                          "url":  "https://glasfaser-kompass.de/fritzbox-7590-ax-erklaert/",
                          "modified":  "2026-08-21T06:45:14",
@@ -1002,31 +1024,9 @@
                          "roi":  4
                      },
                      {
-                         "id":  15011,
-                         "type":  "post",
-                         "title":  "Router richtig platzieren",
-                         "slug":  "router-richtig-platzieren",
-                         "url":  "https://glasfaser-kompass.de/router-richtig-platzieren/",
-                         "modified":  "2026-08-21T06:45:05",
-                         "featured_media":  25915,
-                         "words":  405,
-                         "content_h1":  0,
-                         "h2":  9,
-                         "image_count":  0,
-                         "suspicious_images":  0,
-                         "internal_links":  3,
-                         "issue_count":  1,
-                         "issues":  [
-                                        "thin_content"
-                                    ],
-                         "benefit":  4,
-                         "cost":  1,
-                         "roi":  4
-                     },
-                     {
                          "id":  10003,
                          "type":  "post",
-                         "title":  "WLAN optimieren: Router, StÃ¶rquellen und Heimnetz richtig einstellen",
+                         "title":  "WLAN optimieren: Router, Störquellen und Heimnetz richtig einstellen",
                          "slug":  "wlan-optimieren-router-stoerquellen-und-heimnetz-richtig-einstellen",
                          "url":  "https://glasfaser-kompass.de/wlan-optimieren-router-stoerquellen-und-heimnetz-richtig-einstellen/",
                          "modified":  "2026-08-21T06:45:58",
@@ -1044,6 +1044,28 @@
                          "benefit":  4,
                          "cost":  1,
                          "roi":  4
+                     },
+                     {
+                         "id":  14001,
+                         "type":  "post",
+                         "title":  "Glasfaser-Hausanschluss: Gf-AP, Gf-TA, ONT und Router",
+                         "slug":  "glasfaser-hausanschluss-erklaert",
+                         "url":  "https://glasfaser-kompass.de/glasfaser-hausanschluss-erklaert/",
+                         "modified":  "2026-08-21T06:45:20",
+                         "featured_media":  25939,
+                         "words":  869,
+                         "content_h1":  0,
+                         "h2":  8,
+                         "image_count":  0,
+                         "suspicious_images":  0,
+                         "internal_links":  4,
+                         "issue_count":  1,
+                         "issues":  [
+                                        "missing_cta"
+                                    ],
+                         "benefit":  5,
+                         "cost":  1,
+                         "roi":  5
                      },
                      {
                          "id":  15001,
@@ -1068,31 +1090,9 @@
                          "roi":  4
                      },
                      {
-                         "id":  15002,
-                         "type":  "post",
-                         "title":  "FRITZ!Box 7590 erklÃ¤rt",
-                         "slug":  "fritzbox-7590-erklaert",
-                         "url":  "https://glasfaser-kompass.de/fritzbox-7590-erklaert/",
-                         "modified":  "2026-08-21T06:45:15",
-                         "featured_media":  25933,
-                         "words":  372,
-                         "content_h1":  0,
-                         "h2":  9,
-                         "image_count":  0,
-                         "suspicious_images":  0,
-                         "internal_links":  3,
-                         "issue_count":  1,
-                         "issues":  [
-                                        "thin_content"
-                                    ],
-                         "benefit":  4,
-                         "cost":  1,
-                         "roi":  4
-                     },
-                     {
                          "id":  3013,
                          "type":  "post",
-                         "title":  "KVz erklÃ¤rt",
+                         "title":  "KVz erklärt",
                          "slug":  "kvz-erklaert",
                          "url":  "https://glasfaser-kompass.de/kvz-erklaert/",
                          "modified":  "2026-08-21T06:47:38",
@@ -1161,7 +1161,7 @@
                      {
                          "id":  185,
                          "type":  "post",
-                         "title":  "FTTH einfach erklÃ¤rt",
+                         "title":  "FTTH einfach erklärt",
                          "slug":  "ftth-einfach-erklaert",
                          "url":  "https://glasfaser-kompass.de/ftth-einfach-erklaert/",
                          "modified":  "2026-08-21T06:48:31",
@@ -1184,7 +1184,7 @@
                      {
                          "id":  175,
                          "type":  "post",
-                         "title":  "Die besten Router fÃ¼r GlasfaseranschlÃ¼sse â€“ worauf sollte man achten?",
+                         "title":  "Die besten Router für Glasfaseranschlüsse – worauf sollte man achten?",
                          "slug":  "die-besten-router-fuer-glasfaseranschluesse-worauf-sollte-man-achten",
                          "url":  "https://glasfaser-kompass.de/die-besten-router-fuer-glasfaseranschluesse-worauf-sollte-man-achten/",
                          "modified":  "2026-08-21T06:48:39",
@@ -1195,18 +1195,19 @@
                          "image_count":  1,
                          "suspicious_images":  1,
                          "internal_links":  6,
-                         "issue_count":  1,
+                         "issue_count":  2,
                          "issues":  [
-                                        "schematic_images_1"
+                                        "schematic_images_1",
+                                        "missing_cta"
                                     ],
-                         "benefit":  6,
+                         "benefit":  11,
                          "cost":  1,
-                         "roi":  6
+                         "roi":  11
                      },
                      {
                          "id":  177,
                          "type":  "post",
-                         "title":  "Internet langsam trotz Glasfaser â€“ woran kann das liegen?",
+                         "title":  "Internet langsam trotz Glasfaser – woran kann das liegen?",
                          "slug":  "internet-langsam-trotz-glasfaser-woran-kann-das-liegen",
                          "url":  "https://glasfaser-kompass.de/internet-langsam-trotz-glasfaser-woran-kann-das-liegen/",
                          "modified":  "2026-08-21T06:48:37",
@@ -1252,7 +1253,7 @@
                      {
                          "id":  195,
                          "type":  "post",
-                         "title":  "Gast-WLAN einrichten â€“ warum es sinnvoll ist",
+                         "title":  "Gast-WLAN einrichten – warum es sinnvoll ist",
                          "slug":  "gast-wlan-einrichten-warum-es-sinnvoll-ist",
                          "url":  "https://glasfaser-kompass.de/gast-wlan-einrichten-warum-es-sinnvoll-ist/",
                          "modified":  "2026-08-21T06:48:23",
@@ -1274,7 +1275,7 @@
                      {
                          "id":  197,
                          "type":  "post",
-                         "title":  "LAN oder WLAN â€“ was ist besser?",
+                         "title":  "LAN oder WLAN – was ist besser?",
                          "slug":  "lan-oder-wlan-was-ist-besser",
                          "url":  "https://glasfaser-kompass.de/lan-oder-wlan-was-ist-besser/",
                          "modified":  "2026-08-21T06:48:21",
@@ -1296,7 +1297,7 @@
                      {
                          "id":  199,
                          "type":  "post",
-                         "title":  "Mesh-System einrichten â€“ Schritt fÃ¼r Schritt",
+                         "title":  "Mesh-System einrichten – Schritt für Schritt",
                          "slug":  "mesh-system-einrichten-schritt-fuer-schritt",
                          "url":  "https://glasfaser-kompass.de/mesh-system-einrichten-schritt-fuer-schritt/",
                          "modified":  "2026-08-21T06:48:19",
@@ -1318,7 +1319,7 @@
                      {
                          "id":  187,
                          "type":  "post",
-                         "title":  "Glasfaser vs. DSL â€“ die wichtigsten Unterschiede",
+                         "title":  "Glasfaser vs. DSL – die wichtigsten Unterschiede",
                          "slug":  "glasfaser-vs-dsl-die-wichtigsten-unterschiede",
                          "url":  "https://glasfaser-kompass.de/glasfaser-vs-dsl-die-wichtigsten-unterschiede/",
                          "modified":  "2026-08-21T06:48:30",
@@ -1363,7 +1364,7 @@
                      {
                          "id":  193,
                          "type":  "post",
-                         "title":  "FRITZ!Box richtig einrichten â€“ Schritt fÃ¼r Schritt",
+                         "title":  "FRITZ!Box richtig einrichten – Schritt für Schritt",
                          "slug":  "fritzbox-richtig-einrichten-schritt-fuer-schritt",
                          "url":  "https://glasfaser-kompass.de/fritzbox-richtig-einrichten-schritt-fuer-schritt/",
                          "modified":  "2026-08-21T06:48:25",
@@ -1385,7 +1386,7 @@
                      {
                          "id":  94,
                          "type":  "post",
-                         "title":  "Glasfaseranschluss im Einfamilienhaus erklÃ¤rt",
+                         "title":  "Glasfaseranschluss im Einfamilienhaus erklärt",
                          "slug":  "glasfaseranschluss-im-einfamilienhaus-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfaseranschluss-im-einfamilienhaus-erklaert/",
                          "modified":  "2026-08-21T06:48:54",
@@ -1408,7 +1409,7 @@
                      {
                          "id":  96,
                          "type":  "post",
-                         "title":  "Glasfaseranschluss im Mehrfamilienhaus erklÃ¤rt",
+                         "title":  "Glasfaseranschluss im Mehrfamilienhaus erklärt",
                          "slug":  "glasfaseranschluss-im-mehrfamilienhaus-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfaseranschluss-im-mehrfamilienhaus-erklaert/",
                          "modified":  "2026-08-21T06:48:53",
@@ -1431,7 +1432,7 @@
                      {
                          "id":  161,
                          "type":  "post",
-                         "title":  "WLAN langsam? Die hÃ¤ufigsten Ursachen einfach erklÃ¤rt",
+                         "title":  "WLAN langsam? Die häufigsten Ursachen einfach erklärt",
                          "slug":  "wlan-langsam-die-haeufigsten-ursachen-einfach-erklaert",
                          "url":  "https://glasfaser-kompass.de/wlan-langsam-die-haeufigsten-ursachen-einfach-erklaert/",
                          "modified":  "2026-08-21T06:48:51",
@@ -1453,7 +1454,7 @@
                      {
                          "id":  75,
                          "type":  "post",
-                         "title":  "Was ist ein APL? Einfach erklÃ¤rt",
+                         "title":  "Was ist ein APL? Einfach erklärt",
                          "slug":  "was-ist-ein-apl",
                          "url":  "https://glasfaser-kompass.de/was-ist-ein-apl/",
                          "modified":  "2026-08-21T06:48:59",
@@ -1520,7 +1521,7 @@
                      {
                          "id":  169,
                          "type":  "post",
-                         "title":  "Repeater oder Mesh â€“ Was ist besser?",
+                         "title":  "Repeater oder Mesh – Was ist besser?",
                          "slug":  "repeater-oder-mesh-was-ist-besser",
                          "url":  "https://glasfaser-kompass.de/repeater-oder-mesh-was-ist-besser/",
                          "modified":  "2026-08-21T06:48:44",
@@ -1542,7 +1543,7 @@
                      {
                          "id":  171,
                          "type":  "post",
-                         "title":  "2,4 GHz, 5 GHz oder 6 GHz â€“ Welches WLAN-Band ist das richtige?",
+                         "title":  "2,4 GHz, 5 GHz oder 6 GHz – Welches WLAN-Band ist das richtige?",
                          "slug":  "24-ghz-oder-5-ghz-welches-wlan-ist-besser",
                          "url":  "https://glasfaser-kompass.de/24-ghz-oder-5-ghz-welches-wlan-ist-besser/",
                          "modified":  "2026-08-21T06:48:43",
@@ -1564,7 +1565,7 @@
                      {
                          "id":  173,
                          "type":  "post",
-                         "title":  "Glasfaser oder DSL â€“ die wichtigsten Unterschiede",
+                         "title":  "Glasfaser oder DSL – die wichtigsten Unterschiede",
                          "slug":  "glasfaser-oder-dsl-die-wichtigsten-unterschiede",
                          "url":  "https://glasfaser-kompass.de/glasfaser-oder-dsl-die-wichtigsten-unterschiede/",
                          "modified":  "2026-08-21T06:48:41",
@@ -1630,7 +1631,7 @@
                      {
                          "id":  163,
                          "type":  "post",
-                         "title":  "Router richtig aufstellen â€“ 7 Tipps fÃ¼r besseres WLAN",
+                         "title":  "Router richtig aufstellen – 7 Tipps für besseres WLAN",
                          "slug":  "router-richtig-aufstellen-7-tipps-fuer-besseres-wlan",
                          "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen-7-tipps-fuer-besseres-wlan/",
                          "modified":  "2026-08-21T06:48:46",
@@ -1674,7 +1675,7 @@
                      {
                          "id":  297,
                          "type":  "post",
-                         "title":  "WLAN fÃ¼r Homeoffice optimieren",
+                         "title":  "WLAN für Homeoffice optimieren",
                          "slug":  "wlan-fuer-homeoffice-optimieren",
                          "url":  "https://glasfaser-kompass.de/wlan-fuer-homeoffice-optimieren/",
                          "modified":  "2026-08-21T06:47:52",
@@ -1696,7 +1697,7 @@
                      {
                          "id":  298,
                          "type":  "post",
-                         "title":  "Welcher Router eignet sich fÃ¼r Glasfaser? Der groÃŸe Ratgeber 2026",
+                         "title":  "Welcher Router eignet sich für Glasfaser? Der große Ratgeber 2026",
                          "slug":  "router-fuer-glasfaser",
                          "url":  "https://glasfaser-kompass.de/router-fuer-glasfaser/",
                          "modified":  "2026-08-21T06:47:50",
@@ -1718,7 +1719,7 @@
                      {
                          "id":  293,
                          "type":  "post",
-                         "title":  "WLAN-Kanal wechseln â€“ wann es sinnvoll ist",
+                         "title":  "WLAN-Kanal wechseln – wann es sinnvoll ist",
                          "slug":  "wlan-kanal-wechseln",
                          "url":  "https://glasfaser-kompass.de/wlan-kanal-wechseln/",
                          "modified":  "2026-08-21T06:47:58",
@@ -1740,7 +1741,7 @@
                      {
                          "id":  294,
                          "type":  "post",
-                         "title":  "2,4 GHz, 5 GHz oder 6 GHz â€“ welches WLAN-Band ist richtig?",
+                         "title":  "2,4 GHz, 5 GHz oder 6 GHz – welches WLAN-Band ist richtig?",
                          "slug":  "2-4-ghz-5-ghz-oder-6-ghz",
                          "url":  "https://glasfaser-kompass.de/2-4-ghz-5-ghz-oder-6-ghz/",
                          "modified":  "2026-08-21T06:47:56",
@@ -1784,7 +1785,7 @@
                      {
                          "id":  302,
                          "type":  "post",
-                         "title":  "Wiâ€‘Fi 7 Router â€“ lohnt sich der Umstieg?",
+                         "title":  "Wi‑Fi 7 Router – lohnt sich der Umstieg?",
                          "slug":  "wifi-7-router-lohnt-sich-premium",
                          "url":  "https://glasfaser-kompass.de/wifi-7-router-lohnt-sich-premium/",
                          "modified":  "2026-08-21T06:47:43",
@@ -1795,18 +1796,19 @@
                          "image_count":  1,
                          "suspicious_images":  1,
                          "internal_links":  6,
-                         "issue_count":  1,
+                         "issue_count":  2,
                          "issues":  [
-                                        "schematic_images_1"
+                                        "schematic_images_1",
+                                        "missing_cta"
                                     ],
-                         "benefit":  6,
+                         "benefit":  11,
                          "cost":  1,
-                         "roi":  6
+                         "roi":  11
                      },
                      {
                          "id":  3011,
                          "type":  "post",
-                         "title":  "TAE erklÃ¤rt",
+                         "title":  "TAE erklärt",
                          "slug":  "tae-erklaert",
                          "url":  "https://glasfaser-kompass.de/tae-erklaert/",
                          "modified":  "2026-08-21T06:47:41",
@@ -1829,7 +1831,7 @@
                      {
                          "id":  3012,
                          "type":  "post",
-                         "title":  "TAL erklÃ¤rt",
+                         "title":  "TAL erklärt",
                          "slug":  "tal-erklaert",
                          "url":  "https://glasfaser-kompass.de/tal-erklaert/",
                          "modified":  "2026-08-21T06:47:40",
@@ -1852,7 +1854,7 @@
                      {
                          "id":  299,
                          "type":  "post",
-                         "title":  "FRITZ!Box richtig einrichten â€“ Schritt-fÃ¼r-Schritt-Anleitung",
+                         "title":  "FRITZ!Box richtig einrichten – Schritt-für-Schritt-Anleitung",
                          "slug":  "fritzbox-richtig-einrichten-premium",
                          "url":  "https://glasfaser-kompass.de/fritzbox-richtig-einrichten-premium/",
                          "modified":  "2026-08-21T06:47:48",
@@ -1874,7 +1876,7 @@
                      {
                          "id":  300,
                          "type":  "post",
-                         "title":  "ONT und Router â€“ wo liegt der Unterschied?",
+                         "title":  "ONT und Router – wo liegt der Unterschied?",
                          "slug":  "ont-und-router-unterschied-premium",
                          "url":  "https://glasfaser-kompass.de/ont-und-router-unterschied-premium/",
                          "modified":  "2026-08-21T06:47:47",
@@ -1885,19 +1887,20 @@
                          "image_count":  1,
                          "suspicious_images":  1,
                          "internal_links":  3,
-                         "issue_count":  2,
+                         "issue_count":  3,
                          "issues":  [
                                         "thin_content",
-                                        "schematic_images_1"
+                                        "schematic_images_1",
+                                        "missing_cta"
                                     ],
-                         "benefit":  10,
+                         "benefit":  15,
                          "cost":  1,
-                         "roi":  10
+                         "roi":  15
                      },
                      {
                          "id":  301,
                          "type":  "post",
-                         "title":  "Gast-WLAN einrichten â€“ sicher und einfach",
+                         "title":  "Gast-WLAN einrichten – sicher und einfach",
                          "slug":  "gast-wlan-einrichten-premium",
                          "url":  "https://glasfaser-kompass.de/gast-wlan-einrichten-premium/",
                          "modified":  "2026-08-21T06:47:45",
@@ -1920,7 +1923,7 @@
                      {
                          "id":  267,
                          "type":  "post",
-                         "title":  "Glasfaser vs. DSL â€“ Die wichtigsten Unterschiede im direkten Vergleich",
+                         "title":  "Glasfaser vs. DSL – Die wichtigsten Unterschiede im direkten Vergleich",
                          "slug":  "glasfaser-vs-dsl-die-wichtigsten-unterschiede-im-direkten-vergleich",
                          "url":  "https://glasfaser-kompass.de/glasfaser-vs-dsl-die-wichtigsten-unterschiede-im-direkten-vergleich/",
                          "modified":  "2026-08-21T06:48:13",
@@ -1942,7 +1945,7 @@
                      {
                          "id":  270,
                          "type":  "post",
-                         "title":  "Wie kommt Glasfaser ins Haus? Vom Gehweg bis zur Anschlussdose erklÃ¤rt",
+                         "title":  "Wie kommt Glasfaser ins Haus? Vom Gehweg bis zur Anschlussdose erklärt",
                          "slug":  "wie-kommt-glasfaser-ins-haus-vom-gehweg-bis-zur-anschlussdose-erklaert",
                          "url":  "https://glasfaser-kompass.de/wie-kommt-glasfaser-ins-haus-vom-gehweg-bis-zur-anschlussdose-erklaert/",
                          "modified":  "2026-08-21T06:48:11",
@@ -1965,7 +1968,7 @@
                      {
                          "id":  276,
                          "type":  "post",
-                         "title":  "Was kostet ein Glasfaseranschluss wirklich? Alle Kosten im Ãœberblick",
+                         "title":  "Was kostet ein Glasfaseranschluss wirklich? Alle Kosten im Überblick",
                          "slug":  "was-kostet-ein-glasfaseranschluss-wirklich-alle-kosten-im-ueberblick",
                          "url":  "https://glasfaser-kompass.de/was-kostet-ein-glasfaseranschluss-wirklich-alle-kosten-im-ueberblick/",
                          "modified":  "2026-08-21T06:48:10",
@@ -1988,7 +1991,7 @@
                      {
                          "id":  201,
                          "type":  "post",
-                         "title":  "WLAN-Reichweite erhÃ¶hen â€“ 10 praktische Tipps",
+                         "title":  "WLAN-Reichweite erhöhen – 10 praktische Tipps",
                          "slug":  "wlan-reichweite-erhoehen-10-praktische-tipps",
                          "url":  "https://glasfaser-kompass.de/wlan-reichweite-erhoehen-10-praktische-tipps/",
                          "modified":  "2026-08-21T06:48:18",
@@ -2010,7 +2013,7 @@
                      {
                          "id":  203,
                          "type":  "post",
-                         "title":  "Warum bricht mein WLAN stÃ¤ndig ab?",
+                         "title":  "Warum bricht mein WLAN ständig ab?",
                          "slug":  "warum-bricht-mein-wlan-staendig-ab",
                          "url":  "https://glasfaser-kompass.de/warum-bricht-mein-wlan-staendig-ab/",
                          "modified":  "2026-08-21T06:48:16",
@@ -2032,7 +2035,7 @@
                      {
                          "id":  262,
                          "type":  "post",
-                         "title":  "FTTH einfach erklÃ¤rt â€“ Was bedeutet Fiber To The Home?",
+                         "title":  "FTTH einfach erklärt – Was bedeutet Fiber To The Home?",
                          "slug":  "ftth-einfach-erklaert-was-bedeutet-fiber-to-the-home",
                          "url":  "https://glasfaser-kompass.de/ftth-einfach-erklaert-was-bedeutet-fiber-to-the-home/",
                          "modified":  "2026-08-21T06:48:15",
@@ -2055,7 +2058,7 @@
                      {
                          "id":  290,
                          "type":  "post",
-                         "title":  "Warum bricht mein WLAN stÃ¤ndig ab?",
+                         "title":  "Warum bricht mein WLAN ständig ab?",
                          "slug":  "wlan-bricht-staendig-ab",
                          "url":  "https://glasfaser-kompass.de/wlan-bricht-staendig-ab/",
                          "modified":  "2026-08-21T06:48:03",
@@ -2077,7 +2080,7 @@
                      {
                          "id":  291,
                          "type":  "post",
-                         "title":  "WLAN-Reichweite erhÃ¶hen â€“ 10 praktische Tipps",
+                         "title":  "WLAN-Reichweite erhöhen – 10 praktische Tipps",
                          "slug":  "wlan-reichweite-erhoehen-10-tipps",
                          "url":  "https://glasfaser-kompass.de/wlan-reichweite-erhoehen-10-tipps/",
                          "modified":  "2026-08-21T06:48:01",
@@ -2099,7 +2102,7 @@
                      {
                          "id":  292,
                          "type":  "post",
-                         "title":  "Router richtig aufstellen â€“ so verbessern Sie Ihr WLAN",
+                         "title":  "Router richtig aufstellen – so verbessern Sie Ihr WLAN",
                          "slug":  "router-richtig-aufstellen",
                          "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen/",
                          "modified":  "2026-08-21T06:47:59",
@@ -2121,7 +2124,7 @@
                      {
                          "id":  286,
                          "type":  "post",
-                         "title":  "WLAN-Kanal wechseln â€“ So verbessern Sie Ihr WLAN",
+                         "title":  "WLAN-Kanal wechseln – So verbessern Sie Ihr WLAN",
                          "slug":  "wlan-kanal-wechseln-so-verbessern-sie-ihr-wlan",
                          "url":  "https://glasfaser-kompass.de/wlan-kanal-wechseln-so-verbessern-sie-ihr-wlan/",
                          "modified":  "2026-08-21T06:48:08",
@@ -2143,7 +2146,7 @@
                      {
                          "id":  288,
                          "type":  "post",
-                         "title":  "Wiâ€‘Fi 6, Wiâ€‘Fi 6E und Wiâ€‘Fi 7 erklÃ¤rt",
+                         "title":  "Wi‑Fi 6, Wi‑Fi 6E und Wi‑Fi 7 erklärt",
                          "slug":  "wifi-6-6e-und-7-erklaert",
                          "url":  "https://glasfaser-kompass.de/wifi-6-6e-und-7-erklaert/",
                          "modified":  "2026-08-21T06:48:06",
@@ -2165,7 +2168,7 @@
                      {
                          "id":  289,
                          "type":  "post",
-                         "title":  "WLAN langsam â€“ Ursachen und LÃ¶sungen",
+                         "title":  "WLAN langsam – Ursachen und Lösungen",
                          "slug":  "wlan-langsam-ursachen-loesungen",
                          "url":  "https://glasfaser-kompass.de/wlan-langsam-ursachen-loesungen/",
                          "modified":  "2026-08-21T06:48:04",
@@ -2185,9 +2188,31 @@
                          "roi":  6
                      },
                      {
+                         "id":  16012,
+                         "type":  "post",
+                         "title":  "Häufige Fehler bei Glasfaserprojekten",
+                         "slug":  "haeufige-fehler-bei-glasfaserprojekten",
+                         "url":  "https://glasfaser-kompass.de/haeufige-fehler-bei-glasfaserprojekten/",
+                         "modified":  "2026-08-21T06:44:33",
+                         "featured_media":  25873,
+                         "words":  399,
+                         "content_h1":  0,
+                         "h2":  9,
+                         "image_count":  0,
+                         "suspicious_images":  0,
+                         "internal_links":  3,
+                         "issue_count":  1,
+                         "issues":  [
+                                        "thin_content"
+                                    ],
+                         "benefit":  4,
+                         "cost":  1,
+                         "roi":  4
+                     },
+                     {
                          "id":  26261,
                          "type":  "post",
-                         "title":  "Router fÃ¼r VDSL 250: worauf achten?",
+                         "title":  "Router für VDSL 250: worauf achten?",
                          "slug":  "router-vdsl-250-kriterien",
                          "url":  "https://glasfaser-kompass.de/router-vdsl-250-kriterien/",
                          "modified":  "2026-08-21T06:41:47",
@@ -2275,7 +2300,7 @@
                      {
                          "id":  26257,
                          "type":  "post",
-                         "title":  "HÃ¤ufige VerzÃ¶gerungen beim Termin",
+                         "title":  "Häufige Verzögerungen beim Termin",
                          "slug":  "haeufige-verzoegerungen-technikertermin",
                          "url":  "https://glasfaser-kompass.de/haeufige-verzoegerungen-technikertermin/",
                          "modified":  "2026-08-21T06:41:50",
@@ -2297,7 +2322,7 @@
                      {
                          "id":  26259,
                          "type":  "post",
-                         "title":  "Router fÃ¼r Glasfaser: wichtige Kriterien",
+                         "title":  "Router für Glasfaser: wichtige Kriterien",
                          "slug":  "router-glasfaser-kriterien",
                          "url":  "https://glasfaser-kompass.de/router-glasfaser-kriterien/",
                          "modified":  "2026-08-21T06:41:48",
@@ -2319,7 +2344,7 @@
                      {
                          "id":  1007,
                          "type":  "page",
-                         "title":  "AKP erklÃ¤rt",
+                         "title":  "AKP erklärt",
                          "slug":  "akp-erklaert",
                          "url":  "https://glasfaser-kompass.de/akp-erklaert/",
                          "modified":  "2026-08-21T06:41:31",
@@ -2430,7 +2455,7 @@
                      {
                          "id":  1003,
                          "type":  "page",
-                         "title":  "Gf-AP erklÃ¤rt",
+                         "title":  "Gf-AP erklärt",
                          "slug":  "gf-ap-erklaert",
                          "url":  "https://glasfaser-kompass.de/gf-ap-erklaert/",
                          "modified":  "2026-08-21T06:41:38",
@@ -2474,7 +2499,7 @@
                      {
                          "id":  26239,
                          "type":  "post",
-                         "title":  "WLAN-KanÃ¤le im Mehrfamilienhaus",
+                         "title":  "WLAN-Kanäle im Mehrfamilienhaus",
                          "slug":  "wlan-kanaele-mehrfamilienhaus",
                          "url":  "https://glasfaser-kompass.de/wlan-kanaele-mehrfamilienhaus/",
                          "modified":  "2026-08-21T06:42:07",
@@ -2540,7 +2565,7 @@
                      {
                          "id":  26233,
                          "type":  "post",
-                         "title":  "DSL-AbbrÃ¼che am Abend: Ursachen",
+                         "title":  "DSL-Abbrüche am Abend: Ursachen",
                          "slug":  "dsl-abbrueche-am-abend",
                          "url":  "https://glasfaser-kompass.de/dsl-abbrueche-am-abend/",
                          "modified":  "2026-08-21T06:42:12",
@@ -2584,7 +2609,7 @@
                      {
                          "id":  26249,
                          "type":  "post",
-                         "title":  "Technikertermin fÃ¼r DSL vorbereiten",
+                         "title":  "Technikertermin für DSL vorbereiten",
                          "slug":  "technikertermin-dsl-vorbereiten",
                          "url":  "https://glasfaser-kompass.de/technikertermin-dsl-vorbereiten/",
                          "modified":  "2026-08-21T06:41:57",
@@ -2606,7 +2631,7 @@
                      {
                          "id":  26251,
                          "type":  "post",
-                         "title":  "Technikertermin fÃ¼r Glasfaser vorbereiten",
+                         "title":  "Technikertermin für Glasfaser vorbereiten",
                          "slug":  "technikertermin-glasfaser-vorbereiten",
                          "url":  "https://glasfaser-kompass.de/technikertermin-glasfaser-vorbereiten/",
                          "modified":  "2026-08-21T06:41:56",
@@ -2650,7 +2675,7 @@
                      {
                          "id":  26243,
                          "type":  "post",
-                         "title":  "Router im Keller: LÃ¶sungen",
+                         "title":  "Router im Keller: Lösungen",
                          "slug":  "router-im-keller-loesungen",
                          "url":  "https://glasfaser-kompass.de/router-im-keller-loesungen/",
                          "modified":  "2026-08-21T06:42:03",
@@ -2672,7 +2697,7 @@
                      {
                          "id":  26245,
                          "type":  "post",
-                         "title":  "WLAN fÃ¼r Homeoffice stabilisieren",
+                         "title":  "WLAN für Homeoffice stabilisieren",
                          "slug":  "wlan-homeoffice-stabilisieren",
                          "url":  "https://glasfaser-kompass.de/wlan-homeoffice-stabilisieren/",
                          "modified":  "2026-08-21T06:42:01",
@@ -2727,13 +2752,14 @@
                          "image_count":  0,
                          "suspicious_images":  0,
                          "internal_links":  12,
-                         "issue_count":  1,
+                         "issue_count":  2,
                          "issues":  [
-                                        "thin_content"
+                                        "thin_content",
+                                        "missing_cta"
                                     ],
-                         "benefit":  4,
+                         "benefit":  9,
                          "cost":  1,
-                         "roi":  4
+                         "roi":  9
                      },
                      {
                          "id":  21053,
@@ -2793,13 +2819,14 @@
                          "image_count":  0,
                          "suspicious_images":  0,
                          "internal_links":  12,
-                         "issue_count":  1,
+                         "issue_count":  2,
                          "issues":  [
-                                        "thin_content"
+                                        "thin_content",
+                                        "missing_cta"
                                     ],
-                         "benefit":  4,
+                         "benefit":  9,
                          "cost":  1,
-                         "roi":  4
+                         "roi":  9
                      },
                      {
                          "id":  21022,
@@ -2849,7 +2876,7 @@
                      {
                          "id":  26267,
                          "type":  "page",
-                         "title":  "Glasfaser Grundlagen â€“ groÃŸer Ãœberblick",
+                         "title":  "Glasfaser Grundlagen – großer Überblick",
                          "slug":  "glasfaser-grundlagen",
                          "url":  "https://glasfaser-kompass.de/glasfaser-grundlagen/",
                          "modified":  "2026-08-21T06:41:08",
@@ -2871,7 +2898,7 @@
                      {
                          "id":  26269,
                          "type":  "page",
-                         "title":  "DSL und Kupfer â€“ groÃŸer Ãœberblick",
+                         "title":  "DSL und Kupfer – großer Überblick",
                          "slug":  "dsl-und-kupfer",
                          "url":  "https://glasfaser-kompass.de/dsl-und-kupfer/",
                          "modified":  "2026-08-21T06:41:06",
@@ -2893,7 +2920,7 @@
                      {
                          "id":  26271,
                          "type":  "page",
-                         "title":  "Technikertermin â€“ groÃŸer Ãœberblick",
+                         "title":  "Technikertermin – großer Überblick",
                          "slug":  "technikertermin",
                          "url":  "https://glasfaser-kompass.de/technikertermin/",
                          "modified":  "2026-08-21T06:41:04",
@@ -3003,7 +3030,7 @@
                      {
                          "id":  20824,
                          "type":  "page",
-                         "title":  "Ãœber den Autor",
+                         "title":  "Über den Autor",
                          "slug":  "ueber-den-autor",
                          "url":  "https://glasfaser-kompass.de/ueber-den-autor/",
                          "modified":  "2026-08-17T17:36:15",
@@ -3137,7 +3164,7 @@
                      {
                          "id":  21008,
                          "type":  "page",
-                         "title":  "StÃ¶rungen",
+                         "title":  "Störungen",
                          "slug":  "stoerungen",
                          "url":  "https://glasfaser-kompass.de/stoerungen/",
                          "modified":  "2026-08-23T18:55:03",
@@ -3248,7 +3275,7 @@
                      {
                          "id":  26229,
                          "type":  "post",
-                         "title":  "APL und TAE Signalweg einfach erklÃ¤rt",
+                         "title":  "APL und TAE Signalweg einfach erklärt",
                          "slug":  "apl-tae-signalweg",
                          "url":  "https://glasfaser-kompass.de/apl-tae-signalweg/",
                          "modified":  "2026-08-23T18:18:45",
@@ -3270,7 +3297,7 @@
                      {
                          "id":  18011,
                          "type":  "post",
-                         "title":  "Ausbaugebiet erklÃ¤rt",
+                         "title":  "Ausbaugebiet erklärt",
                          "slug":  "ausbaugebiet-erklaert",
                          "url":  "https://glasfaser-kompass.de/ausbaugebiet-erklaert/",
                          "modified":  "2026-08-21T06:43:58",
@@ -3292,7 +3319,7 @@
                      {
                          "id":  18012,
                          "type":  "post",
-                         "title":  "Vorvermarktung erklÃ¤rt",
+                         "title":  "Vorvermarktung erklärt",
                          "slug":  "vorvermarktung-erklaert",
                          "url":  "https://glasfaser-kompass.de/vorvermarktung-erklaert/",
                          "modified":  "2026-08-21T06:43:56",
@@ -3314,7 +3341,7 @@
                      {
                          "id":  19001,
                          "type":  "post",
-                         "title":  "OLT erklÃ¤rt",
+                         "title":  "OLT erklärt",
                          "slug":  "olt-erklaert",
                          "url":  "https://glasfaser-kompass.de/olt-erklaert/",
                          "modified":  "2026-08-21T06:43:55",
@@ -3358,7 +3385,7 @@
                      {
                          "id":  18009,
                          "type":  "post",
-                         "title":  "Open Access erklÃ¤rt",
+                         "title":  "Open Access erklärt",
                          "slug":  "open-access-erklaert",
                          "url":  "https://glasfaser-kompass.de/open-access-erklaert/",
                          "modified":  "2026-08-21T06:44:02",
@@ -3402,7 +3429,7 @@
                      {
                          "id":  19005,
                          "type":  "post",
-                         "title":  "Singlemode und Multimode erklÃ¤rt",
+                         "title":  "Singlemode und Multimode erklärt",
                          "slug":  "singlemode-und-multimode-erklaert",
                          "url":  "https://glasfaser-kompass.de/singlemode-und-multimode-erklaert/",
                          "modified":  "2026-08-21T06:43:48",
@@ -3424,7 +3451,7 @@
                      {
                          "id":  19006,
                          "type":  "post",
-                         "title":  "LC-Stecker erklÃ¤rt",
+                         "title":  "LC-Stecker erklärt",
                          "slug":  "lc-stecker-erklaert",
                          "url":  "https://glasfaser-kompass.de/lc-stecker-erklaert/",
                          "modified":  "2026-08-21T06:43:46",
@@ -3446,7 +3473,7 @@
                      {
                          "id":  19007,
                          "type":  "post",
-                         "title":  "SC/APC erklÃ¤rt",
+                         "title":  "SC/APC erklärt",
                          "slug":  "sc-apc-erklaert",
                          "url":  "https://glasfaser-kompass.de/sc-apc-erklaert/",
                          "modified":  "2026-08-21T06:43:44",
@@ -3468,7 +3495,7 @@
                      {
                          "id":  19002,
                          "type":  "post",
-                         "title":  "Splitter erklÃ¤rt",
+                         "title":  "Splitter erklärt",
                          "slug":  "splitter-erklaert",
                          "url":  "https://glasfaser-kompass.de/splitter-erklaert/",
                          "modified":  "2026-08-21T06:43:53",
@@ -3490,7 +3517,7 @@
                      {
                          "id":  19003,
                          "type":  "post",
-                         "title":  "PON erklÃ¤rt â€“ was bedeutet die grÃ¼ne PON-Leuchte?",
+                         "title":  "PON erklärt – was bedeutet die grüne PON-Leuchte?",
                          "slug":  "pon-erklaert",
                          "url":  "https://glasfaser-kompass.de/pon-erklaert/",
                          "modified":  "2026-08-21T06:43:51",
@@ -3512,7 +3539,7 @@
                      {
                          "id":  19004,
                          "type":  "post",
-                         "title":  "Active Ethernet erklÃ¤rt",
+                         "title":  "Active Ethernet erklärt",
                          "slug":  "active-ethernet-erklaert",
                          "url":  "https://glasfaser-kompass.de/active-ethernet-erklaert/",
                          "modified":  "2026-08-21T06:43:50",
@@ -3556,7 +3583,7 @@
                      {
                          "id":  17012,
                          "type":  "post",
-                         "title":  "Die hÃ¤ufigsten Fehlerbilder im Telekom-AuÃŸendienst",
+                         "title":  "Die häufigsten Fehlerbilder im Telekom-Außendienst",
                          "slug":  "die-haeufigsten-fehlerbilder-im-telekom-aussendienst",
                          "url":  "https://glasfaser-kompass.de/die-haeufigsten-fehlerbilder-im-telekom-aussendienst/",
                          "modified":  "2026-08-21T06:44:16",
@@ -3578,7 +3605,7 @@
                      {
                          "id":  18001,
                          "type":  "post",
-                         "title":  "Deutsche Telekom Glasfaser erklÃ¤rt",
+                         "title":  "Deutsche Telekom Glasfaser erklärt",
                          "slug":  "deutsche-telekom-glasfaser-erklaert",
                          "url":  "https://glasfaser-kompass.de/deutsche-telekom-glasfaser-erklaert/",
                          "modified":  "2026-08-21T06:44:14",
@@ -3666,7 +3693,7 @@
                      {
                          "id":  18005,
                          "type":  "post",
-                         "title":  "Westconnect erklÃ¤rt",
+                         "title":  "Westconnect erklärt",
                          "slug":  "westconnect-erklaert",
                          "url":  "https://glasfaser-kompass.de/westconnect-erklaert/",
                          "modified":  "2026-08-21T06:44:08",
@@ -3688,7 +3715,7 @@
                      {
                          "id":  18006,
                          "type":  "post",
-                         "title":  "E.ON Highspeed erklÃ¤rt",
+                         "title":  "E.ON Highspeed erklärt",
                          "slug":  "e-on-highspeed-erklaert",
                          "url":  "https://glasfaser-kompass.de/e-on-highspeed-erklaert/",
                          "modified":  "2026-08-21T06:44:06",
@@ -3710,7 +3737,7 @@
                      {
                          "id":  18007,
                          "type":  "post",
-                         "title":  "Unsere GrÃ¼ne Glasfaser erklÃ¤rt",
+                         "title":  "Unsere Grüne Glasfaser erklärt",
                          "slug":  "unsere-gruene-glasfaser-erklaert",
                          "url":  "https://glasfaser-kompass.de/unsere-gruene-glasfaser-erklaert/",
                          "modified":  "2026-08-21T06:44:04",
@@ -3732,7 +3759,7 @@
                      {
                          "id":  18002,
                          "type":  "post",
-                         "title":  "Deutsche Glasfaser erklÃ¤rt",
+                         "title":  "Deutsche Glasfaser erklärt",
                          "slug":  "deutsche-glasfaser-erklaert",
                          "url":  "https://glasfaser-kompass.de/deutsche-glasfaser-erklaert/",
                          "modified":  "2026-08-21T06:44:13",
@@ -3754,7 +3781,7 @@
                      {
                          "id":  18003,
                          "type":  "post",
-                         "title":  "OXG erklÃ¤rt",
+                         "title":  "OXG erklärt",
                          "slug":  "oxg-erklaert",
                          "url":  "https://glasfaser-kompass.de/oxg-erklaert/",
                          "modified":  "2026-08-21T06:44:11",
@@ -3776,7 +3803,7 @@
                      {
                          "id":  18004,
                          "type":  "post",
-                         "title":  "Glasfaser Plus erklÃ¤rt",
+                         "title":  "Glasfaser Plus erklärt",
                          "slug":  "glasfaser-plus-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfaser-plus-erklaert/",
                          "modified":  "2026-08-21T06:44:09",
@@ -3798,7 +3825,7 @@
                      {
                          "id":  26210,
                          "type":  "post",
-                         "title":  "Glasfaser oder Kabelinternet: Unterschiede einfach erklÃ¤rt",
+                         "title":  "Glasfaser oder Kabelinternet: Unterschiede einfach erklärt",
                          "slug":  "glasfaser-oder-kabelinternet",
                          "url":  "https://glasfaser-kompass.de/glasfaser-oder-kabelinternet/",
                          "modified":  "2026-08-21T06:42:30",
@@ -3864,7 +3891,7 @@
                      {
                          "id":  26204,
                          "type":  "post",
-                         "title":  "Glasfaser-Bauteile im Haus einfach erklÃ¤rt",
+                         "title":  "Glasfaser-Bauteile im Haus einfach erklärt",
                          "slug":  "glasfaser-bauteile-im-haus",
                          "url":  "https://glasfaser-kompass.de/glasfaser-bauteile-im-haus/",
                          "modified":  "2026-08-21T06:42:35",
@@ -3886,7 +3913,7 @@
                      {
                          "id":  26206,
                          "type":  "post",
-                         "title":  "DSL-Bauteile im Haus einfach erklÃ¤rt",
+                         "title":  "DSL-Bauteile im Haus einfach erklärt",
                          "slug":  "dsl-bauteile-im-haus",
                          "url":  "https://glasfaser-kompass.de/dsl-bauteile-im-haus/",
                          "modified":  "2026-08-21T06:42:33",
@@ -3908,7 +3935,7 @@
                      {
                          "id":  26208,
                          "type":  "post",
-                         "title":  "Technikertermin vorbereiten: Checkliste fÃ¼r Kunden",
+                         "title":  "Technikertermin vorbereiten: Checkliste für Kunden",
                          "slug":  "technikertermin-vorbereiten-checkliste",
                          "url":  "https://glasfaser-kompass.de/technikertermin-vorbereiten-checkliste/",
                          "modified":  "2026-08-21T06:42:32",
@@ -3996,7 +4023,7 @@
                      {
                          "id":  26216,
                          "type":  "post",
-                         "title":  "APL und Gf-AP: Unterschied einfach erklÃ¤rt",
+                         "title":  "APL und Gf-AP: Unterschied einfach erklärt",
                          "slug":  "apl-und-gf-ap-unterschied",
                          "url":  "https://glasfaser-kompass.de/apl-und-gf-ap-unterschied/",
                          "modified":  "2026-08-21T06:42:25",
@@ -4018,7 +4045,7 @@
                      {
                          "id":  26219,
                          "type":  "post",
-                         "title":  "FTTH Anschlussarten einfach erklÃ¤rt",
+                         "title":  "FTTH Anschlussarten einfach erklärt",
                          "slug":  "ftth-anschlussarten-erklaert",
                          "url":  "https://glasfaser-kompass.de/ftth-anschlussarten-erklaert/",
                          "modified":  "2026-08-21T06:42:24",
@@ -4062,7 +4089,7 @@
                      {
                          "id":  20792,
                          "type":  "post",
-                         "title":  "Glasfaser einblasen â€“ wie funktioniert das?",
+                         "title":  "Glasfaser einblasen – wie funktioniert das?",
                          "slug":  "glasfaser-einblasen",
                          "url":  "https://glasfaser-kompass.de/glasfaser-einblasen/",
                          "modified":  "2026-08-21T06:43:17",
@@ -4084,7 +4111,7 @@
                      {
                          "id":  20793,
                          "type":  "post",
-                         "title":  "SpleiÃŸen bei Glasfaser einfach erklÃ¤rt",
+                         "title":  "Spleißen bei Glasfaser einfach erklärt",
                          "slug":  "glasfaser-spleissen-erklaert",
                          "url":  "https://glasfaser-kompass.de/glasfaser-spleissen-erklaert/",
                          "modified":  "2026-08-21T06:43:15",
@@ -4106,7 +4133,7 @@
                      {
                          "id":  20815,
                          "type":  "post",
-                         "title":  "FRITZ!Box 7690 fÃ¼r DSL â€“ lohnt sie sich?",
+                         "title":  "FRITZ!Box 7690 für DSL – lohnt sie sich?",
                          "slug":  "fritzbox-7690-dsl",
                          "url":  "https://glasfaser-kompass.de/fritzbox-7690-dsl/",
                          "modified":  "2026-08-21T06:42:56",
@@ -4151,7 +4178,7 @@
                      {
                          "id":  20790,
                          "type":  "post",
-                         "title":  "LOS rot bei Glasfaser â€“ Bedeutung und Hilfe",
+                         "title":  "LOS rot bei Glasfaser – Bedeutung und Hilfe",
                          "slug":  "los-rot-glasfaser",
                          "url":  "https://glasfaser-kompass.de/los-rot-glasfaser/",
                          "modified":  "2026-08-21T06:43:20",
@@ -4195,7 +4222,7 @@
                      {
                          "id":  20819,
                          "type":  "post",
-                         "title":  "Router im Keller â€“ warum das WLAN leidet",
+                         "title":  "Router im Keller – warum das WLAN leidet",
                          "slug":  "router-im-keller",
                          "url":  "https://glasfaser-kompass.de/router-im-keller/",
                          "modified":  "2026-08-21T06:42:48",
@@ -4217,7 +4244,7 @@
                      {
                          "id":  20820,
                          "type":  "post",
-                         "title":  "Welcher Router fÃ¼r Homeoffice?",
+                         "title":  "Welcher Router für Homeoffice?",
                          "slug":  "router-fuer-homeoffice",
                          "url":  "https://glasfaser-kompass.de/router-fuer-homeoffice/",
                          "modified":  "2026-08-21T06:42:47",
@@ -4239,7 +4266,7 @@
                      {
                          "id":  21101,
                          "type":  "post",
-                         "title":  "DSL-Ausfall bei Regen â€“ die hÃ¤ufigsten Ursachen",
+                         "title":  "DSL-Ausfall bei Regen – die häufigsten Ursachen",
                          "slug":  "dsl-ausfall-bei-regen-die-haeufigsten-ursachen",
                          "url":  "https://glasfaser-kompass.de/dsl-ausfall-bei-regen-die-haeufigsten-ursachen/",
                          "modified":  "2026-08-21T06:42:36",
@@ -4261,7 +4288,7 @@
                      {
                          "id":  20816,
                          "type":  "post",
-                         "title":  "Speedport oder FRITZ!Box â€“ was passt besser?",
+                         "title":  "Speedport oder FRITZ!Box – was passt besser?",
                          "slug":  "speedport-oder-fritzbox",
                          "url":  "https://glasfaser-kompass.de/speedport-oder-fritzbox/",
                          "modified":  "2026-08-21T06:42:54",
@@ -4305,7 +4332,7 @@
                      {
                          "id":  20818,
                          "type":  "post",
-                         "title":  "Glasfaserrouter oder ONT â€“ was ist besser?",
+                         "title":  "Glasfaserrouter oder ONT – was ist besser?",
                          "slug":  "glasfaserrouter-oder-ont",
                          "url":  "https://glasfaser-kompass.de/glasfaserrouter-oder-ont/",
                          "modified":  "2026-08-21T06:42:50",
@@ -4329,7 +4356,7 @@
                         {
                             "id":  26271,
                             "type":  "page",
-                            "title":  "Technikertermin â€“ groÃŸer Ãœberblick",
+                            "title":  "Technikertermin – großer Überblick",
                             "slug":  "technikertermin",
                             "url":  "https://glasfaser-kompass.de/technikertermin/",
                             "modified":  "2026-08-21T06:41:04",
@@ -4351,7 +4378,7 @@
                         {
                             "id":  26269,
                             "type":  "page",
-                            "title":  "DSL und Kupfer â€“ groÃŸer Ãœberblick",
+                            "title":  "DSL und Kupfer – großer Überblick",
                             "slug":  "dsl-und-kupfer",
                             "url":  "https://glasfaser-kompass.de/dsl-und-kupfer/",
                             "modified":  "2026-08-21T06:41:06",
@@ -4373,7 +4400,7 @@
                         {
                             "id":  26267,
                             "type":  "page",
-                            "title":  "Glasfaser Grundlagen â€“ groÃŸer Ãœberblick",
+                            "title":  "Glasfaser Grundlagen – großer Überblick",
                             "slug":  "glasfaser-grundlagen",
                             "url":  "https://glasfaser-kompass.de/glasfaser-grundlagen/",
                             "modified":  "2026-08-21T06:41:08",
@@ -4516,13 +4543,14 @@
                             "image_count":  0,
                             "suspicious_images":  0,
                             "internal_links":  12,
-                            "issue_count":  1,
+                            "issue_count":  2,
                             "issues":  [
-                                           "thin_content"
+                                           "thin_content",
+                                           "missing_cta"
                                        ],
-                            "benefit":  4,
+                            "benefit":  9,
                             "cost":  1,
-                            "roi":  4
+                            "roi":  9
                         },
                         {
                             "id":  21041,
@@ -4583,13 +4611,14 @@
                             "image_count":  0,
                             "suspicious_images":  0,
                             "internal_links":  12,
-                            "issue_count":  1,
+                            "issue_count":  2,
                             "issues":  [
-                                           "thin_content"
+                                           "thin_content",
+                                           "missing_cta"
                                        ],
-                            "benefit":  4,
+                            "benefit":  9,
                             "cost":  1,
-                            "roi":  4
+                            "roi":  9
                         },
                         {
                             "id":  21020,
@@ -4638,7 +4667,7 @@
                         {
                             "id":  21008,
                             "type":  "page",
-                            "title":  "StÃ¶rungen",
+                            "title":  "Störungen",
                             "slug":  "stoerungen",
                             "url":  "https://glasfaser-kompass.de/stoerungen/",
                             "modified":  "2026-08-23T18:55:03",
@@ -4771,7 +4800,7 @@
                         {
                             "id":  20824,
                             "type":  "page",
-                            "title":  "Ãœber den Autor",
+                            "title":  "Über den Autor",
                             "slug":  "ueber-den-autor",
                             "url":  "https://glasfaser-kompass.de/ueber-den-autor/",
                             "modified":  "2026-08-17T17:36:15",
@@ -4928,7 +4957,7 @@
                         {
                             "id":  1007,
                             "type":  "page",
-                            "title":  "AKP erklÃ¤rt",
+                            "title":  "AKP erklärt",
                             "slug":  "akp-erklaert",
                             "url":  "https://glasfaser-kompass.de/akp-erklaert/",
                             "modified":  "2026-08-21T06:41:31",
@@ -4950,7 +4979,7 @@
                         {
                             "id":  1006,
                             "type":  "page",
-                            "title":  "APL erklÃ¤rt",
+                            "title":  "APL erklärt",
                             "slug":  "apl-erklaert",
                             "url":  "https://glasfaser-kompass.de/apl-erklaert/",
                             "modified":  "2026-08-21T06:41:32",
@@ -4972,7 +5001,7 @@
                         {
                             "id":  1005,
                             "type":  "page",
-                            "title":  "ONT erklÃ¤rt",
+                            "title":  "ONT erklärt",
                             "slug":  "ont-erklaert",
                             "url":  "https://glasfaser-kompass.de/ont-erklaert/",
                             "modified":  "2026-08-21T06:41:34",
@@ -4994,7 +5023,7 @@
                         {
                             "id":  1004,
                             "type":  "page",
-                            "title":  "Gf-TA erklÃ¤rt",
+                            "title":  "Gf-TA erklärt",
                             "slug":  "gf-ta-erklaert",
                             "url":  "https://glasfaser-kompass.de/gf-ta-erklaert/",
                             "modified":  "2026-08-21T06:41:36",
@@ -5016,7 +5045,7 @@
                         {
                             "id":  1003,
                             "type":  "page",
-                            "title":  "Gf-AP erklÃ¤rt",
+                            "title":  "Gf-AP erklärt",
                             "slug":  "gf-ap-erklaert",
                             "url":  "https://glasfaser-kompass.de/gf-ap-erklaert/",
                             "modified":  "2026-08-21T06:41:38",
@@ -5126,7 +5155,7 @@
                         {
                             "id":  26261,
                             "type":  "post",
-                            "title":  "Router fÃ¼r VDSL 250: worauf achten?",
+                            "title":  "Router für VDSL 250: worauf achten?",
                             "slug":  "router-vdsl-250-kriterien",
                             "url":  "https://glasfaser-kompass.de/router-vdsl-250-kriterien/",
                             "modified":  "2026-08-21T06:41:47",
@@ -5148,7 +5177,7 @@
                         {
                             "id":  26259,
                             "type":  "post",
-                            "title":  "Router fÃ¼r Glasfaser: wichtige Kriterien",
+                            "title":  "Router für Glasfaser: wichtige Kriterien",
                             "slug":  "router-glasfaser-kriterien",
                             "url":  "https://glasfaser-kompass.de/router-glasfaser-kriterien/",
                             "modified":  "2026-08-21T06:41:48",
@@ -5170,7 +5199,7 @@
                         {
                             "id":  26257,
                             "type":  "post",
-                            "title":  "HÃ¤ufige VerzÃ¶gerungen beim Termin",
+                            "title":  "Häufige Verzögerungen beim Termin",
                             "slug":  "haeufige-verzoegerungen-technikertermin",
                             "url":  "https://glasfaser-kompass.de/haeufige-verzoegerungen-technikertermin/",
                             "modified":  "2026-08-21T06:41:50",
@@ -5236,7 +5265,7 @@
                         {
                             "id":  26251,
                             "type":  "post",
-                            "title":  "Technikertermin fÃ¼r Glasfaser vorbereiten",
+                            "title":  "Technikertermin für Glasfaser vorbereiten",
                             "slug":  "technikertermin-glasfaser-vorbereiten",
                             "url":  "https://glasfaser-kompass.de/technikertermin-glasfaser-vorbereiten/",
                             "modified":  "2026-08-21T06:41:56",
@@ -5258,7 +5287,7 @@
                         {
                             "id":  26249,
                             "type":  "post",
-                            "title":  "Technikertermin fÃ¼r DSL vorbereiten",
+                            "title":  "Technikertermin für DSL vorbereiten",
                             "slug":  "technikertermin-dsl-vorbereiten",
                             "url":  "https://glasfaser-kompass.de/technikertermin-dsl-vorbereiten/",
                             "modified":  "2026-08-21T06:41:57",
@@ -5302,7 +5331,7 @@
                         {
                             "id":  26245,
                             "type":  "post",
-                            "title":  "WLAN fÃ¼r Homeoffice stabilisieren",
+                            "title":  "WLAN für Homeoffice stabilisieren",
                             "slug":  "wlan-homeoffice-stabilisieren",
                             "url":  "https://glasfaser-kompass.de/wlan-homeoffice-stabilisieren/",
                             "modified":  "2026-08-21T06:42:01",
@@ -5324,7 +5353,7 @@
                         {
                             "id":  26243,
                             "type":  "post",
-                            "title":  "Router im Keller: LÃ¶sungen",
+                            "title":  "Router im Keller: Lösungen",
                             "slug":  "router-im-keller-loesungen",
                             "url":  "https://glasfaser-kompass.de/router-im-keller-loesungen/",
                             "modified":  "2026-08-21T06:42:03",
@@ -5368,7 +5397,7 @@
                         {
                             "id":  26239,
                             "type":  "post",
-                            "title":  "WLAN-KanÃ¤le im Mehrfamilienhaus",
+                            "title":  "WLAN-Kanäle im Mehrfamilienhaus",
                             "slug":  "wlan-kanaele-mehrfamilienhaus",
                             "url":  "https://glasfaser-kompass.de/wlan-kanaele-mehrfamilienhaus/",
                             "modified":  "2026-08-21T06:42:07",
@@ -5434,7 +5463,7 @@
                         {
                             "id":  26233,
                             "type":  "post",
-                            "title":  "DSL-AbbrÃ¼che am Abend: Ursachen",
+                            "title":  "DSL-Abbrüche am Abend: Ursachen",
                             "slug":  "dsl-abbrueche-am-abend",
                             "url":  "https://glasfaser-kompass.de/dsl-abbrueche-am-abend/",
                             "modified":  "2026-08-21T06:42:12",
@@ -5478,7 +5507,7 @@
                         {
                             "id":  26229,
                             "type":  "post",
-                            "title":  "APL und TAE Signalweg einfach erklÃ¤rt",
+                            "title":  "APL und TAE Signalweg einfach erklärt",
                             "slug":  "apl-tae-signalweg",
                             "url":  "https://glasfaser-kompass.de/apl-tae-signalweg/",
                             "modified":  "2026-08-23T18:18:45",
@@ -5588,7 +5617,7 @@
                         {
                             "id":  26219,
                             "type":  "post",
-                            "title":  "FTTH Anschlussarten einfach erklÃ¤rt",
+                            "title":  "FTTH Anschlussarten einfach erklärt",
                             "slug":  "ftth-anschlussarten-erklaert",
                             "url":  "https://glasfaser-kompass.de/ftth-anschlussarten-erklaert/",
                             "modified":  "2026-08-21T06:42:24",
@@ -5610,7 +5639,7 @@
                         {
                             "id":  26216,
                             "type":  "post",
-                            "title":  "APL und Gf-AP: Unterschied einfach erklÃ¤rt",
+                            "title":  "APL und Gf-AP: Unterschied einfach erklärt",
                             "slug":  "apl-und-gf-ap-unterschied",
                             "url":  "https://glasfaser-kompass.de/apl-und-gf-ap-unterschied/",
                             "modified":  "2026-08-21T06:42:25",
@@ -5676,7 +5705,7 @@
                         {
                             "id":  26210,
                             "type":  "post",
-                            "title":  "Glasfaser oder Kabelinternet: Unterschiede einfach erklÃ¤rt",
+                            "title":  "Glasfaser oder Kabelinternet: Unterschiede einfach erklärt",
                             "slug":  "glasfaser-oder-kabelinternet",
                             "url":  "https://glasfaser-kompass.de/glasfaser-oder-kabelinternet/",
                             "modified":  "2026-08-21T06:42:30",
@@ -5698,7 +5727,7 @@
                         {
                             "id":  26208,
                             "type":  "post",
-                            "title":  "Technikertermin vorbereiten: Checkliste fÃ¼r Kunden",
+                            "title":  "Technikertermin vorbereiten: Checkliste für Kunden",
                             "slug":  "technikertermin-vorbereiten-checkliste",
                             "url":  "https://glasfaser-kompass.de/technikertermin-vorbereiten-checkliste/",
                             "modified":  "2026-08-21T06:42:32",
@@ -5720,7 +5749,7 @@
                         {
                             "id":  26206,
                             "type":  "post",
-                            "title":  "DSL-Bauteile im Haus einfach erklÃ¤rt",
+                            "title":  "DSL-Bauteile im Haus einfach erklärt",
                             "slug":  "dsl-bauteile-im-haus",
                             "url":  "https://glasfaser-kompass.de/dsl-bauteile-im-haus/",
                             "modified":  "2026-08-21T06:42:33",
@@ -5742,7 +5771,7 @@
                         {
                             "id":  26204,
                             "type":  "post",
-                            "title":  "Glasfaser-Bauteile im Haus einfach erklÃ¤rt",
+                            "title":  "Glasfaser-Bauteile im Haus einfach erklärt",
                             "slug":  "glasfaser-bauteile-im-haus",
                             "url":  "https://glasfaser-kompass.de/glasfaser-bauteile-im-haus/",
                             "modified":  "2026-08-21T06:42:35",
@@ -5764,7 +5793,7 @@
                         {
                             "id":  21101,
                             "type":  "post",
-                            "title":  "DSL-Ausfall bei Regen â€“ die hÃ¤ufigsten Ursachen",
+                            "title":  "DSL-Ausfall bei Regen – die häufigsten Ursachen",
                             "slug":  "dsl-ausfall-bei-regen-die-haeufigsten-ursachen",
                             "url":  "https://glasfaser-kompass.de/dsl-ausfall-bei-regen-die-haeufigsten-ursachen/",
                             "modified":  "2026-08-21T06:42:36",
@@ -5786,7 +5815,7 @@
                         {
                             "id":  21100,
                             "type":  "post",
-                            "title":  "Router im Keller â€“ der hÃ¤ufigste WLAN-Fehler",
+                            "title":  "Router im Keller – der häufigste WLAN-Fehler",
                             "slug":  "router-im-keller-der-haeufigste-wlan-fehler",
                             "url":  "https://glasfaser-kompass.de/router-im-keller-der-haeufigste-wlan-fehler/",
                             "modified":  "2026-08-21T06:42:38",
@@ -5830,7 +5859,7 @@
                         {
                             "id":  21098,
                             "type":  "post",
-                            "title":  "Die 10 hÃ¤ufigsten Fehler vor dem Technikertermin",
+                            "title":  "Die 10 häufigsten Fehler vor dem Technikertermin",
                             "slug":  "die-10-haeufigsten-fehler-vor-dem-technikertermin",
                             "url":  "https://glasfaser-kompass.de/die-10-haeufigsten-fehler-vor-dem-technikertermin/",
                             "modified":  "2026-08-21T06:42:41",
@@ -5852,7 +5881,7 @@
                         {
                             "id":  21096,
                             "type":  "post",
-                            "title":  "Gf-TA erklÃ¤rt: Die Glasfaser-Teilnehmeranschlussdose einfach erklÃ¤rt",
+                            "title":  "Gf-TA erklärt: Die Glasfaser-Teilnehmeranschlussdose einfach erklärt",
                             "slug":  "gf-ta-erklaert-die-glasfaser-teilnehmeranschlussdose-einfach-erklaert",
                             "url":  "https://glasfaser-kompass.de/gf-ta-erklaert-die-glasfaser-teilnehmeranschlussdose-einfach-erklaert/",
                             "modified":  "2026-08-21T06:42:43",
@@ -5874,7 +5903,7 @@
                         {
                             "id":  21094,
                             "type":  "post",
-                            "title":  "ONT erklÃ¤rt einfach erklÃ¤rt",
+                            "title":  "ONT erklärt einfach erklärt",
                             "slug":  "ont-erklaert-einfach-erklaert",
                             "url":  "https://glasfaser-kompass.de/ont-erklaert-einfach-erklaert/",
                             "modified":  "2026-08-21T06:42:45",
@@ -5896,7 +5925,7 @@
                         {
                             "id":  20820,
                             "type":  "post",
-                            "title":  "Welcher Router fÃ¼r Homeoffice?",
+                            "title":  "Welcher Router für Homeoffice?",
                             "slug":  "router-fuer-homeoffice",
                             "url":  "https://glasfaser-kompass.de/router-fuer-homeoffice/",
                             "modified":  "2026-08-21T06:42:47",
@@ -5918,7 +5947,7 @@
                         {
                             "id":  20819,
                             "type":  "post",
-                            "title":  "Router im Keller â€“ warum das WLAN leidet",
+                            "title":  "Router im Keller – warum das WLAN leidet",
                             "slug":  "router-im-keller",
                             "url":  "https://glasfaser-kompass.de/router-im-keller/",
                             "modified":  "2026-08-21T06:42:48",
@@ -5940,7 +5969,7 @@
                         {
                             "id":  20818,
                             "type":  "post",
-                            "title":  "Glasfaserrouter oder ONT â€“ was ist besser?",
+                            "title":  "Glasfaserrouter oder ONT – was ist besser?",
                             "slug":  "glasfaserrouter-oder-ont",
                             "url":  "https://glasfaser-kompass.de/glasfaserrouter-oder-ont/",
                             "modified":  "2026-08-21T06:42:50",
@@ -5984,7 +6013,7 @@
                         {
                             "id":  20816,
                             "type":  "post",
-                            "title":  "Speedport oder FRITZ!Box â€“ was passt besser?",
+                            "title":  "Speedport oder FRITZ!Box – was passt besser?",
                             "slug":  "speedport-oder-fritzbox",
                             "url":  "https://glasfaser-kompass.de/speedport-oder-fritzbox/",
                             "modified":  "2026-08-21T06:42:54",
@@ -6006,7 +6035,7 @@
                         {
                             "id":  20815,
                             "type":  "post",
-                            "title":  "FRITZ!Box 7690 fÃ¼r DSL â€“ lohnt sie sich?",
+                            "title":  "FRITZ!Box 7690 für DSL – lohnt sie sich?",
                             "slug":  "fritzbox-7690-dsl",
                             "url":  "https://glasfaser-kompass.de/fritzbox-7690-dsl/",
                             "modified":  "2026-08-21T06:42:56",
@@ -6028,7 +6057,7 @@
                         {
                             "id":  20813,
                             "type":  "post",
-                            "title":  "Welche FRITZ!Box fÃ¼r Glasfaser?",
+                            "title":  "Welche FRITZ!Box für Glasfaser?",
                             "slug":  "welche-fritzbox-fuer-glasfaser",
                             "url":  "https://glasfaser-kompass.de/welche-fritzbox-fuer-glasfaser/",
                             "modified":  "2026-08-17T18:04:22",
@@ -6050,7 +6079,7 @@
                         {
                             "id":  20811,
                             "type":  "post",
-                            "title":  "LAN oder WLAN â€“ wann lohnt sich ein Netzwerkkabel?",
+                            "title":  "LAN oder WLAN – wann lohnt sich ein Netzwerkkabel?",
                             "slug":  "lan-oder-wlan",
                             "url":  "https://glasfaser-kompass.de/lan-oder-wlan/",
                             "modified":  "2026-08-21T06:42:57",
@@ -6072,7 +6101,7 @@
                         {
                             "id":  20809,
                             "type":  "post",
-                            "title":  "WLAN hinter Aquarium â€“ warum Wasser das Signal stÃ¶rt",
+                            "title":  "WLAN hinter Aquarium – warum Wasser das Signal stört",
                             "slug":  "wlan-aquarium-stoerung",
                             "url":  "https://glasfaser-kompass.de/wlan-aquarium-stoerung/",
                             "modified":  "2026-08-21T06:42:59",
@@ -6094,7 +6123,7 @@
                         {
                             "id":  20808,
                             "type":  "post",
-                            "title":  "Access Point oder Repeater â€“ was ist besser?",
+                            "title":  "Access Point oder Repeater – was ist besser?",
                             "slug":  "access-point-oder-repeater",
                             "url":  "https://glasfaser-kompass.de/access-point-oder-repeater/",
                             "modified":  "2026-08-21T06:43:01",
@@ -6116,7 +6145,7 @@
                         {
                             "id":  20805,
                             "type":  "post",
-                            "title":  "WLAN 2,4 GHz, 5 GHz oder 6 GHz â€“ was ist besser?",
+                            "title":  "WLAN 2,4 GHz, 5 GHz oder 6 GHz – was ist besser?",
                             "slug":  "wlan-24-5-6-ghz",
                             "url":  "https://glasfaser-kompass.de/wlan-24-5-6-ghz/",
                             "modified":  "2026-08-21T06:43:03",
@@ -6138,7 +6167,7 @@
                         {
                             "id":  20804,
                             "type":  "post",
-                            "title":  "Routerstandort optimieren â€“ so wird das WLAN besser",
+                            "title":  "Routerstandort optimieren – so wird das WLAN besser",
                             "slug":  "routerstandort-optimieren",
                             "url":  "https://glasfaser-kompass.de/routerstandort-optimieren/",
                             "modified":  "2026-08-21T06:43:05",
@@ -6160,7 +6189,7 @@
                         {
                             "id":  20803,
                             "type":  "post",
-                            "title":  "DSL-StÃ¶rungen verstehen und beheben",
+                            "title":  "DSL-Störungen verstehen und beheben",
                             "slug":  "dsl-stoerungen-verstehen",
                             "url":  "https://glasfaser-kompass.de/dsl-stoerungen-verstehen/",
                             "modified":  "2026-08-21T06:43:06",
@@ -6182,7 +6211,7 @@
                         {
                             "id":  20802,
                             "type":  "post",
-                            "title":  "Hausverkabelung prÃ¼fen bei DSL-StÃ¶rungen",
+                            "title":  "Hausverkabelung prüfen bei DSL-Störungen",
                             "slug":  "hausverkabelung-pruefen-dsl",
                             "url":  "https://glasfaser-kompass.de/hausverkabelung-pruefen-dsl/",
                             "modified":  "2026-08-21T06:43:08",
@@ -6226,7 +6255,7 @@
                         {
                             "id":  20798,
                             "type":  "post",
-                            "title":  "StÃ¶rabstandsmarge SNR erklÃ¤rt",
+                            "title":  "Störabstandsmarge SNR erklärt",
                             "slug":  "snr-stoerabstandsmarge-erklaert",
                             "url":  "https://glasfaser-kompass.de/snr-stoerabstandsmarge-erklaert/",
                             "modified":  "2026-08-21T06:43:12",
@@ -6248,7 +6277,7 @@
                         {
                             "id":  20794,
                             "type":  "post",
-                            "title":  "Glasfaseranschluss einfach erklÃ¤rt â€“ der groÃŸe Ratgeber",
+                            "title":  "Glasfaseranschluss einfach erklärt – der große Ratgeber",
                             "slug":  "glasfaseranschluss-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaseranschluss-erklaert/",
                             "modified":  "2026-08-21T06:43:13",
@@ -6270,7 +6299,7 @@
                         {
                             "id":  20793,
                             "type":  "post",
-                            "title":  "SpleiÃŸen bei Glasfaser einfach erklÃ¤rt",
+                            "title":  "Spleißen bei Glasfaser einfach erklärt",
                             "slug":  "glasfaser-spleissen-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaser-spleissen-erklaert/",
                             "modified":  "2026-08-21T06:43:15",
@@ -6292,7 +6321,7 @@
                         {
                             "id":  20792,
                             "type":  "post",
-                            "title":  "Glasfaser einblasen â€“ wie funktioniert das?",
+                            "title":  "Glasfaser einblasen – wie funktioniert das?",
                             "slug":  "glasfaser-einblasen",
                             "url":  "https://glasfaser-kompass.de/glasfaser-einblasen/",
                             "modified":  "2026-08-21T06:43:17",
@@ -6336,7 +6365,7 @@
                         {
                             "id":  20790,
                             "type":  "post",
-                            "title":  "LOS rot bei Glasfaser â€“ Bedeutung und Hilfe",
+                            "title":  "LOS rot bei Glasfaser – Bedeutung und Hilfe",
                             "slug":  "los-rot-glasfaser",
                             "url":  "https://glasfaser-kompass.de/los-rot-glasfaser/",
                             "modified":  "2026-08-21T06:43:20",
@@ -6380,7 +6409,7 @@
                         {
                             "id":  20783,
                             "type":  "post",
-                            "title":  "Wem gehÃ¶rt der APL?",
+                            "title":  "Wem gehört der APL?",
                             "slug":  "wem-gehoert-der-apl",
                             "url":  "https://glasfaser-kompass.de/wem-gehoert-der-apl/",
                             "modified":  "2026-08-21T06:43:24",
@@ -6402,7 +6431,7 @@
                         {
                             "id":  20782,
                             "type":  "post",
-                            "title":  "APL defekt â€“ typische Fehlerbilder und LÃ¶sungen",
+                            "title":  "APL defekt – typische Fehlerbilder und Lösungen",
                             "slug":  "apl-defekt-fehlerbilder",
                             "url":  "https://glasfaser-kompass.de/apl-defekt-fehlerbilder/",
                             "modified":  "2026-08-21T06:43:26",
@@ -6424,7 +6453,7 @@
                         {
                             "id":  20781,
                             "type":  "post",
-                            "title":  "APL Box erklÃ¤rt â€“ was bedeutet die Anschlussbox im Keller?",
+                            "title":  "APL Box erklärt – was bedeutet die Anschlussbox im Keller?",
                             "slug":  "apl-box-erklaert",
                             "url":  "https://glasfaser-kompass.de/apl-box-erklaert/",
                             "modified":  "2026-08-21T06:43:28",
@@ -6468,7 +6497,7 @@
                         {
                             "id":  20779,
                             "type":  "post",
-                            "title":  "APL finden â€“ typische Standorte im Haus",
+                            "title":  "APL finden – typische Standorte im Haus",
                             "slug":  "apl-finden-standorte-im-haus",
                             "url":  "https://glasfaser-kompass.de/apl-finden-standorte-im-haus/",
                             "modified":  "2026-08-21T06:43:31",
@@ -6490,7 +6519,7 @@
                         {
                             "id":  20778,
                             "type":  "post",
-                            "title":  "Wer darf den APL Ã¶ffnen?",
+                            "title":  "Wer darf den APL öffnen?",
                             "slug":  "wer-darf-den-apl-oeffnen",
                             "url":  "https://glasfaser-kompass.de/wer-darf-den-apl-oeffnen/",
                             "modified":  "2026-08-21T06:43:33",
@@ -6512,7 +6541,7 @@
                         {
                             "id":  20348,
                             "type":  "post",
-                            "title":  "Die 20 hÃ¤ufigsten Fehler beim Glasfaseranschluss",
+                            "title":  "Die 20 häufigsten Fehler beim Glasfaseranschluss",
                             "slug":  "fehler-beim-glasfaseranschluss",
                             "url":  "https://glasfaser-kompass.de/fehler-beim-glasfaseranschluss/",
                             "modified":  "2026-08-17T18:44:32",
@@ -6534,7 +6563,7 @@
                         {
                             "id":  20346,
                             "type":  "post",
-                            "title":  "Glasfaser oder DSL â€“ Was lohnt sich 2026?",
+                            "title":  "Glasfaser oder DSL – Was lohnt sich 2026?",
                             "slug":  "glasfaser-oder-dsl",
                             "url":  "https://glasfaser-kompass.de/glasfaser-oder-dsl/",
                             "modified":  "2026-08-17T18:44:23",
@@ -6556,7 +6585,7 @@
                         {
                             "id":  20345,
                             "type":  "post",
-                            "title":  "Wie lÃ¤uft ein Glasfaseranschluss von Anfang bis Ende ab?",
+                            "title":  "Wie läuft ein Glasfaseranschluss von Anfang bis Ende ab?",
                             "slug":  "glasfaseranschluss-ablauf",
                             "url":  "https://glasfaser-kompass.de/glasfaseranschluss-ablauf/",
                             "modified":  "2026-08-17T18:44:14",
@@ -6578,7 +6607,7 @@
                         {
                             "id":  20344,
                             "type":  "post",
-                            "title":  "Hausbegehung und AKP erklÃ¤rt â€“ Warum der Termin vor dem Glasfaserausbau so wichtig ist",
+                            "title":  "Hausbegehung und AKP erklärt – Warum der Termin vor dem Glasfaserausbau so wichtig ist",
                             "slug":  "hausbegehung-und-akp-erklaert",
                             "url":  "https://glasfaser-kompass.de/hausbegehung-und-akp-erklaert/",
                             "modified":  "2026-08-17T18:44:06",
@@ -6645,7 +6674,7 @@
                         {
                             "id":  19011,
                             "type":  "post",
-                            "title":  "Glasfaser-SpleiÃŸtechnik",
+                            "title":  "Glasfaser-Spleißtechnik",
                             "slug":  "glasfaser-spleisstechnik",
                             "url":  "https://glasfaser-kompass.de/glasfaser-spleisstechnik/",
                             "modified":  "2026-08-21T06:43:38",
@@ -6667,7 +6696,7 @@
                         {
                             "id":  19010,
                             "type":  "post",
-                            "title":  "Pegelmessung erklÃ¤rt",
+                            "title":  "Pegelmessung erklärt",
                             "slug":  "pegelmessung-erklaert",
                             "url":  "https://glasfaser-kompass.de/pegelmessung-erklaert/",
                             "modified":  "2026-08-21T06:43:39",
@@ -6689,7 +6718,7 @@
                         {
                             "id":  19009,
                             "type":  "post",
-                            "title":  "OTDR erklÃ¤rt",
+                            "title":  "OTDR erklärt",
                             "slug":  "otdr-erklaert",
                             "url":  "https://glasfaser-kompass.de/otdr-erklaert/",
                             "modified":  "2026-08-21T06:43:41",
@@ -6711,7 +6740,7 @@
                         {
                             "id":  19008,
                             "type":  "post",
-                            "title":  "DÃ¤mpfung im Glasfasernetz",
+                            "title":  "Dämpfung im Glasfasernetz",
                             "slug":  "daempfung-im-glasfasernetz",
                             "url":  "https://glasfaser-kompass.de/daempfung-im-glasfasernetz/",
                             "modified":  "2026-08-21T06:43:43",
@@ -6733,7 +6762,7 @@
                         {
                             "id":  19007,
                             "type":  "post",
-                            "title":  "SC/APC erklÃ¤rt",
+                            "title":  "SC/APC erklärt",
                             "slug":  "sc-apc-erklaert",
                             "url":  "https://glasfaser-kompass.de/sc-apc-erklaert/",
                             "modified":  "2026-08-21T06:43:44",
@@ -6755,7 +6784,7 @@
                         {
                             "id":  19006,
                             "type":  "post",
-                            "title":  "LC-Stecker erklÃ¤rt",
+                            "title":  "LC-Stecker erklärt",
                             "slug":  "lc-stecker-erklaert",
                             "url":  "https://glasfaser-kompass.de/lc-stecker-erklaert/",
                             "modified":  "2026-08-21T06:43:46",
@@ -6777,7 +6806,7 @@
                         {
                             "id":  19005,
                             "type":  "post",
-                            "title":  "Singlemode und Multimode erklÃ¤rt",
+                            "title":  "Singlemode und Multimode erklärt",
                             "slug":  "singlemode-und-multimode-erklaert",
                             "url":  "https://glasfaser-kompass.de/singlemode-und-multimode-erklaert/",
                             "modified":  "2026-08-21T06:43:48",
@@ -6799,7 +6828,7 @@
                         {
                             "id":  19004,
                             "type":  "post",
-                            "title":  "Active Ethernet erklÃ¤rt",
+                            "title":  "Active Ethernet erklärt",
                             "slug":  "active-ethernet-erklaert",
                             "url":  "https://glasfaser-kompass.de/active-ethernet-erklaert/",
                             "modified":  "2026-08-21T06:43:50",
@@ -6821,7 +6850,7 @@
                         {
                             "id":  19003,
                             "type":  "post",
-                            "title":  "PON erklÃ¤rt â€“ was bedeutet die grÃ¼ne PON-Leuchte?",
+                            "title":  "PON erklärt – was bedeutet die grüne PON-Leuchte?",
                             "slug":  "pon-erklaert",
                             "url":  "https://glasfaser-kompass.de/pon-erklaert/",
                             "modified":  "2026-08-21T06:43:51",
@@ -6843,7 +6872,7 @@
                         {
                             "id":  19002,
                             "type":  "post",
-                            "title":  "Splitter erklÃ¤rt",
+                            "title":  "Splitter erklärt",
                             "slug":  "splitter-erklaert",
                             "url":  "https://glasfaser-kompass.de/splitter-erklaert/",
                             "modified":  "2026-08-21T06:43:53",
@@ -6865,7 +6894,7 @@
                         {
                             "id":  19001,
                             "type":  "post",
-                            "title":  "OLT erklÃ¤rt",
+                            "title":  "OLT erklärt",
                             "slug":  "olt-erklaert",
                             "url":  "https://glasfaser-kompass.de/olt-erklaert/",
                             "modified":  "2026-08-21T06:43:55",
@@ -6887,7 +6916,7 @@
                         {
                             "id":  18012,
                             "type":  "post",
-                            "title":  "Vorvermarktung erklÃ¤rt",
+                            "title":  "Vorvermarktung erklärt",
                             "slug":  "vorvermarktung-erklaert",
                             "url":  "https://glasfaser-kompass.de/vorvermarktung-erklaert/",
                             "modified":  "2026-08-21T06:43:56",
@@ -6909,7 +6938,7 @@
                         {
                             "id":  18011,
                             "type":  "post",
-                            "title":  "Ausbaugebiet erklÃ¤rt",
+                            "title":  "Ausbaugebiet erklärt",
                             "slug":  "ausbaugebiet-erklaert",
                             "url":  "https://glasfaser-kompass.de/ausbaugebiet-erklaert/",
                             "modified":  "2026-08-21T06:43:58",
@@ -6953,7 +6982,7 @@
                         {
                             "id":  18009,
                             "type":  "post",
-                            "title":  "Open Access erklÃ¤rt",
+                            "title":  "Open Access erklärt",
                             "slug":  "open-access-erklaert",
                             "url":  "https://glasfaser-kompass.de/open-access-erklaert/",
                             "modified":  "2026-08-21T06:44:02",
@@ -6997,7 +7026,7 @@
                         {
                             "id":  18007,
                             "type":  "post",
-                            "title":  "Unsere GrÃ¼ne Glasfaser erklÃ¤rt",
+                            "title":  "Unsere Grüne Glasfaser erklärt",
                             "slug":  "unsere-gruene-glasfaser-erklaert",
                             "url":  "https://glasfaser-kompass.de/unsere-gruene-glasfaser-erklaert/",
                             "modified":  "2026-08-21T06:44:04",
@@ -7019,7 +7048,7 @@
                         {
                             "id":  18006,
                             "type":  "post",
-                            "title":  "E.ON Highspeed erklÃ¤rt",
+                            "title":  "E.ON Highspeed erklärt",
                             "slug":  "e-on-highspeed-erklaert",
                             "url":  "https://glasfaser-kompass.de/e-on-highspeed-erklaert/",
                             "modified":  "2026-08-21T06:44:06",
@@ -7041,7 +7070,7 @@
                         {
                             "id":  18005,
                             "type":  "post",
-                            "title":  "Westconnect erklÃ¤rt",
+                            "title":  "Westconnect erklärt",
                             "slug":  "westconnect-erklaert",
                             "url":  "https://glasfaser-kompass.de/westconnect-erklaert/",
                             "modified":  "2026-08-21T06:44:08",
@@ -7063,7 +7092,7 @@
                         {
                             "id":  18004,
                             "type":  "post",
-                            "title":  "Glasfaser Plus erklÃ¤rt",
+                            "title":  "Glasfaser Plus erklärt",
                             "slug":  "glasfaser-plus-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaser-plus-erklaert/",
                             "modified":  "2026-08-21T06:44:09",
@@ -7085,7 +7114,7 @@
                         {
                             "id":  18003,
                             "type":  "post",
-                            "title":  "OXG erklÃ¤rt",
+                            "title":  "OXG erklärt",
                             "slug":  "oxg-erklaert",
                             "url":  "https://glasfaser-kompass.de/oxg-erklaert/",
                             "modified":  "2026-08-21T06:44:11",
@@ -7107,7 +7136,7 @@
                         {
                             "id":  18002,
                             "type":  "post",
-                            "title":  "Deutsche Glasfaser erklÃ¤rt",
+                            "title":  "Deutsche Glasfaser erklärt",
                             "slug":  "deutsche-glasfaser-erklaert",
                             "url":  "https://glasfaser-kompass.de/deutsche-glasfaser-erklaert/",
                             "modified":  "2026-08-21T06:44:13",
@@ -7129,7 +7158,7 @@
                         {
                             "id":  18001,
                             "type":  "post",
-                            "title":  "Deutsche Telekom Glasfaser erklÃ¤rt",
+                            "title":  "Deutsche Telekom Glasfaser erklärt",
                             "slug":  "deutsche-telekom-glasfaser-erklaert",
                             "url":  "https://glasfaser-kompass.de/deutsche-telekom-glasfaser-erklaert/",
                             "modified":  "2026-08-21T06:44:14",
@@ -7151,7 +7180,7 @@
                         {
                             "id":  17012,
                             "type":  "post",
-                            "title":  "Die hÃ¤ufigsten Fehlerbilder im Telekom-AuÃŸendienst",
+                            "title":  "Die häufigsten Fehlerbilder im Telekom-Außendienst",
                             "slug":  "die-haeufigsten-fehlerbilder-im-telekom-aussendienst",
                             "url":  "https://glasfaser-kompass.de/die-haeufigsten-fehlerbilder-im-telekom-aussendienst/",
                             "modified":  "2026-08-21T06:44:16",
@@ -7217,7 +7246,7 @@
                         {
                             "id":  17009,
                             "type":  "post",
-                            "title":  "Wie lÃ¤uft ein Technikertermin ab?",
+                            "title":  "Wie läuft ein Technikertermin ab?",
                             "slug":  "wie-laeuft-ein-technikertermin-ab",
                             "url":  "https://glasfaser-kompass.de/wie-laeuft-ein-technikertermin-ab/",
                             "modified":  "2026-08-21T06:44:20",
@@ -7239,7 +7268,7 @@
                         {
                             "id":  17008,
                             "type":  "post",
-                            "title":  "Warum dauert eine EntstÃ¶rung manchmal lÃ¤nger?",
+                            "title":  "Warum dauert eine Entstörung manchmal länger?",
                             "slug":  "warum-dauert-eine-entstoerung-manchmal-laenger",
                             "url":  "https://glasfaser-kompass.de/warum-dauert-eine-entstoerung-manchmal-laenger/",
                             "modified":  "2026-08-21T06:44:22",
@@ -7283,7 +7312,7 @@
                         {
                             "id":  17006,
                             "type":  "post",
-                            "title":  "Typische MissverstÃ¤ndnisse beim Technikertermin",
+                            "title":  "Typische Missverständnisse beim Technikertermin",
                             "slug":  "typische-missverstaendnisse-beim-technikertermin",
                             "url":  "https://glasfaser-kompass.de/typische-missverstaendnisse-beim-technikertermin/",
                             "modified":  "2026-08-21T06:44:26",
@@ -7349,7 +7378,7 @@
                         {
                             "id":  17003,
                             "type":  "post",
-                            "title":  "Was prÃ¼ft ein Techniker bei einer EntstÃ¶rung?",
+                            "title":  "Was prüft ein Techniker bei einer Entstörung?",
                             "slug":  "was-prueft-ein-techniker-bei-einer-entstoerung",
                             "url":  "https://glasfaser-kompass.de/was-prueft-ein-techniker-bei-einer-entstoerung/",
                             "modified":  "2026-08-21T06:44:30",
@@ -7371,7 +7400,7 @@
                         {
                             "id":  17002,
                             "type":  "post",
-                            "title":  "Warum muss der APL zugÃ¤nglich sein?",
+                            "title":  "Warum muss der APL zugänglich sein?",
                             "slug":  "warum-muss-der-apl-zugaenglich-sein",
                             "url":  "https://glasfaser-kompass.de/warum-muss-der-apl-zugaenglich-sein/",
                             "modified":  "2026-08-17T21:55:44",
@@ -7415,7 +7444,7 @@
                         {
                             "id":  16012,
                             "type":  "post",
-                            "title":  "HÃ¤ufige Fehler bei Glasfaserprojekten",
+                            "title":  "Häufige Fehler bei Glasfaserprojekten",
                             "slug":  "haeufige-fehler-bei-glasfaserprojekten",
                             "url":  "https://glasfaser-kompass.de/haeufige-fehler-bei-glasfaserprojekten/",
                             "modified":  "2026-08-21T06:44:33",
@@ -7525,7 +7554,7 @@
                         {
                             "id":  16007,
                             "type":  "post",
-                            "title":  "Glasfaser fÃ¼r EigentÃ¼mer erklÃ¤rt",
+                            "title":  "Glasfaser für Eigentümer erklärt",
                             "slug":  "glasfaser-fuer-eigentuemer-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaser-fuer-eigentuemer-erklaert/",
                             "modified":  "2026-08-21T06:44:42",
@@ -7547,7 +7576,7 @@
                         {
                             "id":  16006,
                             "type":  "post",
-                            "title":  "Glasfaser fÃ¼r Vermieter erklÃ¤rt",
+                            "title":  "Glasfaser für Vermieter erklärt",
                             "slug":  "glasfaser-fuer-vermieter-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaser-fuer-vermieter-erklaert/",
                             "modified":  "2026-08-21T06:44:44",
@@ -7569,7 +7598,7 @@
                         {
                             "id":  16005,
                             "type":  "post",
-                            "title":  "Glasfaser fÃ¼r MehrfamilienhÃ¤user",
+                            "title":  "Glasfaser für Mehrfamilienhäuser",
                             "slug":  "glasfaser-fuer-mehrfamilienhaeuser",
                             "url":  "https://glasfaser-kompass.de/glasfaser-fuer-mehrfamilienhaeuser/",
                             "modified":  "2026-08-21T06:44:45",
@@ -7591,7 +7620,7 @@
                         {
                             "id":  16004,
                             "type":  "post",
-                            "title":  "Glasfaseranschluss ablehnen â€“ sinnvoll?",
+                            "title":  "Glasfaseranschluss ablehnen – sinnvoll?",
                             "slug":  "glasfaseranschluss-ablehnen-sinnvoll",
                             "url":  "https://glasfaser-kompass.de/glasfaseranschluss-ablehnen-sinnvoll/",
                             "modified":  "2026-08-21T06:44:47",
@@ -7613,7 +7642,7 @@
                         {
                             "id":  16003,
                             "type":  "post",
-                            "title":  "Wem gehÃ¶rt die Glasfaser im Haus?",
+                            "title":  "Wem gehört die Glasfaser im Haus?",
                             "slug":  "wem-gehoert-die-glasfaser-im-haus",
                             "url":  "https://glasfaser-kompass.de/wem-gehoert-die-glasfaser-im-haus/",
                             "modified":  "2026-08-21T06:44:49",
@@ -7679,7 +7708,7 @@
                         {
                             "id":  14010,
                             "type":  "post",
-                            "title":  "HÃ¤ufige Fehler beim FTTH-Anschluss: Diagnose und LÃ¶sungen",
+                            "title":  "Häufige Fehler beim FTTH-Anschluss: Diagnose und Lösungen",
                             "slug":  "haeufige-fehler-beim-ftth-anschluss",
                             "url":  "https://glasfaser-kompass.de/haeufige-fehler-beim-ftth-anschluss/",
                             "modified":  "2026-08-21T06:44:54",
@@ -7723,7 +7752,7 @@
                         {
                             "id":  14008,
                             "type":  "post",
-                            "title":  "Glasfaser im Einfamilienhaus: Planung, Leitungsweg und GerÃ¤te",
+                            "title":  "Glasfaser im Einfamilienhaus: Planung, Leitungsweg und Geräte",
                             "slug":  "glasfaser-im-einfamilienhaus",
                             "url":  "https://glasfaser-kompass.de/glasfaser-im-einfamilienhaus/",
                             "modified":  "2026-08-21T06:44:57",
@@ -7877,7 +7906,7 @@
                         {
                             "id":  15010,
                             "type":  "post",
-                            "title":  "Router richtig anschlieÃŸen",
+                            "title":  "Router richtig anschließen",
                             "slug":  "router-richtig-anschliessen",
                             "url":  "https://glasfaser-kompass.de/router-richtig-anschliessen/",
                             "modified":  "2026-08-21T06:45:07",
@@ -7921,7 +7950,7 @@
                         {
                             "id":  15008,
                             "type":  "post",
-                            "title":  "Welcher Router fÃ¼r VDSL 250?",
+                            "title":  "Welcher Router für VDSL 250?",
                             "slug":  "welcher-router-fuer-vdsl-250",
                             "url":  "https://glasfaser-kompass.de/welcher-router-fuer-vdsl-250/",
                             "modified":  "2026-08-17T21:55:41",
@@ -7943,7 +7972,7 @@
                         {
                             "id":  15007,
                             "type":  "post",
-                            "title":  "Welcher Router fÃ¼r Glasfaser?",
+                            "title":  "Welcher Router für Glasfaser?",
                             "slug":  "welcher-router-fuer-glasfaser",
                             "url":  "https://glasfaser-kompass.de/welcher-router-fuer-glasfaser/",
                             "modified":  "2026-08-17T21:55:39",
@@ -7965,7 +7994,7 @@
                         {
                             "id":  15006,
                             "type":  "post",
-                            "title":  "Speedport Smart 4 Plus erklÃ¤rt",
+                            "title":  "Speedport Smart 4 Plus erklärt",
                             "slug":  "speedport-smart-4-plus-erklaert",
                             "url":  "https://glasfaser-kompass.de/speedport-smart-4-plus-erklaert/",
                             "modified":  "2026-08-17T18:03:21",
@@ -7987,7 +8016,7 @@
                         {
                             "id":  15005,
                             "type":  "post",
-                            "title":  "Speedport Smart 4 erklÃ¤rt",
+                            "title":  "Speedport Smart 4 erklärt",
                             "slug":  "speedport-smart-4-erklaert",
                             "url":  "https://glasfaser-kompass.de/speedport-smart-4-erklaert/",
                             "modified":  "2026-08-21T06:45:10",
@@ -8009,7 +8038,7 @@
                         {
                             "id":  15004,
                             "type":  "post",
-                            "title":  "FRITZ!Box 5690 Pro erklÃ¤rt",
+                            "title":  "FRITZ!Box 5690 Pro erklärt",
                             "slug":  "fritzbox-5690-pro-erklaert",
                             "url":  "https://glasfaser-kompass.de/fritzbox-5690-pro-erklaert/",
                             "modified":  "2026-08-21T06:45:12",
@@ -8031,7 +8060,7 @@
                         {
                             "id":  15003,
                             "type":  "post",
-                            "title":  "FRITZ!Box 7590 AX erklÃ¤rt",
+                            "title":  "FRITZ!Box 7590 AX erklärt",
                             "slug":  "fritzbox-7590-ax-erklaert",
                             "url":  "https://glasfaser-kompass.de/fritzbox-7590-ax-erklaert/",
                             "modified":  "2026-08-21T06:45:14",
@@ -8053,7 +8082,7 @@
                         {
                             "id":  15002,
                             "type":  "post",
-                            "title":  "FRITZ!Box 7590 erklÃ¤rt",
+                            "title":  "FRITZ!Box 7590 erklärt",
                             "slug":  "fritzbox-7590-erklaert",
                             "url":  "https://glasfaser-kompass.de/fritzbox-7590-erklaert/",
                             "modified":  "2026-08-21T06:45:15",
@@ -8130,13 +8159,13 @@
                             "image_count":  0,
                             "suspicious_images":  0,
                             "internal_links":  4,
-                            "issue_count":  0,
+                            "issue_count":  1,
                             "issues":  [
-
+                                           "missing_cta"
                                        ],
-                            "benefit":  0,
+                            "benefit":  5,
                             "cost":  1,
-                            "roi":  0
+                            "roi":  5
                         },
                         {
                             "id":  13013,
@@ -8163,7 +8192,7 @@
                         {
                             "id":  13006,
                             "type":  "post",
-                            "title":  "DSL-LeitungsdÃ¤mpfung richtig einordnen",
+                            "title":  "DSL-Leitungsdämpfung richtig einordnen",
                             "slug":  "leitungsdaempfung-erklaert",
                             "url":  "https://glasfaser-kompass.de/leitungsdaempfung-erklaert/",
                             "modified":  "2026-08-21T06:45:23",
@@ -8185,7 +8214,7 @@
                         {
                             "id":  13005,
                             "type":  "post",
-                            "title":  "DSL-StÃ¶rabstandsmarge (SNR-Marge) richtig einordnen",
+                            "title":  "DSL-Störabstandsmarge (SNR-Marge) richtig einordnen",
                             "slug":  "stoerabstandsmarge-snr-erklaert",
                             "url":  "https://glasfaser-kompass.de/stoerabstandsmarge-snr-erklaert/",
                             "modified":  "2026-08-21T06:45:25",
@@ -8229,7 +8258,7 @@
                         {
                             "id":  13003,
                             "type":  "post",
-                            "title":  "CRC-Fehler in der FRITZ!Box: ZÃ¤hler richtig einordnen",
+                            "title":  "CRC-Fehler in der FRITZ!Box: Zähler richtig einordnen",
                             "slug":  "crc-fehler-in-der-fritzbox-verstehen",
                             "url":  "https://glasfaser-kompass.de/crc-fehler-in-der-fritzbox-verstehen/",
                             "modified":  "2026-08-21T06:45:29",
@@ -8251,7 +8280,7 @@
                         {
                             "id":  13001,
                             "type":  "post",
-                            "title":  "FRITZ!Box synchronisiert nur mit 63 Mbit/s: Ursachen richtig prÃ¼fen",
+                            "title":  "FRITZ!Box synchronisiert nur mit 63 Mbit/s: Ursachen richtig prüfen",
                             "slug":  "fritzbox-synchronisiert-nur-mit-63-mbit-s",
                             "url":  "https://glasfaser-kompass.de/fritzbox-synchronisiert-nur-mit-63-mbit-s/",
                             "modified":  "2026-08-21T06:45:31",
@@ -8273,7 +8302,7 @@
                         {
                             "id":  12006,
                             "type":  "post",
-                            "title":  "DSL-StÃ¶rung systematisch eingrenzen: Anschluss, Endleitung oder Heimnetz?",
+                            "title":  "DSL-Störung systematisch eingrenzen: Anschluss, Endleitung oder Heimnetz?",
                             "slug":  "dsl-stoerung-systematisch-eingrenzen",
                             "url":  "https://glasfaser-kompass.de/dsl-stoerung-systematisch-eingrenzen/",
                             "modified":  "2026-08-21T06:45:33",
@@ -8295,7 +8324,7 @@
                         {
                             "id":  12005,
                             "type":  "post",
-                            "title":  "Typische Fehlerbilder im AuÃŸendienst: DSL, FTTH, Koax und Heimnetz trennen",
+                            "title":  "Typische Fehlerbilder im Außendienst: DSL, FTTH, Koax und Heimnetz trennen",
                             "slug":  "typische-fehlerbilder-im-aussendienst-2",
                             "url":  "https://glasfaser-kompass.de/typische-fehlerbilder-im-aussendienst-2/",
                             "modified":  "2026-08-21T06:45:34",
@@ -8317,7 +8346,7 @@
                         {
                             "id":  12004,
                             "type":  "post",
-                            "title":  "DSL-Endleitung prÃ¼fen: Fehler zwischen APL und erster TAE eingrenzen",
+                            "title":  "DSL-Endleitung prüfen: Fehler zwischen APL und erster TAE eingrenzen",
                             "slug":  "endleitung-pruefen",
                             "url":  "https://glasfaser-kompass.de/endleitung-pruefen/",
                             "modified":  "2026-08-21T06:45:36",
@@ -8339,7 +8368,7 @@
                         {
                             "id":  12003,
                             "type":  "post",
-                            "title":  "APL prÃ¼fen bei DSL: sichere Sichtkontrolle und Techniker-Messung",
+                            "title":  "APL prüfen bei DSL: sichere Sichtkontrolle und Techniker-Messung",
                             "slug":  "apl-pruefen-2",
                             "url":  "https://glasfaser-kompass.de/apl-pruefen-2/",
                             "modified":  "2026-08-21T06:45:37",
@@ -8361,7 +8390,7 @@
                         {
                             "id":  12002,
                             "type":  "post",
-                            "title":  "EntstÃ¶rung bei Internet-Ausfall: Ablauf, Mitwirkung und Rechte",
+                            "title":  "Entstörung bei Internet-Ausfall: Ablauf, Mitwirkung und Rechte",
                             "slug":  "was-passiert-bei-einer-entstoerung-2",
                             "url":  "https://glasfaser-kompass.de/was-passiert-bei-einer-entstoerung-2/",
                             "modified":  "2026-08-21T06:45:39",
@@ -8383,7 +8412,7 @@
                         {
                             "id":  12001,
                             "type":  "post",
-                            "title":  "Was macht ein Telekom-Techniker bei Anschluss und StÃ¶rung?",
+                            "title":  "Was macht ein Telekom-Techniker bei Anschluss und Störung?",
                             "slug":  "was-macht-ein-telekom-techniker-2",
                             "url":  "https://glasfaser-kompass.de/was-macht-ein-telekom-techniker-2/",
                             "modified":  "2026-08-21T06:45:41",
@@ -8449,7 +8478,7 @@
                         {
                             "id":  11004,
                             "type":  "post",
-                            "title":  "Erste TAE prÃ¼fen: DSL-Signalweg sicher eingrenzen",
+                            "title":  "Erste TAE prüfen: DSL-Signalweg sicher eingrenzen",
                             "slug":  "erste-tae-pruefen-2",
                             "url":  "https://glasfaser-kompass.de/erste-tae-pruefen-2/",
                             "modified":  "2026-08-21T06:45:46",
@@ -8471,7 +8500,7 @@
                         {
                             "id":  11003,
                             "type":  "post",
-                            "title":  "DSL-Hausverkabelung prÃ¼fen: Leitungsweg zwischen APL und TAE",
+                            "title":  "DSL-Hausverkabelung prüfen: Leitungsweg zwischen APL und TAE",
                             "slug":  "hausverkabelung-pruefen-2",
                             "url":  "https://glasfaser-kompass.de/hausverkabelung-pruefen-2/",
                             "modified":  "2026-08-21T06:45:48",
@@ -8537,7 +8566,7 @@
                         {
                             "id":  10005,
                             "type":  "post",
-                            "title":  "CRC-Fehler erklÃ¤rt: Was sie Ã¼ber eine DSL-Leitung aussagen",
+                            "title":  "CRC-Fehler erklärt: Was sie über eine DSL-Leitung aussagen",
                             "slug":  "crc-fehler-erklaert-was-sie-ueber-eine-dsl-leitung-aussagen",
                             "url":  "https://glasfaser-kompass.de/crc-fehler-erklaert-was-sie-ueber-eine-dsl-leitung-aussagen/",
                             "modified":  "2026-08-21T06:45:54",
@@ -8559,7 +8588,7 @@
                         {
                             "id":  10004,
                             "type":  "post",
-                            "title":  "DSL bricht stÃ¤ndig ab: Ursachen und typische Fehlerbilder",
+                            "title":  "DSL bricht ständig ab: Ursachen und typische Fehlerbilder",
                             "slug":  "dsl-bricht-staendig-ab-ursachen-und-typische-fehlerbilder",
                             "url":  "https://glasfaser-kompass.de/dsl-bricht-staendig-ab-ursachen-und-typische-fehlerbilder/",
                             "modified":  "2026-08-21T06:45:56",
@@ -8581,7 +8610,7 @@
                         {
                             "id":  10003,
                             "type":  "post",
-                            "title":  "WLAN optimieren: Router, StÃ¶rquellen und Heimnetz richtig einstellen",
+                            "title":  "WLAN optimieren: Router, Störquellen und Heimnetz richtig einstellen",
                             "slug":  "wlan-optimieren-router-stoerquellen-und-heimnetz-richtig-einstellen",
                             "url":  "https://glasfaser-kompass.de/wlan-optimieren-router-stoerquellen-und-heimnetz-richtig-einstellen/",
                             "modified":  "2026-08-21T06:45:58",
@@ -8603,7 +8632,7 @@
                         {
                             "id":  10002,
                             "type":  "post",
-                            "title":  "ONT erklÃ¤rt: Glasfaser-Modem zwischen Gf-TA und Router",
+                            "title":  "ONT erklärt: Glasfaser-Modem zwischen Gf-TA und Router",
                             "slug":  "ont-erklaert-glasfaser-modem-zwischen-gf-ta-und-router",
                             "url":  "https://glasfaser-kompass.de/ont-erklaert-glasfaser-modem-zwischen-gf-ta-und-router/",
                             "modified":  "2026-08-11T08:42:18",
@@ -8625,7 +8654,7 @@
                         {
                             "id":  10001,
                             "type":  "post",
-                            "title":  "APL erklÃ¤rt: Abschlusspunkt Linientechnik im Haus",
+                            "title":  "APL erklärt: Abschlusspunkt Linientechnik im Haus",
                             "slug":  "apl-erklaert-abschlusspunkt-linientechnik-im-haus",
                             "url":  "https://glasfaser-kompass.de/apl-erklaert-abschlusspunkt-linientechnik-im-haus/",
                             "modified":  "2026-08-21T06:45:59",
@@ -8647,7 +8676,7 @@
                         {
                             "id":  9006,
                             "type":  "post",
-                            "title":  "Typische Fehlerbilder im AuÃŸendienst",
+                            "title":  "Typische Fehlerbilder im Außendienst",
                             "slug":  "typische-fehlerbilder-im-aussendienst",
                             "url":  "https://glasfaser-kompass.de/typische-fehlerbilder-im-aussendienst/",
                             "modified":  "2026-08-21T06:46:01",
@@ -8669,7 +8698,7 @@
                         {
                             "id":  9005,
                             "type":  "post",
-                            "title":  "Erste TAE prÃ¼fen",
+                            "title":  "Erste TAE prüfen",
                             "slug":  "erste-tae-pruefen",
                             "url":  "https://glasfaser-kompass.de/erste-tae-pruefen/",
                             "modified":  "2026-08-21T06:46:03",
@@ -8691,7 +8720,7 @@
                         {
                             "id":  9004,
                             "type":  "post",
-                            "title":  "APL prÃ¼fen",
+                            "title":  "APL prüfen",
                             "slug":  "apl-pruefen",
                             "url":  "https://glasfaser-kompass.de/apl-pruefen/",
                             "modified":  "2026-08-21T06:46:05",
@@ -8713,7 +8742,7 @@
                         {
                             "id":  9003,
                             "type":  "post",
-                            "title":  "Hausverkabelung prÃ¼fen",
+                            "title":  "Hausverkabelung prüfen",
                             "slug":  "hausverkabelung-pruefen",
                             "url":  "https://glasfaser-kompass.de/hausverkabelung-pruefen/",
                             "modified":  "2026-08-21T06:46:07",
@@ -8735,7 +8764,7 @@
                         {
                             "id":  9002,
                             "type":  "post",
-                            "title":  "Was passiert bei einer EntstÃ¶rung?",
+                            "title":  "Was passiert bei einer Entstörung?",
                             "slug":  "was-passiert-bei-einer-entstoerung",
                             "url":  "https://glasfaser-kompass.de/was-passiert-bei-einer-entstoerung/",
                             "modified":  "2026-08-21T06:46:09",
@@ -8955,7 +8984,7 @@
                         {
                             "id":  7008,
                             "type":  "post",
-                            "title":  "Resynchronisation erklÃ¤rt",
+                            "title":  "Resynchronisation erklärt",
                             "slug":  "resynchronisation-erklaert",
                             "url":  "https://glasfaser-kompass.de/resynchronisation-erklaert/",
                             "modified":  "2026-08-21T06:46:27",
@@ -8977,7 +9006,7 @@
                         {
                             "id":  7007,
                             "type":  "post",
-                            "title":  "StÃ¶rabstandsmarge erklÃ¤rt",
+                            "title":  "Störabstandsmarge erklärt",
                             "slug":  "stoerabstandsmarge-erklaert",
                             "url":  "https://glasfaser-kompass.de/stoerabstandsmarge-erklaert/",
                             "modified":  "2026-08-21T06:46:28",
@@ -8999,7 +9028,7 @@
                         {
                             "id":  7006,
                             "type":  "post",
-                            "title":  "LeitungskapazitÃ¤t erklÃ¤rt",
+                            "title":  "Leitungskapazität erklärt",
                             "slug":  "leitungskapazitaet-erklaert",
                             "url":  "https://glasfaser-kompass.de/leitungskapazitaet-erklaert/",
                             "modified":  "2026-08-21T06:46:30",
@@ -9021,7 +9050,7 @@
                         {
                             "id":  7005,
                             "type":  "post",
-                            "title":  "DÃ¤mpfung erklÃ¤rt",
+                            "title":  "Dämpfung erklärt",
                             "slug":  "daempfung-erklaert",
                             "url":  "https://glasfaser-kompass.de/daempfung-erklaert/",
                             "modified":  "2026-08-21T06:46:32",
@@ -9065,7 +9094,7 @@
                         {
                             "id":  7003,
                             "type":  "post",
-                            "title":  "CRC-Fehler erklÃ¤rt â€“ was bedeuten die Fehler im Router?",
+                            "title":  "CRC-Fehler erklärt – was bedeuten die Fehler im Router?",
                             "slug":  "crc-fehler-erklaert",
                             "url":  "https://glasfaser-kompass.de/crc-fehler-erklaert/",
                             "modified":  "2026-08-21T06:46:35",
@@ -9087,7 +9116,7 @@
                         {
                             "id":  7002,
                             "type":  "post",
-                            "title":  "DSL bricht stÃ¤ndig ab â€“ Ursachen und LÃ¶sungen",
+                            "title":  "DSL bricht ständig ab – Ursachen und Lösungen",
                             "slug":  "dsl-bricht-staendig-ab",
                             "url":  "https://glasfaser-kompass.de/dsl-bricht-staendig-ab/",
                             "modified":  "2026-08-21T06:46:36",
@@ -9131,7 +9160,7 @@
                         {
                             "id":  6006,
                             "type":  "post",
-                            "title":  "WLAN-StÃ¶rquellen erklÃ¤rt",
+                            "title":  "WLAN-Störquellen erklärt",
                             "slug":  "wlan-stoerquellen-erklaert",
                             "url":  "https://glasfaser-kompass.de/wlan-stoerquellen-erklaert/",
                             "modified":  "2026-08-23T18:18:57",
@@ -9153,7 +9182,7 @@
                         {
                             "id":  6005,
                             "type":  "post",
-                            "title":  "Repeater erklÃ¤rt",
+                            "title":  "Repeater erklärt",
                             "slug":  "repeater-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/repeater-erklaert-voll/",
                             "modified":  "2026-08-23T18:19:03",
@@ -9175,7 +9204,7 @@
                         {
                             "id":  6004,
                             "type":  "post",
-                            "title":  "Access Point erklÃ¤rt",
+                            "title":  "Access Point erklärt",
                             "slug":  "access-point-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/access-point-erklaert-voll/",
                             "modified":  "2026-08-23T18:19:10",
@@ -9197,7 +9226,7 @@
                         {
                             "id":  6003,
                             "type":  "post",
-                            "title":  "Mesh WLAN erklÃ¤rt",
+                            "title":  "Mesh WLAN erklärt",
                             "slug":  "mesh-wlan-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/mesh-wlan-erklaert-voll/",
                             "modified":  "2026-08-23T18:19:16",
@@ -9219,7 +9248,7 @@
                         {
                             "id":  6002,
                             "type":  "post",
-                            "title":  "Wiâ€‘Fi 7 erklÃ¤rt",
+                            "title":  "Wi‑Fi 7 erklärt",
                             "slug":  "wifi-7-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/wifi-7-erklaert-voll/",
                             "modified":  "2026-08-23T18:19:23",
@@ -9241,7 +9270,7 @@
                         {
                             "id":  6001,
                             "type":  "post",
-                            "title":  "Wiâ€‘Fi 6 erklÃ¤rt",
+                            "title":  "Wi‑Fi 6 erklärt",
                             "slug":  "wifi-6-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/wifi-6-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:48",
@@ -9263,7 +9292,7 @@
                         {
                             "id":  5008,
                             "type":  "post",
-                            "title":  "Supervectoring erklÃ¤rt",
+                            "title":  "Supervectoring erklärt",
                             "slug":  "supervectoring-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/supervectoring-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:49",
@@ -9285,7 +9314,7 @@
                         {
                             "id":  5007,
                             "type":  "post",
-                            "title":  "Vectoring erklÃ¤rt",
+                            "title":  "Vectoring erklärt",
                             "slug":  "vectoring-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/vectoring-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:51",
@@ -9307,7 +9336,7 @@
                         {
                             "id":  5006,
                             "type":  "post",
-                            "title":  "DSLAM erklÃ¤rt",
+                            "title":  "DSLAM erklärt",
                             "slug":  "dslam-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/dslam-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:53",
@@ -9329,7 +9358,7 @@
                         {
                             "id":  5005,
                             "type":  "post",
-                            "title":  "HVt erklÃ¤rt",
+                            "title":  "HVt erklärt",
                             "slug":  "hvt-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/hvt-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:54",
@@ -9351,7 +9380,7 @@
                         {
                             "id":  5004,
                             "type":  "post",
-                            "title":  "KVz erklÃ¤rt",
+                            "title":  "KVz erklärt",
                             "slug":  "kvz-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/kvz-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:56",
@@ -9373,7 +9402,7 @@
                         {
                             "id":  5003,
                             "type":  "post",
-                            "title":  "TAL erklÃ¤rt",
+                            "title":  "TAL erklärt",
                             "slug":  "tal-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/tal-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:58",
@@ -9395,7 +9424,7 @@
                         {
                             "id":  5002,
                             "type":  "post",
-                            "title":  "TAE erklÃ¤rt",
+                            "title":  "TAE erklärt",
                             "slug":  "tae-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/tae-erklaert-voll/",
                             "modified":  "2026-08-21T06:46:59",
@@ -9417,7 +9446,7 @@
                         {
                             "id":  5001,
                             "type":  "post",
-                            "title":  "APL erklÃ¤rt",
+                            "title":  "APL erklärt",
                             "slug":  "apl-erklaert-voll",
                             "url":  "https://glasfaser-kompass.de/apl-erklaert-voll/",
                             "modified":  "2026-08-21T06:47:01",
@@ -9439,7 +9468,7 @@
                         {
                             "id":  4010,
                             "type":  "post",
-                            "title":  "Hausstich erklÃ¤rt",
+                            "title":  "Hausstich erklärt",
                             "slug":  "hausstich-erklaert",
                             "url":  "https://glasfaser-kompass.de/hausstich-erklaert/",
                             "modified":  "2026-08-21T06:47:03",
@@ -9461,7 +9490,7 @@
                         {
                             "id":  4009,
                             "type":  "post",
-                            "title":  "HauseinfÃ¼hrung erklÃ¤rt",
+                            "title":  "Hauseinführung erklärt",
                             "slug":  "hauseinfuehrung-erklaert",
                             "url":  "https://glasfaser-kompass.de/hauseinfuehrung-erklaert/",
                             "modified":  "2026-08-21T06:47:04",
@@ -9483,7 +9512,7 @@
                         {
                             "id":  4008,
                             "type":  "post",
-                            "title":  "SpleiÃŸen erklÃ¤rt",
+                            "title":  "Spleißen erklärt",
                             "slug":  "spleissen-erklaert",
                             "url":  "https://glasfaser-kompass.de/spleissen-erklaert/",
                             "modified":  "2026-08-21T06:47:06",
@@ -9505,7 +9534,7 @@
                         {
                             "id":  4007,
                             "type":  "post",
-                            "title":  "Glasfasermuffe erklÃ¤rt",
+                            "title":  "Glasfasermuffe erklärt",
                             "slug":  "glasfasermuffe-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfasermuffe-erklaert/",
                             "modified":  "2026-08-21T06:47:07",
@@ -9528,7 +9557,7 @@
                         {
                             "id":  4006,
                             "type":  "post",
-                            "title":  "Speedpipe erklÃ¤rt",
+                            "title":  "Speedpipe erklärt",
                             "slug":  "speedpipe-erklaert",
                             "url":  "https://glasfaser-kompass.de/speedpipe-erklaert/",
                             "modified":  "2026-08-21T06:47:09",
@@ -9551,7 +9580,7 @@
                         {
                             "id":  4005,
                             "type":  "post",
-                            "title":  "PoP erklÃ¤rt",
+                            "title":  "PoP erklärt",
                             "slug":  "pop-erklaert",
                             "url":  "https://glasfaser-kompass.de/pop-erklaert/",
                             "modified":  "2026-08-21T06:47:11",
@@ -9574,7 +9603,7 @@
                         {
                             "id":  4004,
                             "type":  "post",
-                            "title":  "NVT erklÃ¤rt",
+                            "title":  "NVT erklärt",
                             "slug":  "nvt-erklaert",
                             "url":  "https://glasfaser-kompass.de/nvt-erklaert/",
                             "modified":  "2026-08-21T06:47:12",
@@ -9597,7 +9626,7 @@
                         {
                             "id":  4003,
                             "type":  "post",
-                            "title":  "XGS-PON erklÃ¤rt",
+                            "title":  "XGS-PON erklärt",
                             "slug":  "xgs-pon-erklaert",
                             "url":  "https://glasfaser-kompass.de/xgs-pon-erklaert/",
                             "modified":  "2026-08-21T06:47:14",
@@ -9620,7 +9649,7 @@
                         {
                             "id":  4002,
                             "type":  "post",
-                            "title":  "GPON erklÃ¤rt",
+                            "title":  "GPON erklärt",
                             "slug":  "gpon-erklaert",
                             "url":  "https://glasfaser-kompass.de/gpon-erklaert/",
                             "modified":  "2026-08-21T06:47:16",
@@ -9643,7 +9672,7 @@
                         {
                             "id":  4001,
                             "type":  "post",
-                            "title":  "FTTH erklÃ¤rt",
+                            "title":  "FTTH erklärt",
                             "slug":  "ftth-erklaert",
                             "url":  "https://glasfaser-kompass.de/ftth-erklaert/",
                             "modified":  "2026-08-21T06:47:18",
@@ -9665,7 +9694,7 @@
                         {
                             "id":  3025,
                             "type":  "post",
-                            "title":  "EigentÃ¼mererklÃ¤rung erklÃ¤rt",
+                            "title":  "Eigentümererklärung erklärt",
                             "slug":  "eigentuemererklaerung-erklaert",
                             "url":  "https://glasfaser-kompass.de/eigentuemererklaerung-erklaert/",
                             "modified":  "2026-08-21T06:47:19",
@@ -9688,7 +9717,7 @@
                         {
                             "id":  3024,
                             "type":  "post",
-                            "title":  "GrundstÃ¼ckszustimmung erklÃ¤rt",
+                            "title":  "Grundstückszustimmung erklärt",
                             "slug":  "grundstueckszustimmung-erklaert",
                             "url":  "https://glasfaser-kompass.de/grundstueckszustimmung-erklaert/",
                             "modified":  "2026-08-21T06:47:21",
@@ -9711,7 +9740,7 @@
                         {
                             "id":  3023,
                             "type":  "post",
-                            "title":  "Hausbegehung erklÃ¤rt",
+                            "title":  "Hausbegehung erklärt",
                             "slug":  "hausbegehung-erklaert",
                             "url":  "https://glasfaser-kompass.de/hausbegehung-erklaert/",
                             "modified":  "2026-08-21T06:47:23",
@@ -9734,7 +9763,7 @@
                         {
                             "id":  3022,
                             "type":  "post",
-                            "title":  "Repeater erklÃ¤rt",
+                            "title":  "Repeater erklärt",
                             "slug":  "repeater-erklaert",
                             "url":  "https://glasfaser-kompass.de/repeater-erklaert/",
                             "modified":  "2026-08-21T06:47:24",
@@ -9757,7 +9786,7 @@
                         {
                             "id":  3021,
                             "type":  "post",
-                            "title":  "Access Point erklÃ¤rt",
+                            "title":  "Access Point erklärt",
                             "slug":  "access-point-erklaert",
                             "url":  "https://glasfaser-kompass.de/access-point-erklaert/",
                             "modified":  "2026-08-21T06:47:26",
@@ -9780,7 +9809,7 @@
                         {
                             "id":  3020,
                             "type":  "post",
-                            "title":  "Mesh WLAN erklÃ¤rt â€“ wann lohnt sich Mesh?",
+                            "title":  "Mesh WLAN erklärt – wann lohnt sich Mesh?",
                             "slug":  "mesh-wlan-erklaert",
                             "url":  "https://glasfaser-kompass.de/mesh-wlan-erklaert/",
                             "modified":  "2026-08-21T06:47:28",
@@ -9803,7 +9832,7 @@
                         {
                             "id":  3019,
                             "type":  "post",
-                            "title":  "Wiâ€‘Fi 7 erklÃ¤rt",
+                            "title":  "Wi‑Fi 7 erklärt",
                             "slug":  "wifi-7-erklaert",
                             "url":  "https://glasfaser-kompass.de/wifi-7-erklaert/",
                             "modified":  "2026-08-21T06:47:30",
@@ -9826,7 +9855,7 @@
                         {
                             "id":  3018,
                             "type":  "post",
-                            "title":  "Wiâ€‘Fi 6 erklÃ¤rt",
+                            "title":  "Wi‑Fi 6 erklärt",
                             "slug":  "wifi-6-erklaert",
                             "url":  "https://glasfaser-kompass.de/wifi-6-erklaert/",
                             "modified":  "2026-08-21T06:47:31",
@@ -9849,7 +9878,7 @@
                         {
                             "id":  3017,
                             "type":  "post",
-                            "title":  "Supervectoring erklÃ¤rt",
+                            "title":  "Supervectoring erklärt",
                             "slug":  "supervectoring-erklaert",
                             "url":  "https://glasfaser-kompass.de/supervectoring-erklaert/",
                             "modified":  "2026-08-21T06:47:33",
@@ -9872,7 +9901,7 @@
                         {
                             "id":  3016,
                             "type":  "post",
-                            "title":  "Vectoring erklÃ¤rt",
+                            "title":  "Vectoring erklärt",
                             "slug":  "vectoring-erklaert",
                             "url":  "https://glasfaser-kompass.de/vectoring-erklaert/",
                             "modified":  "2026-08-21T06:47:34",
@@ -9895,7 +9924,7 @@
                         {
                             "id":  3015,
                             "type":  "post",
-                            "title":  "DSLAM erklÃ¤rt",
+                            "title":  "DSLAM erklärt",
                             "slug":  "dslam-erklaert",
                             "url":  "https://glasfaser-kompass.de/dslam-erklaert/",
                             "modified":  "2026-08-21T06:47:36",
@@ -9918,7 +9947,7 @@
                         {
                             "id":  3014,
                             "type":  "post",
-                            "title":  "HVt erklÃ¤rt",
+                            "title":  "HVt erklärt",
                             "slug":  "hvt-erklaert",
                             "url":  "https://glasfaser-kompass.de/hvt-erklaert/",
                             "modified":  "2026-08-21T06:47:37",
@@ -9941,7 +9970,7 @@
                         {
                             "id":  3013,
                             "type":  "post",
-                            "title":  "KVz erklÃ¤rt",
+                            "title":  "KVz erklärt",
                             "slug":  "kvz-erklaert",
                             "url":  "https://glasfaser-kompass.de/kvz-erklaert/",
                             "modified":  "2026-08-21T06:47:38",
@@ -9964,7 +9993,7 @@
                         {
                             "id":  3012,
                             "type":  "post",
-                            "title":  "TAL erklÃ¤rt",
+                            "title":  "TAL erklärt",
                             "slug":  "tal-erklaert",
                             "url":  "https://glasfaser-kompass.de/tal-erklaert/",
                             "modified":  "2026-08-21T06:47:40",
@@ -9987,7 +10016,7 @@
                         {
                             "id":  3011,
                             "type":  "post",
-                            "title":  "TAE erklÃ¤rt",
+                            "title":  "TAE erklärt",
                             "slug":  "tae-erklaert",
                             "url":  "https://glasfaser-kompass.de/tae-erklaert/",
                             "modified":  "2026-08-21T06:47:41",
@@ -10010,7 +10039,7 @@
                         {
                             "id":  302,
                             "type":  "post",
-                            "title":  "Wiâ€‘Fi 7 Router â€“ lohnt sich der Umstieg?",
+                            "title":  "Wi‑Fi 7 Router – lohnt sich der Umstieg?",
                             "slug":  "wifi-7-router-lohnt-sich-premium",
                             "url":  "https://glasfaser-kompass.de/wifi-7-router-lohnt-sich-premium/",
                             "modified":  "2026-08-21T06:47:43",
@@ -10021,18 +10050,19 @@
                             "image_count":  1,
                             "suspicious_images":  1,
                             "internal_links":  6,
-                            "issue_count":  1,
+                            "issue_count":  2,
                             "issues":  [
-                                           "schematic_images_1"
+                                           "schematic_images_1",
+                                           "missing_cta"
                                        ],
-                            "benefit":  6,
+                            "benefit":  11,
                             "cost":  1,
-                            "roi":  6
+                            "roi":  11
                         },
                         {
                             "id":  301,
                             "type":  "post",
-                            "title":  "Gast-WLAN einrichten â€“ sicher und einfach",
+                            "title":  "Gast-WLAN einrichten – sicher und einfach",
                             "slug":  "gast-wlan-einrichten-premium",
                             "url":  "https://glasfaser-kompass.de/gast-wlan-einrichten-premium/",
                             "modified":  "2026-08-21T06:47:45",
@@ -10055,7 +10085,7 @@
                         {
                             "id":  300,
                             "type":  "post",
-                            "title":  "ONT und Router â€“ wo liegt der Unterschied?",
+                            "title":  "ONT und Router – wo liegt der Unterschied?",
                             "slug":  "ont-und-router-unterschied-premium",
                             "url":  "https://glasfaser-kompass.de/ont-und-router-unterschied-premium/",
                             "modified":  "2026-08-21T06:47:47",
@@ -10066,19 +10096,20 @@
                             "image_count":  1,
                             "suspicious_images":  1,
                             "internal_links":  3,
-                            "issue_count":  2,
+                            "issue_count":  3,
                             "issues":  [
                                            "thin_content",
-                                           "schematic_images_1"
+                                           "schematic_images_1",
+                                           "missing_cta"
                                        ],
-                            "benefit":  10,
+                            "benefit":  15,
                             "cost":  1,
-                            "roi":  10
+                            "roi":  15
                         },
                         {
                             "id":  299,
                             "type":  "post",
-                            "title":  "FRITZ!Box richtig einrichten â€“ Schritt-fÃ¼r-Schritt-Anleitung",
+                            "title":  "FRITZ!Box richtig einrichten – Schritt-für-Schritt-Anleitung",
                             "slug":  "fritzbox-richtig-einrichten-premium",
                             "url":  "https://glasfaser-kompass.de/fritzbox-richtig-einrichten-premium/",
                             "modified":  "2026-08-21T06:47:48",
@@ -10100,7 +10131,7 @@
                         {
                             "id":  298,
                             "type":  "post",
-                            "title":  "Welcher Router eignet sich fÃ¼r Glasfaser? Der groÃŸe Ratgeber 2026",
+                            "title":  "Welcher Router eignet sich für Glasfaser? Der große Ratgeber 2026",
                             "slug":  "router-fuer-glasfaser",
                             "url":  "https://glasfaser-kompass.de/router-fuer-glasfaser/",
                             "modified":  "2026-08-21T06:47:50",
@@ -10122,7 +10153,7 @@
                         {
                             "id":  297,
                             "type":  "post",
-                            "title":  "WLAN fÃ¼r Homeoffice optimieren",
+                            "title":  "WLAN für Homeoffice optimieren",
                             "slug":  "wlan-fuer-homeoffice-optimieren",
                             "url":  "https://glasfaser-kompass.de/wlan-fuer-homeoffice-optimieren/",
                             "modified":  "2026-08-21T06:47:52",
@@ -10188,7 +10219,7 @@
                         {
                             "id":  294,
                             "type":  "post",
-                            "title":  "2,4 GHz, 5 GHz oder 6 GHz â€“ welches WLAN-Band ist richtig?",
+                            "title":  "2,4 GHz, 5 GHz oder 6 GHz – welches WLAN-Band ist richtig?",
                             "slug":  "2-4-ghz-5-ghz-oder-6-ghz",
                             "url":  "https://glasfaser-kompass.de/2-4-ghz-5-ghz-oder-6-ghz/",
                             "modified":  "2026-08-21T06:47:56",
@@ -10210,7 +10241,7 @@
                         {
                             "id":  293,
                             "type":  "post",
-                            "title":  "WLAN-Kanal wechseln â€“ wann es sinnvoll ist",
+                            "title":  "WLAN-Kanal wechseln – wann es sinnvoll ist",
                             "slug":  "wlan-kanal-wechseln",
                             "url":  "https://glasfaser-kompass.de/wlan-kanal-wechseln/",
                             "modified":  "2026-08-21T06:47:58",
@@ -10232,7 +10263,7 @@
                         {
                             "id":  292,
                             "type":  "post",
-                            "title":  "Router richtig aufstellen â€“ so verbessern Sie Ihr WLAN",
+                            "title":  "Router richtig aufstellen – so verbessern Sie Ihr WLAN",
                             "slug":  "router-richtig-aufstellen",
                             "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen/",
                             "modified":  "2026-08-21T06:47:59",
@@ -10254,7 +10285,7 @@
                         {
                             "id":  291,
                             "type":  "post",
-                            "title":  "WLAN-Reichweite erhÃ¶hen â€“ 10 praktische Tipps",
+                            "title":  "WLAN-Reichweite erhöhen – 10 praktische Tipps",
                             "slug":  "wlan-reichweite-erhoehen-10-tipps",
                             "url":  "https://glasfaser-kompass.de/wlan-reichweite-erhoehen-10-tipps/",
                             "modified":  "2026-08-21T06:48:01",
@@ -10276,7 +10307,7 @@
                         {
                             "id":  290,
                             "type":  "post",
-                            "title":  "Warum bricht mein WLAN stÃ¤ndig ab?",
+                            "title":  "Warum bricht mein WLAN ständig ab?",
                             "slug":  "wlan-bricht-staendig-ab",
                             "url":  "https://glasfaser-kompass.de/wlan-bricht-staendig-ab/",
                             "modified":  "2026-08-21T06:48:03",
@@ -10298,7 +10329,7 @@
                         {
                             "id":  289,
                             "type":  "post",
-                            "title":  "WLAN langsam â€“ Ursachen und LÃ¶sungen",
+                            "title":  "WLAN langsam – Ursachen und Lösungen",
                             "slug":  "wlan-langsam-ursachen-loesungen",
                             "url":  "https://glasfaser-kompass.de/wlan-langsam-ursachen-loesungen/",
                             "modified":  "2026-08-21T06:48:04",
@@ -10320,7 +10351,7 @@
                         {
                             "id":  288,
                             "type":  "post",
-                            "title":  "Wiâ€‘Fi 6, Wiâ€‘Fi 6E und Wiâ€‘Fi 7 erklÃ¤rt",
+                            "title":  "Wi‑Fi 6, Wi‑Fi 6E und Wi‑Fi 7 erklärt",
                             "slug":  "wifi-6-6e-und-7-erklaert",
                             "url":  "https://glasfaser-kompass.de/wifi-6-6e-und-7-erklaert/",
                             "modified":  "2026-08-21T06:48:06",
@@ -10342,7 +10373,7 @@
                         {
                             "id":  286,
                             "type":  "post",
-                            "title":  "WLAN-Kanal wechseln â€“ So verbessern Sie Ihr WLAN",
+                            "title":  "WLAN-Kanal wechseln – So verbessern Sie Ihr WLAN",
                             "slug":  "wlan-kanal-wechseln-so-verbessern-sie-ihr-wlan",
                             "url":  "https://glasfaser-kompass.de/wlan-kanal-wechseln-so-verbessern-sie-ihr-wlan/",
                             "modified":  "2026-08-21T06:48:08",
@@ -10364,7 +10395,7 @@
                         {
                             "id":  276,
                             "type":  "post",
-                            "title":  "Was kostet ein Glasfaseranschluss wirklich? Alle Kosten im Ãœberblick",
+                            "title":  "Was kostet ein Glasfaseranschluss wirklich? Alle Kosten im Überblick",
                             "slug":  "was-kostet-ein-glasfaseranschluss-wirklich-alle-kosten-im-ueberblick",
                             "url":  "https://glasfaser-kompass.de/was-kostet-ein-glasfaseranschluss-wirklich-alle-kosten-im-ueberblick/",
                             "modified":  "2026-08-21T06:48:10",
@@ -10387,7 +10418,7 @@
                         {
                             "id":  270,
                             "type":  "post",
-                            "title":  "Wie kommt Glasfaser ins Haus? Vom Gehweg bis zur Anschlussdose erklÃ¤rt",
+                            "title":  "Wie kommt Glasfaser ins Haus? Vom Gehweg bis zur Anschlussdose erklärt",
                             "slug":  "wie-kommt-glasfaser-ins-haus-vom-gehweg-bis-zur-anschlussdose-erklaert",
                             "url":  "https://glasfaser-kompass.de/wie-kommt-glasfaser-ins-haus-vom-gehweg-bis-zur-anschlussdose-erklaert/",
                             "modified":  "2026-08-21T06:48:11",
@@ -10410,7 +10441,7 @@
                         {
                             "id":  267,
                             "type":  "post",
-                            "title":  "Glasfaser vs. DSL â€“ Die wichtigsten Unterschiede im direkten Vergleich",
+                            "title":  "Glasfaser vs. DSL – Die wichtigsten Unterschiede im direkten Vergleich",
                             "slug":  "glasfaser-vs-dsl-die-wichtigsten-unterschiede-im-direkten-vergleich",
                             "url":  "https://glasfaser-kompass.de/glasfaser-vs-dsl-die-wichtigsten-unterschiede-im-direkten-vergleich/",
                             "modified":  "2026-08-21T06:48:13",
@@ -10432,7 +10463,7 @@
                         {
                             "id":  262,
                             "type":  "post",
-                            "title":  "FTTH einfach erklÃ¤rt â€“ Was bedeutet Fiber To The Home?",
+                            "title":  "FTTH einfach erklärt – Was bedeutet Fiber To The Home?",
                             "slug":  "ftth-einfach-erklaert-was-bedeutet-fiber-to-the-home",
                             "url":  "https://glasfaser-kompass.de/ftth-einfach-erklaert-was-bedeutet-fiber-to-the-home/",
                             "modified":  "2026-08-21T06:48:15",
@@ -10455,7 +10486,7 @@
                         {
                             "id":  203,
                             "type":  "post",
-                            "title":  "Warum bricht mein WLAN stÃ¤ndig ab?",
+                            "title":  "Warum bricht mein WLAN ständig ab?",
                             "slug":  "warum-bricht-mein-wlan-staendig-ab",
                             "url":  "https://glasfaser-kompass.de/warum-bricht-mein-wlan-staendig-ab/",
                             "modified":  "2026-08-21T06:48:16",
@@ -10477,7 +10508,7 @@
                         {
                             "id":  201,
                             "type":  "post",
-                            "title":  "WLAN-Reichweite erhÃ¶hen â€“ 10 praktische Tipps",
+                            "title":  "WLAN-Reichweite erhöhen – 10 praktische Tipps",
                             "slug":  "wlan-reichweite-erhoehen-10-praktische-tipps",
                             "url":  "https://glasfaser-kompass.de/wlan-reichweite-erhoehen-10-praktische-tipps/",
                             "modified":  "2026-08-21T06:48:18",
@@ -10499,7 +10530,7 @@
                         {
                             "id":  199,
                             "type":  "post",
-                            "title":  "Mesh-System einrichten â€“ Schritt fÃ¼r Schritt",
+                            "title":  "Mesh-System einrichten – Schritt für Schritt",
                             "slug":  "mesh-system-einrichten-schritt-fuer-schritt",
                             "url":  "https://glasfaser-kompass.de/mesh-system-einrichten-schritt-fuer-schritt/",
                             "modified":  "2026-08-21T06:48:19",
@@ -10521,7 +10552,7 @@
                         {
                             "id":  197,
                             "type":  "post",
-                            "title":  "LAN oder WLAN â€“ was ist besser?",
+                            "title":  "LAN oder WLAN – was ist besser?",
                             "slug":  "lan-oder-wlan-was-ist-besser",
                             "url":  "https://glasfaser-kompass.de/lan-oder-wlan-was-ist-besser/",
                             "modified":  "2026-08-21T06:48:21",
@@ -10543,7 +10574,7 @@
                         {
                             "id":  195,
                             "type":  "post",
-                            "title":  "Gast-WLAN einrichten â€“ warum es sinnvoll ist",
+                            "title":  "Gast-WLAN einrichten – warum es sinnvoll ist",
                             "slug":  "gast-wlan-einrichten-warum-es-sinnvoll-ist",
                             "url":  "https://glasfaser-kompass.de/gast-wlan-einrichten-warum-es-sinnvoll-ist/",
                             "modified":  "2026-08-21T06:48:23",
@@ -10565,7 +10596,7 @@
                         {
                             "id":  193,
                             "type":  "post",
-                            "title":  "FRITZ!Box richtig einrichten â€“ Schritt fÃ¼r Schritt",
+                            "title":  "FRITZ!Box richtig einrichten – Schritt für Schritt",
                             "slug":  "fritzbox-richtig-einrichten-schritt-fuer-schritt",
                             "url":  "https://glasfaser-kompass.de/fritzbox-richtig-einrichten-schritt-fuer-schritt/",
                             "modified":  "2026-08-21T06:48:25",
@@ -10587,7 +10618,7 @@
                         {
                             "id":  191,
                             "type":  "post",
-                            "title":  "Die hÃ¤ufigsten Fehler beim Heimnetzwerk",
+                            "title":  "Die häufigsten Fehler beim Heimnetzwerk",
                             "slug":  "die-haeufigsten-fehler-beim-heimnetzwerk",
                             "url":  "https://glasfaser-kompass.de/die-haeufigsten-fehler-beim-heimnetzwerk/",
                             "modified":  "2026-08-21T06:48:27",
@@ -10632,7 +10663,7 @@
                         {
                             "id":  187,
                             "type":  "post",
-                            "title":  "Glasfaser vs. DSL â€“ die wichtigsten Unterschiede",
+                            "title":  "Glasfaser vs. DSL – die wichtigsten Unterschiede",
                             "slug":  "glasfaser-vs-dsl-die-wichtigsten-unterschiede",
                             "url":  "https://glasfaser-kompass.de/glasfaser-vs-dsl-die-wichtigsten-unterschiede/",
                             "modified":  "2026-08-21T06:48:30",
@@ -10654,7 +10685,7 @@
                         {
                             "id":  185,
                             "type":  "post",
-                            "title":  "FTTH einfach erklÃ¤rt",
+                            "title":  "FTTH einfach erklärt",
                             "slug":  "ftth-einfach-erklaert",
                             "url":  "https://glasfaser-kompass.de/ftth-einfach-erklaert/",
                             "modified":  "2026-08-21T06:48:31",
@@ -10746,7 +10777,7 @@
                         {
                             "id":  177,
                             "type":  "post",
-                            "title":  "Internet langsam trotz Glasfaser â€“ woran kann das liegen?",
+                            "title":  "Internet langsam trotz Glasfaser – woran kann das liegen?",
                             "slug":  "internet-langsam-trotz-glasfaser-woran-kann-das-liegen",
                             "url":  "https://glasfaser-kompass.de/internet-langsam-trotz-glasfaser-woran-kann-das-liegen/",
                             "modified":  "2026-08-21T06:48:37",
@@ -10769,7 +10800,7 @@
                         {
                             "id":  175,
                             "type":  "post",
-                            "title":  "Die besten Router fÃ¼r GlasfaseranschlÃ¼sse â€“ worauf sollte man achten?",
+                            "title":  "Die besten Router für Glasfaseranschlüsse – worauf sollte man achten?",
                             "slug":  "die-besten-router-fuer-glasfaseranschluesse-worauf-sollte-man-achten",
                             "url":  "https://glasfaser-kompass.de/die-besten-router-fuer-glasfaseranschluesse-worauf-sollte-man-achten/",
                             "modified":  "2026-08-21T06:48:39",
@@ -10780,18 +10811,19 @@
                             "image_count":  1,
                             "suspicious_images":  1,
                             "internal_links":  6,
-                            "issue_count":  1,
+                            "issue_count":  2,
                             "issues":  [
-                                           "schematic_images_1"
+                                           "schematic_images_1",
+                                           "missing_cta"
                                        ],
-                            "benefit":  6,
+                            "benefit":  11,
                             "cost":  1,
-                            "roi":  6
+                            "roi":  11
                         },
                         {
                             "id":  173,
                             "type":  "post",
-                            "title":  "Glasfaser oder DSL â€“ die wichtigsten Unterschiede",
+                            "title":  "Glasfaser oder DSL – die wichtigsten Unterschiede",
                             "slug":  "glasfaser-oder-dsl-die-wichtigsten-unterschiede",
                             "url":  "https://glasfaser-kompass.de/glasfaser-oder-dsl-die-wichtigsten-unterschiede/",
                             "modified":  "2026-08-21T06:48:41",
@@ -10813,7 +10845,7 @@
                         {
                             "id":  171,
                             "type":  "post",
-                            "title":  "2,4 GHz, 5 GHz oder 6 GHz â€“ Welches WLAN-Band ist das richtige?",
+                            "title":  "2,4 GHz, 5 GHz oder 6 GHz – Welches WLAN-Band ist das richtige?",
                             "slug":  "24-ghz-oder-5-ghz-welches-wlan-ist-besser",
                             "url":  "https://glasfaser-kompass.de/24-ghz-oder-5-ghz-welches-wlan-ist-besser/",
                             "modified":  "2026-08-21T06:48:43",
@@ -10835,7 +10867,7 @@
                         {
                             "id":  169,
                             "type":  "post",
-                            "title":  "Repeater oder Mesh â€“ Was ist besser?",
+                            "title":  "Repeater oder Mesh – Was ist besser?",
                             "slug":  "repeater-oder-mesh-was-ist-besser",
                             "url":  "https://glasfaser-kompass.de/repeater-oder-mesh-was-ist-besser/",
                             "modified":  "2026-08-21T06:48:44",
@@ -10857,7 +10889,7 @@
                         {
                             "id":  163,
                             "type":  "post",
-                            "title":  "Router richtig aufstellen â€“ 7 Tipps fÃ¼r besseres WLAN",
+                            "title":  "Router richtig aufstellen – 7 Tipps für besseres WLAN",
                             "slug":  "router-richtig-aufstellen-7-tipps-fuer-besseres-wlan",
                             "url":  "https://glasfaser-kompass.de/router-richtig-aufstellen-7-tipps-fuer-besseres-wlan/",
                             "modified":  "2026-08-21T06:48:46",
@@ -10923,7 +10955,7 @@
                         {
                             "id":  161,
                             "type":  "post",
-                            "title":  "WLAN langsam? Die hÃ¤ufigsten Ursachen einfach erklÃ¤rt",
+                            "title":  "WLAN langsam? Die häufigsten Ursachen einfach erklärt",
                             "slug":  "wlan-langsam-die-haeufigsten-ursachen-einfach-erklaert",
                             "url":  "https://glasfaser-kompass.de/wlan-langsam-die-haeufigsten-ursachen-einfach-erklaert/",
                             "modified":  "2026-08-21T06:48:51",
@@ -10945,7 +10977,7 @@
                         {
                             "id":  96,
                             "type":  "post",
-                            "title":  "Glasfaseranschluss im Mehrfamilienhaus erklÃ¤rt",
+                            "title":  "Glasfaseranschluss im Mehrfamilienhaus erklärt",
                             "slug":  "glasfaseranschluss-im-mehrfamilienhaus-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaseranschluss-im-mehrfamilienhaus-erklaert/",
                             "modified":  "2026-08-21T06:48:53",
@@ -10968,7 +11000,7 @@
                         {
                             "id":  94,
                             "type":  "post",
-                            "title":  "Glasfaseranschluss im Einfamilienhaus erklÃ¤rt",
+                            "title":  "Glasfaseranschluss im Einfamilienhaus erklärt",
                             "slug":  "glasfaseranschluss-im-einfamilienhaus-erklaert",
                             "url":  "https://glasfaser-kompass.de/glasfaseranschluss-im-einfamilienhaus-erklaert/",
                             "modified":  "2026-08-21T06:48:54",
@@ -11036,7 +11068,7 @@
                         {
                             "id":  75,
                             "type":  "post",
-                            "title":  "Was ist ein APL? Einfach erklÃ¤rt",
+                            "title":  "Was ist ein APL? Einfach erklärt",
                             "slug":  "was-ist-ein-apl",
                             "url":  "https://glasfaser-kompass.de/was-ist-ein-apl/",
                             "modified":  "2026-08-21T06:48:59",
