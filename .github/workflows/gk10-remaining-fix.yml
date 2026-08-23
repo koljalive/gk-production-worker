@@ -4,7 +4,7 @@ on:
 permissions:
   contents: write
 jobs:
-  verified-live-pilot:
+  live-visual-polish:
     runs-on: self-hosted
     timeout-minutes: 25
     steps:
@@ -13,20 +13,20 @@ jobs:
           fetch-depth: 0
       - name: Parser gate
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Run-GKVerifiedLivePilot.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
-      - name: Apply transactional three-page live pilot
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Run-GKLiveVisualPolish.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
+      - name: Apply visual polish and capture exact viewports
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKVerifiedLivePilot.ps1"
-      - name: Persist live evidence and backups
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Run-GKLiveVisualPolish.ps1"
+      - name: Persist visual evidence and backup
         if: always()
         shell: cmd
         run: |
           cd /d "%GITHUB_WORKSPACE%"
-          if not exist bridge\gk-live-pilot-result.json exit /b 1
-          if not exist bridge\gk-live-pilot-backup.json exit /b 1
+          if not exist bridge\gk-live-polish-result.json exit /b 1
+          if not exist bridge\gk-live-polish-backup.json exit /b 1
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.name "gk-live-pilot"
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-live-pilot@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-live-pilot-result.json bridge/gk-live-pilot-backup.json bridge/live-pilot-*.png
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist verified three-page live pilot evidence [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-live-polish-result.json bridge/gk-live-polish-backup.json bridge/final-*.png
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist final exact-viewport visual evidence [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
