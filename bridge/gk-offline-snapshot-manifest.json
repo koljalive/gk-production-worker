@@ -1,8 +1,11 @@
 {
-    "captured_utc":  "2026-08-23T19:20:31.3410347Z",
+    "captured_utc":  "2026-08-23T19:26:20.6795064Z",
     "page_count":  34,
-    "post_count":  100,
-    "media_count":  100,
+    "post_count":  270,
+    "media_count":  422,
+    "page_api_pages":  1,
+    "post_api_pages":  3,
+    "media_api_pages":  5,
     "snapshot":  "bridge/gk-offline-snapshot.json",
-    "status":  "SNAPSHOT_COMPLETE_NO_WRITES"
+    "status":  "SNAPSHOT_COMPLETE_NO_WRITES_TOTALS_VERIFIED"
 }
