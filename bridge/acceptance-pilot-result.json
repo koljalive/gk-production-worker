@@ -1,0 +1,60 @@
+{
+    "started_utc":  "2026-08-23T16:20:04.1525669Z",
+    "status":  "PUBLIC VERIFIED - VISUAL EVIDENCE CAPTURED",
+    "items":  [
+                  {
+                      "id":  21020,
+                      "url":  "https://glasfaser-kompass.de/router-kaufberatung/",
+                      "change":  "content_h1_to_h2",
+                      "backup":  "C:\\GKBridge\\backups\\acceptance-pilot-21020-before-20260823-182004.json",
+                      "public":  {
+                                     "ok":  true,
+                                     "http":  200,
+                                     "h1":  1,
+                                     "suspicious":  0,
+                                     "expected_image":  true
+                                 },
+                      "accepted":  true
+                  },
+                  {
+                      "id":  21009,
+                      "url":  "https://glasfaser-kompass.de/praxiswissen/",
+                      "change":  "replace_visible_schematic_with_selected_real_photo",
+                      "media_id":  29397,
+                      "media_title":  "FRITZ!Box 7590 – reales Routerfoto",
+                      "media_src":  "https://glasfaser-kompass.de/wp-content/uploads/2026/08/fritzbox-7590-reales-routerfoto-scaled.jpg",
+                      "backup":  "C:\\GKBridge\\backups\\acceptance-pilot-21009-before-20260823-182005.json",
+                      "public":  {
+                                     "ok":  true,
+                                     "http":  200,
+                                     "h1":  1,
+                                     "suspicious":  0,
+                                     "expected_image":  true
+                                 },
+                      "accepted":  true
+                  }
+              ],
+    "screenshots":  [
+                        {
+                            "url":  "https://glasfaser-kompass.de/router-kaufberatung/",
+                            "viewport":  "desktop",
+                            "path":  "acceptance-router-desktop.png"
+                        },
+                        {
+                            "url":  "https://glasfaser-kompass.de/router-kaufberatung/",
+                            "viewport":  "mobile",
+                            "path":  "acceptance-router-mobile.png"
+                        },
+                        {
+                            "url":  "https://glasfaser-kompass.de/praxiswissen/",
+                            "viewport":  "desktop",
+                            "path":  "acceptance-praxiswissen-desktop.png"
+                        },
+                        {
+                            "url":  "https://glasfaser-kompass.de/praxiswissen/",
+                            "viewport":  "mobile",
+                            "path":  "acceptance-praxiswissen-mobile.png"
+                        }
+                    ],
+    "finished_utc":  "2026-08-23T16:20:17.0723088Z"
+}
