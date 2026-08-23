@@ -1,0 +1,10 @@
+{
+    "generated_utc":  "2026-08-23T19:40:04.3526352Z",
+    "source_snapshot_utc":  "2026-08-23T19:26:20.6795064Z",
+    "offline_only":  true,
+    "production_writes":  0,
+    "content_total":  304,
+    "contextual_editorial_count":  144,
+    "real_photo_candidate_count":  4,
+    "status":  "OFFLINE_REVIEW_PREPARED"
+}
