@@ -4,29 +4,20 @@ on:
 permissions:
   contents: write
 jobs:
-  offline-utf8-rebuild:
+  offline-pilot-final:
     runs-on: self-hosted
-    timeout-minutes: 35
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Parser gate for complete offline chain
+      - name: Parser gate
         shell: cmd
-        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$files=@('Export-GKOfflineSnapshot.ps1','Analyze-GKOfflineSnapshot.ps1','Simulate-GKOfflineImprovements.ps1','Prepare-GKOfflineReview.ps1','Prepare-GKOfflineMedia.ps1','Analyze-GKOfflineDuplicates.ps1','Prepare-GKOfflineEditorialBatch.ps1','Analyze-GKOfflineEditorialBatch.ps1','Build-GKOfflinePilot.ps1');foreach($f in $files){$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\'+$f),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}}"
-      - name: Rebuild verified UTF-8 offline foundation and pilot
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "$tokens=$null;$errors=$null;[System.Management.Automation.Language.Parser]::ParseFile(($env:GITHUB_WORKSPACE+'\bridge\Build-GKOfflinePilot.ps1'),[ref]$tokens,[ref]$errors)|Out-Null;if($errors.Count -gt 0){Write-Host ($errors -join [Environment]::NewLine);exit 1}"
+      - name: Build final three-page offline pilot
         shell: cmd
-        run: |
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Export-GKOfflineSnapshot.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Analyze-GKOfflineSnapshot.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Simulate-GKOfflineImprovements.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Prepare-GKOfflineReview.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Prepare-GKOfflineMedia.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Analyze-GKOfflineDuplicates.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Prepare-GKOfflineEditorialBatch.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Analyze-GKOfflineEditorialBatch.ps1" || exit /b 1
-          powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Build-GKOfflinePilot.ps1" || exit /b 1
-      - name: Persist rebuilt offline evidence
+        run: powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "%GITHUB_WORKSPACE%\bridge\Build-GKOfflinePilot.ps1"
+      - name: Persist final offline pilot
         if: always()
         shell: cmd
         run: |
@@ -36,5 +27,5 @@ jobs:
           git -c safe.directory="%GITHUB_WORKSPACE%" config user.email "gk-offline-audit@users.noreply.github.com"
           git -c safe.directory="%GITHUB_WORKSPACE%" fetch origin main
           git -c safe.directory="%GITHUB_WORKSPACE%" reset --soft origin/main
-          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-*.json
-          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Rebuild complete UTF-8 offline evidence [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
+          git -c safe.directory="%GITHUB_WORKSPACE%" add bridge/gk-offline-pilot.json
+          git -c safe.directory="%GITHUB_WORKSPACE%" diff --cached --quiet || (git -c safe.directory="%GITHUB_WORKSPACE%" commit -m "Persist final verified offline pilot [skip ci]" && git -c safe.directory="%GITHUB_WORKSPACE%" push origin HEAD:main)
