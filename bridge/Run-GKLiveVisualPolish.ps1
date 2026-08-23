@@ -10,8 +10,15 @@ if($pilot.status-ne'OFFLINE_PILOT_FULL_SIMULATION_PASSED'){throw 'Pilot gate fai
 $css=@'
 <style class="gk-nav-fix">.gk-clean-article .gk-design-toc{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}.gk-clean-article .gk-design-toc a{display:inline-flex;padding:9px 13px;border:1px solid #b9d8e8;border-radius:999px;text-decoration:none;font-weight:700;background:#f7fbfd}.gk-clean-article table{display:block;max-width:100%;overflow-x:auto}@media(max-width:600px){.gk-clean-article .gk-design-toc{gap:8px}.gk-clean-article .gk-design-toc a{padding:8px 11px;font-size:.92rem}}</style>
 '@
-$plans=@();foreach($id in 298,163){$t=$pilot.targets|Where-Object{[int]$_.id-eq$id};if($null-eq$t){throw "Pilot target missing $id"};$plans+=@([ordered]@{id=$id;route="/wp/v2/posts/$id";expected=[string]$t.content;new=([string]$t.content+$css)})}
-if($Simulation){foreach($p in $plans){if(-not$p.new.Contains('gk-nav-fix')-or$p.new-match'<h1\b|<img\b'){throw 'Simulation quality gate failed'}};Write-Host 'VISUAL POLISH SIMULATION PASSED';exit 0}
+$plans=@();foreach($id in 298,163){
+ $t=$pilot.targets|Where-Object{[int]$_.id-eq$id};if($null-eq$t){throw "Pilot target missing $id"}
+ $expected=[string]$t.content+$css
+ $new=$expected.Replace('<article class="gk-clean-article"','<article style="width:100%;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere" class="gk-clean-article"')
+ $new=$new.Replace('<nav class="gk-design-toc"','<nav style="display:flex;flex-wrap:wrap;gap:10px;margin:22px 0;max-width:100%" class="gk-design-toc"')
+ $new=$new.Replace('</a><a','</a> <a')
+ $plans+=@([ordered]@{id=$id;route="/wp/v2/posts/$id";expected=$expected;new=$new})
+}
+if($Simulation){foreach($p in $plans){if(-not$p.new.Contains('gk-nav-fix')-or-not$p.new.Contains('display:flex')-or-not$p.new.Contains('</a> <a')-or$p.new-match'<h1\b|<img\b'){throw 'Simulation quality gate failed'}};Write-Host 'VISUAL POLISH SIMULATION PASSED';exit 0}
 $secretDir=Join-Path $env:APPDATA 'GK-MCP-Tunnel';$user=(Get-Content(Join-Path $secretDir 'wp-user.txt')-Raw).Trim();$pass=Get-PlainSecret(Join-Path $secretDir 'wp-password.dat');try{$basic=[Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($user+':'+$pass))}finally{Remove-Variable pass -ErrorAction SilentlyContinue};$headers=@{Authorization="Basic $basic";Accept='application/json'};Remove-Variable basic -ErrorAction SilentlyContinue
 $backups=@();foreach($p in $plans){$x=Invoke-Wp GET ($p.route+'?context=edit&_fields=id,link,content,featured_media') $headers;$raw=[string]$x.content.raw;if($raw-ne$p.expected-and$raw-ne$p.new){throw "Source content changed $($p.id)"};$backups+=@([ordered]@{id=$p.id;route=$p.route;link=[string]$x.link;content=$raw;featured_media=[int]$x.featured_media});$p.link=[string]$x.link}
 [IO.File]::WriteAllText((Join-Path $workspace 'bridge/gk-live-polish-backup.json'),($backups|ConvertTo-Json -Depth 20),(New-Object Text.UTF8Encoding($false)))
