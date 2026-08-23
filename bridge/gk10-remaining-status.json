@@ -1,6 +1,18 @@
 {
-  "checked_at": "2026-08-23T15:55:12Z",
+  "checked_at": "2026-08-23T16:03:58Z",
   "runs": [
+    {
+      "id": 32650486154,
+      "name": "GK10 Remaining Repair",
+      "status": "in_progress",
+      "conclusion": null,
+      "head_sha": "4a0361f7c9dafd01ec1ae789761cd92078aeb67e",
+      "display_title": "START: acceptance pilot after execution-policy fix",
+      "created_at": "2026-08-23T16:03:30Z",
+      "updated_at": "2026-08-23T16:03:34Z",
+      "html_url": "https://github.com/koljalive/gk-production-worker/actions/runs/32650486154",
+      "jobs_url": "https://api.github.com/repos/koljalive/gk-production-worker/actions/runs/32650486154/jobs"
+    },
     {
       "id": 32648136247,
       "name": "GK10 Remaining Repair",
